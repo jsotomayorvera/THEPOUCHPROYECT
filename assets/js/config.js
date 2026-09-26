@@ -11,9 +11,8 @@ window.TPP = {
   },
 
   /* ---- CONTACTO -------------------------------------------------------- */
-  // ⚠️ REEMPLAZA con el número real, formato internacional SIN "+" ni espacios.
-  //    Ecuador = 593 + número sin el 0 inicial.  Ej: 0991234567 -> 593991234567
-  whatsapp: '593900000000',
+  // Formato internacional SIN "+" ni espacios: 593 + número sin el 0 inicial.
+  whatsapp: '593940238603',   // 0940238603
   instagram: 'thepouchproject',
   email: 'hola@thepouchproject.ec',
 
@@ -25,7 +24,7 @@ window.TPP = {
     linea: 'Focus · Nootropic Pouches',
     sabor: 'Peppermint',
     unidades: 15,
-    foto: 'assets/img/producto-nze-peppermint.jpg',
+    foto: 'assets/img/producto-nze-peppermint.webp',
     resumen:
       'Pouch nootrópico de menta fría. Sostiene la atención sin estimulante: ' +
       'cero cafeína, cero azúcar, cero tabaco y sin edulcorantes artificiales.',
@@ -73,6 +72,37 @@ window.TPP = {
   // Vacío = se usa el fondo animado de respaldo.
   // Ver assets/video/README.md para formato, peso y encuadre.
   heroVideos: [
-    // { src: 'assets/video/hero-01.mp4', poster: 'assets/img/poster-01.jpg' },
+    { src: 'assets/video/hero.mp4', poster: 'assets/img/poster-hero.jpg' },
+  ],
+
+  /* ---- MÓDULO DE EFECTOS ----------------------------------------------- */
+  // Cada pestaña tiene su propia animación de fondo, generada en código.
+  // Si consigues un clip real para alguna, añade `video: 'assets/video/xxx.mp4'`
+  // y esa pestaña lo usará en lugar de la animación.
+  efectos: [
+    {
+      id: 'minutos', label: 'Minutos', when: '0 – 10 minutos', tema: 'frost', tono: '#DCEFE2',
+      copy: 'El frescor de la menta llega al primer segundo. Mientras el pouch sigue puesto, ' +
+            'los activos se liberan por la mucosa de la boca, una vía muy vascularizada que entra ' +
+            'a circulación sin pasar primero por el hígado. Enciendes sin haber tomado un mililitro de líquido.',
+    },
+    {
+      id: 'horas', label: 'Horas', when: '1 – 3 horas', tema: 'pace', tono: '#DEEAF1',
+      copy: 'La ventana de trabajo. La L-Teanina sostiene una atención tranquila y la L-Tirosina es ' +
+            'el precursor que el cerebro gasta bajo presión. Sin azúcar no hay pico de insulina y, ' +
+            'por tanto, no hay caída reactiva una hora después.',
+    },
+    {
+      id: 'dias', label: 'Días', when: 'Día tras día', tema: 'pulse', tono: '#F0E4CB',
+      copy: 'Un pouch trae siempre la misma cantidad, así que dejas de adivinar la dosis. Nada que ' +
+            'cargar, nada que enfriar, nada que manche el esmalte. Y si quieres cortar, lo retiras: ' +
+            'con una lata ya te la tomaste.',
+    },
+    {
+      id: 'largo', label: 'A largo plazo', when: 'A largo plazo', tema: 'climb', tono: '#E3EDDF',
+      copy: 'Cambias la lata azucarada por un formato limpio y controlas tu día real. Cuando lleguen ' +
+            'la línea con cafeína y los electrolitos se cierra el círculo: foco para la cabeza, ' +
+            'energía para arrancar, sales para recuperar.',
+    },
   ],
 };

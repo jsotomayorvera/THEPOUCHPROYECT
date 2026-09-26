@@ -216,16 +216,29 @@
 
   renderSummary();
 
-  /* ═══════════════════════════════════════════════ 4. FONDOS ANIMADOS */
-  var heroField = window.TPPField ? window.TPPField($('#heroField'), { bubbles: 16, intensity: 1.05, speed: .8, hue: 150, dark: true }) : null;
-  var fxField   = window.TPPField ? window.TPPField($('#fxField'),   { bubbles: 22, intensity: 1.3,  speed: 1,  hue: 150 }) : null;
+  /* ═══════════════════════════════════════════════ 4. EFECTOS: PESTAÑAS */
+  var fx = window.TPPFx ? window.TPPFx($('#fxField')) : null;
 
-  /* ═══════════════════════════════════════════════ 5. PESTAÑAS */
   (function tabs() {
-    var list = $('.tabs'); if (!list) return;
-    var thumb = $('#fxThumb');
+    var list = $('#fxTabs'), panels = $('#fxPanels'), thumb = $('#fxThumb');
+    if (!list || !panels) return;
+    var datos = cfg.efectos || [];
+
+    panels.innerHTML = datos.map(function (d, i) {
+      return '<div class="fxpanel" id="panel-' + d.id + '" role="tabpanel" ' +
+        'aria-labelledby="tab-' + d.id + '" tabindex="0"' + (i ? ' hidden' : '') + '>' +
+        '<p class="fxpanel__when">' + d.when + '</p>' +
+        '<p class="fxpanel__copy">' + d.copy + '</p></div>';
+    }).join('');
+
+    list.insertAdjacentHTML('beforeend', datos.map(function (d, i) {
+      return '<button class="tab" type="button" role="tab" id="tab-' + d.id + '" ' +
+        'aria-controls="panel-' + d.id + '" aria-selected="' + (i === 0) + '"' +
+        (i ? ' tabindex="-1"' : '') + '>' + d.label + '</button>';
+    }).join(''));
+
     var btns = $$('.tab', list);
-    var panels = btns.map(function (b) { return document.getElementById(b.getAttribute('aria-controls')); });
+    var media = $('#fxMedia');
 
     function moveThumb(btn, animate) {
       var x = btn.offsetLeft - list.clientLeft, w = btn.offsetWidth;
@@ -234,12 +247,12 @@
     }
 
     function select(i, animate) {
+      var d = datos[i];
       btns.forEach(function (b, n) {
         b.setAttribute('aria-selected', n === i ? 'true' : 'false');
         b.tabIndex = n === i ? 0 : -1;
       });
-      panels.forEach(function (p, n) {
-        if (!p) return;
+      $$('.fxpanel', panels).forEach(function (p, n) {
         if (n === i) {
           p.hidden = false;
           if (hasGsap && animate && !reduced) {
@@ -248,27 +261,71 @@
         } else { p.hidden = true; }
       });
       moveThumb(btns[i], animate);
-      if (fxField) fxField.setHue(Number(btns[i].dataset.hue) || 150);
+
+      // Cada pestaña trae su propia animación; si algún día tiene un clip real
+      // en config (`video`), ese clip manda sobre la animación generada.
+      if (media) {
+        if (d.video) {
+          media.innerHTML = '<video src="' + d.video + '" muted playsinline loop autoplay></video>';
+          media.hidden = false;
+        } else {
+          media.innerHTML = ''; media.hidden = true;
+        }
+      }
+      if (fx && !d.video) fx.setTema(d.tema);
+      // El tono del módulo de efectos lo decide la pestaña activa
+      var sec = document.getElementById('efectos');
+      if (d.tono && sec) {
+        sec.dataset.tone = d.tono;
+        if (toneOwner === sec) setTone(d.tono);
+      }
     }
 
     btns.forEach(function (b, i) {
       b.addEventListener('click', function () { select(i, true); });
       b.addEventListener('keydown', function (e) {
-        var d = e.key === 'ArrowRight' ? 1 : e.key === 'ArrowLeft' ? -1 : 0;
-        if (!d) return;
+        var dir = e.key === 'ArrowRight' ? 1 : e.key === 'ArrowLeft' ? -1 : 0;
+        if (!dir) return;
         e.preventDefault();
-        var n = (i + d + btns.length) % btns.length;
+        var n = (i + dir + btns.length) % btns.length;
         btns[n].focus(); select(n, true);
       });
     });
 
     function init() { select(0, false); }
     init();
-    if (document.fonts && document.fonts.ready) document.fonts.ready.then(init);
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(function () {
+      var on = btns.filter(function (b) { return b.getAttribute('aria-selected') === 'true'; })[0] || btns[0];
+      moveThumb(on, false);
+    });
     window.addEventListener('resize', function () {
       var on = btns.filter(function (b) { return b.getAttribute('aria-selected') === 'true'; })[0] || btns[0];
       moveThumb(on, false);
     });
+  })();
+
+  /* ═══════════════════════════════════════════════ 5. TONO DE LA PÁGINA */
+  /* El fondo del sitio va tomando la tonalidad del módulo en el que estás. */
+  var toneNow = '', toneOwner = null;
+  function setTone(hex) {
+    if (!hex || hex === toneNow) return;
+    toneNow = hex;
+    document.body.style.backgroundColor = hex;
+    document.querySelector('meta[name="theme-color"]').setAttribute('content', hex);
+  }
+
+  (function tones() {
+    var secciones = $$('[data-tone]');
+    if (!('IntersectionObserver' in window) || !secciones.length) return;
+    var io = new IntersectionObserver(function (entries) {
+      // El módulo que más superficie ocupa manda sobre el tono
+      var mejor = null;
+      entries.forEach(function (e) {
+        if (e.isIntersecting && (!mejor || e.intersectionRatio > mejor.intersectionRatio)) mejor = e;
+      });
+      if (mejor) { toneOwner = mejor.target; setTone(mejor.target.dataset.tone); }
+    }, { threshold: [0.12, 0.35, 0.6], rootMargin: '-25% 0px -25% 0px' });
+    secciones.forEach(function (s) { io.observe(s); });
   })();
 
   /* ═══════════════════════════════════════════════ 6. NAV Y BARRA MÓVIL */
@@ -302,12 +359,17 @@
     gsap.registerPlugin(ScrollTrigger);
     gsap.defaults({ ease: 'power3.out', duration: .8 });
 
-    /* Parte cada [data-split] en palabras para animarlas de una en una */
+    /* Parte cada [data-split] en palabras para animarlas de una en una.
+       Si el titular va en degradado, el degradado se muda a las palabras:
+       `background-clip:text` deja de pintar cuando un hijo lleva transform,
+       y las palabras se animan justamente con transform. */
     $$('[data-split]').forEach(function (el) {
       if (el.dataset.splitDone) return;
       el.dataset.splitDone = '1';
+      var grad = el.classList.contains('grad');
+      if (grad) el.classList.remove('grad');
       el.innerHTML = el.textContent.trim().split(/\s+/).map(function (w) {
-        return '<span class="word">' + w + '</span>';
+        return '<span class="word' + (grad ? ' grad' : '') + '">' + w + '</span>';
       }).join(' ');
     });
 
@@ -324,12 +386,19 @@
         .from('[data-anim="hero"]', { autoAlpha: 0, y: 20, duration: .7 }, '-=.35')
         .from('.hero__scroll', { autoAlpha: 0, duration: .6 }, '-=.3');
 
-      /* Titulares: palabra a palabra al entrar en pantalla */
+      /* Titulares: palabra a palabra al entrar en pantalla.
+         El tween se crea DENTRO de onEnter a propósito: si se creara antes,
+         `from` escondería las palabras desde el primer momento y un titular
+         cuyo disparador no llegue a saltar se quedaría invisible. */
       $$('[data-split]').forEach(function (el) {
         if (el.classList.contains('hero__tagline')) return;
-        gsap.from(el.querySelectorAll('.word'), {
-          autoAlpha: 0, yPercent: 100, duration: .7, stagger: .045,
-          scrollTrigger: { trigger: el, start: 'top 86%', once: true },
+        ScrollTrigger.create({
+          trigger: el, start: 'top 90%', once: true,
+          onEnter: function () {
+            gsap.from(el.querySelectorAll('.word'), {
+              autoAlpha: 0, yPercent: 100, duration: .7, stagger: .045, ease: 'power3.out',
+            });
+          },
         });
       });
 
@@ -352,8 +421,13 @@
       });
 
       /* Paralaje del hero */
-      gsap.to('#heroField', {
-        yPercent: 14, ease: 'none',
+      gsap.to('.hero__scroll', {
+        autoAlpha: 0, ease: 'none',
+        scrollTrigger: { trigger: '.hero', start: 'top top', end: '35% top', scrub: true },
+      });
+
+      gsap.to('#heroMedia', {
+        yPercent: 12, scale: 1.06, ease: 'none',
         scrollTrigger: { trigger: '.hero', start: 'top top', end: 'bottom top', scrub: .6 },
       });
       gsap.to('#heroLogo', {
@@ -413,7 +487,10 @@
     if (clips.length > 1) {
       els.forEach(function (v) { v.addEventListener('ended', function () { idx = (idx + 1) % els.length; show(idx); }); });
     }
-    if (heroField) heroField.stop();
+    var poster = $('#heroPoster');
+    els[0].addEventListener('playing', function () {
+      if (poster) gsap && !reduced ? gsap.to(poster, { autoAlpha: 0, duration: .6 }) : (poster.hidden = true);
+    }, { once: true });
     show(0);
   }
 })();

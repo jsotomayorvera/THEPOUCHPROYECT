@@ -23,6 +23,11 @@
   --blush:#F1DFD4;
   --volt:#1E9E63;
 
+  /* Café: la banda de declaración */
+  --coffee:#4A3428;
+  --coffee-2:#5E4334;
+  --coffee-soft:#C9A88E;
+
   /* Semántico */
   --bg:var(--cream);
   --fg:var(--ink);
@@ -49,17 +54,28 @@
   --grain-url:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.86' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='220' height='220' filter='url(%23n)' opacity='.55'/%3E%3C/svg%3E");
 }
 
+/* Tonos por módulo. El valor real lo aplica main.js sobre el body al
+   entrar en cada sección; aquí quedan documentados y sirven de respaldo. */
 .surface-2{--bg:var(--cream-2)}
 .surface-mint{--bg:var(--mint-2)}
-.surface-sand{--bg:color-mix(in srgb, var(--sand) 42%, var(--cream))}
+.surface-sand{--bg:var(--sand)}
+.surface-sky{--bg:var(--sky)}
 
-/* Banda oscura: el verde del logo, una sola vez, como declaración */
-.surface-ink{
-  --bg:var(--ink); --fg:var(--cream);
-  --muted:color-mix(in srgb, var(--cream) 72%, transparent);
+/* Banda café: la declaración de marca, el único bloque oscuro de la página */
+.surface-coffee{
+  --bg:var(--coffee); --fg:var(--cream);
+  --muted:color-mix(in srgb, var(--cream) 74%, transparent);
   --hairline:color-mix(in srgb, var(--cream) 18%, transparent);
   --card:color-mix(in srgb, var(--cream) 8%, transparent);
-  --logo-ink:var(--cream); --logo-paper:var(--ink);
+  --logo-ink:var(--cream); --logo-paper:var(--coffee);
+  background:
+    radial-gradient(120% 80% at 50% 0%, var(--coffee-2), transparent 62%),
+    var(--coffee) !important;
+}
+.surface-coffee .eyebrow{color:var(--coffee-soft)}
+.surface-coffee .grad{
+  background:linear-gradient(104deg, var(--cream) 0%, var(--coffee-soft) 100%);
+  -webkit-background-clip:text; background-clip:text;
 }
 
 /* ------------------------------------------------------------- 2. RESET */
@@ -67,7 +83,10 @@
 html{-webkit-text-size-adjust:100%; scroll-behavior:smooth}
 @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
 body{
-  margin:0; background:var(--cream); color:var(--ink);
+  margin:0; color:var(--ink);
+  background-color:var(--cream);
+  /* El tono de la página se va tiñendo con el módulo en el que estás */
+  transition:background-color .9s cubic-bezier(.16,1,.3,1);
   font-family:var(--body); font-size:clamp(15.5px,.5vw + 14.5px,17.5px);
   line-height:1.62; -webkit-font-smoothing:antialiased; overflow-x:hidden;
 }
@@ -81,7 +100,7 @@ ul{margin:0; padding:0; list-style:none}
 
 /* --------------------------------------------------------- 3. PRIMITIVAS */
 .wrap{width:100%; max-width:var(--max); margin-inline:auto; padding-inline:var(--gutter)}
-.section{padding-block:var(--sec); background:var(--bg); color:var(--fg)}
+.section{padding-block:var(--sec); background:transparent; color:var(--fg)}
 main section[id]{scroll-margin-top:calc(var(--nav-h) + 14px)}
 
 .eyebrow{
@@ -93,6 +112,10 @@ main section[id]{scroll-margin-top:calc(var(--nav-h) + 14px)}
 .surface-ink .eyebrow{color:var(--sage)}
 .eyebrow::before{content:''; width:20px; height:2px; background:currentColor; flex:none; opacity:.75}
 .eyebrow--center{justify-content:center}
+/* Centrado de verdad: el guion del antetítulo descuadra el bloque centrado */
+.section-head.center .eyebrow,
+.efectos__inner .eyebrow,
+.cta-final .eyebrow{justify-content:center}
 
 .display{
   font-family:var(--display); font-weight:800;
@@ -212,9 +235,8 @@ main section[id]{scroll-margin-top:calc(var(--nav-h) + 14px)}
   min-height:100svh; display:grid; place-items:center;
   background:var(--ink);
 }
-.hero__canvas,.hero__media{position:absolute; inset:0; width:100%; height:100%}
-.hero__canvas{z-index:-3}
-.hero__media{z-index:-2}
+.hero__media{position:absolute; inset:0; width:100%; height:100%; z-index:-2}
+.hero__media img.hero__poster{width:100%; height:100%; object-fit:cover}
 .hero__media video{width:100%; height:100%; object-fit:cover; opacity:0; transition:opacity 1.2s linear}
 .hero__media video.is-on{opacity:1}
 .hero__veil{
@@ -295,7 +317,7 @@ main section[id]{scroll-margin-top:calc(var(--nav-h) + 14px)}
   padding:7px 14px; border-radius:999px;
 }
 
-.buy{display:grid; gap:20px}
+.buy{display:grid; gap:20px; align-content:start}
 .seals{display:flex; flex-wrap:wrap; gap:8px}
 .seal{
   font-family:var(--label); font-weight:500; font-size:12.5px;
@@ -356,6 +378,7 @@ main section[id]{scroll-margin-top:calc(var(--nav-h) + 14px)}
 .ing{
   background:var(--card); border:1px solid var(--hairline); border-radius:var(--r-lg);
   padding:clamp(22px,2.6vw,32px); display:grid; gap:11px; align-content:start;
+  height:100%;
 }
 .ing__rol{font-family:var(--label); font-weight:600; font-size:11.5px; letter-spacing:.24em; text-transform:uppercase; color:var(--ink-3)}
 .ing h3{font-family:var(--display); font-weight:800; font-size:clamp(21px,2.3vw,28px); text-transform:uppercase; line-height:.95}
@@ -367,7 +390,7 @@ main section[id]{scroll-margin-top:calc(var(--nav-h) + 14px)}
 .efectos{position:relative; isolation:isolate; overflow:hidden; --bg:transparent; padding-block:clamp(70px,9vw,126px)}
 .efectos__canvas{position:absolute; inset:0; width:100%; height:100%; z-index:-2}
 .efectos__veil{position:absolute; inset:0; z-index:-1;
-  background:radial-gradient(58% 46% at 50% 52%, color-mix(in srgb, var(--cream) 92%, transparent), color-mix(in srgb, var(--cream) 58%, transparent) 62%, transparent 88%)}
+  background:radial-gradient(56% 44% at 50% 52%, color-mix(in srgb, var(--cream-2) 82%, transparent), transparent 82%)}
 .efectos__inner{position:relative; z-index:2; display:grid; justify-items:center; text-align:center; gap:clamp(18px,3vw,32px)}
 .efectos__title{max-width:14ch}
 .efectos__glyph{width:clamp(70px,7.5vw,102px); height:auto; color:var(--ink-2); opacity:.55}
@@ -494,7 +517,9 @@ main section[id]{scroll-margin-top:calc(var(--nav-h) + 14px)}
 @media (min-width:520px){.grid-2{grid-template-columns:1fr 1fr}}
 .promo{display:flex; gap:9px; align-items:flex-start}
 .promo .field{flex:1}
-.promo .btn{padding:13px 20px; font-size:13px; white-space:nowrap; margin-top:25px}
+.promo{align-items:end}
+.promo .btn{padding:13px 20px; font-size:13px; white-space:nowrap}
+.promo .field .err{display:none}
 .promo-ok{color:var(--volt); font-size:13px; font-weight:600}
 
 /* --------------------------------------------------------------- 12. FAQ */
@@ -562,3 +587,7 @@ main section[id]{scroll-margin-top:calc(var(--nav-h) + 14px)}
 }
 
 .visually-hidden{position:absolute!important; width:1px; height:1px; margin:-1px; padding:0; overflow:hidden; clip:rect(0 0 0 0); white-space:nowrap; border:0}
+
+/* Clip real por pestaña (opcional): si existe, tapa la animación generada */
+.efectos__media{position:absolute; inset:0; z-index:-2}
+.efectos__media video{width:100%; height:100%; object-fit:cover; opacity:.55}

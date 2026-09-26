@@ -34,7 +34,9 @@ Abre **`assets/js/config.js`**. Todo lo editable está ahí y en un solo lugar:
 | `productos` | Catálogo. `stage: 'live'` se vende hoy; `stage: 'soon'` sale como "próximamente" |
 | `productos[].opciones` | Presentaciones y precios ($12 la lata, 2×$20) |
 | `heroVideos` | Los clips del banner principal (ver más abajo) |
-| `productos[].foto` | Ruta de la foto del producto. Si el archivo no existe, la web dibuja una lata de respaldo y no se rompe nada |
+| `producto.foto` | Ruta de la foto del producto. Si el archivo no existe, la web dibuja una lata de respaldo y no se rompe nada |
+| `efectos` | Las cuatro pestañas del módulo de efectos. Cada una trae su animación (`tema`) y su tono de página (`tono`). Si le pones `video`, ese clip sustituye a la animación |
+| `envios`, `descuentos`, `packs` | Tarifas, códigos y precios del pedido |
 
 No hace falta tocar HTML para cambiar precios, nombres ni textos del producto.
 
@@ -46,7 +48,7 @@ assets/css/styles.css      Sistema de diseño y todos los estilos
 assets/css/fonts.css       Archivo · Barlow (autoalojadas, sin Google Fonts)
 assets/js/config.js        ⚙️ Configuración: número, precios, catálogo
 assets/js/checkout.js      Construcción del pedido y del enlace de WhatsApp
-assets/js/field.js         Fondo iridiscente animado (canvas, sin librerías)
+assets/js/fx.js            Animaciones del módulo de efectos (canvas, una por pestaña)
 assets/js/main.js          Comportamiento y animación de la página
 assets/js/vendor/          GSAP + ScrollTrigger alojados en el proyecto
 assets/img/                Logo vectorizado, versiones con transparencia e iconos

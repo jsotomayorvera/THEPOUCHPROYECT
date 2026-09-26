@@ -5,6 +5,11 @@ grande al centro sin caja detrás, la barra de navegación encima y el vídeo a 
 completa por debajo. Mientras no haya clips muestra un campo animado en verde profundo,
 así que el sitio nunca se ve roto y el logo siempre se lee.
 
+> ⚠️ El clip que está puesto ahora (`hero.mp4`) viene de un teaser de otra marca.
+> Está recortado para dejar fuera su logo y su fecha de lanzamiento, que iban al
+> centro del encuadre, pero **sigue sin ser material tuyo**: sustitúyelo por
+> grabación propia o con licencia antes de hacer publicidad con la página.
+
 ## Cómo añadir tus vídeos
 
 1. Deja los archivos aquí, en `assets/video/`, con nombres tipo `hero-01.mp4`.
