@@ -20,8 +20,8 @@
 <link rel="icon" href="assets/img/icon-32.png" sizes="32x32">
 <link rel="apple-touch-icon" href="assets/img/icon-180.png">
 
-<link rel="preload" href="assets/fonts/archivo-500-latin.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="preload" href="assets/fonts/barlow-400-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="assets/fonts/fraunces-normal-600-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="assets/fonts/instrument-sans-normal-400-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="assets/css/fonts.css">
 <link rel="stylesheet" href="assets/css/styles.css">
 
@@ -56,15 +56,20 @@
 <!-- ══════════════════════════════════════════════════════ HERO -->
 <section class="hero" id="hero" aria-label="The Pouch Project" data-tone="#4A3428">
   <div class="hero__media" id="heroMedia" aria-hidden="true">
-    <img class="hero__poster" id="heroPoster" src="assets/img/poster-hero.jpg" alt=""
+    <img class="hero__poster" src="assets/img/poster-hero.jpg" alt=""
          width="1920" height="1080" fetchpriority="high">
+    <video id="heroVideo" poster="assets/img/poster-hero.jpg"
+           autoplay muted loop playsinline preload="auto" disablepictureinpicture>
+      <source src="assets/video/hero.webm" type="video/webm">
+      <source src="assets/video/hero.mp4" type="video/mp4">
+    </video>
   </div>
   <div class="hero__veil" aria-hidden="true"></div>
 
   <div class="wrap hero__inner">
     <img class="hero__logo" id="heroLogo" src="assets/img/logo-cream.png"
          alt="The Pouch Project" width="1024" height="784" fetchpriority="high">
-    <p class="hero__tagline" data-split>Rinde sin límites. Foco limpio en un pouch, sin azúcar y sin tabaco.</p>
+    <p class="hero__tagline" data-split>Rinde <em>sin límites</em>. Foco limpio en un pouch, sin azúcar y sin tabaco.</p>
     <div class="hero__actions" data-anim="hero">
       <a class="btn btn--cream" href="#pedido">Pedir ahora</a>
       <a class="btn btn--ghost" href="#producto" style="--btn-fg:var(--cream)">Ver el producto</a>
@@ -102,7 +107,7 @@
     <div class="section-head split">
       <div>
         <p class="eyebrow" data-anim="up">El producto</p>
-        <h2 class="display h2 grad" data-split>Un pouch, una dosis</h2>
+        <h2 class="display h2" data-split>Un pouch, <em>una dosis</em></h2>
       </div>
       <p class="lede" data-anim="up">Por ahora traemos una sola referencia y la traemos bien.
         Eliges el pack aquí y terminas el pedido más abajo.</p>
@@ -161,7 +166,7 @@
   <div class="grain" aria-hidden="true"></div>
 
   <div class="wrap efectos__inner">
-    <h2 class="display h2 grad efectos__title" id="efectosTitle" data-split>Efectos inmediatos</h2>
+    <h2 class="display h2 efectos__title" id="efectosTitle" data-split>Efectos <em>inmediatos</em></h2>
 
     <svg class="efectos__glyph" viewBox="0 0 120 90" aria-hidden="true">
       <g fill="none" stroke="currentColor" stroke-width="1.1">
@@ -186,7 +191,7 @@
     <div class="section-head split">
       <div>
         <p class="eyebrow" data-anim="up">Qué lleva dentro</p>
-        <h2 class="display h2 grad" data-split>Tres activos, cero ruido</h2>
+        <h2 class="display h2" data-split>Tres activos, <em>cero ruido</em></h2>
       </div>
       <p class="lede" data-anim="up">Sin cafeína, sin azúcar y sin edulcorantes artificiales.
         Lo que hace el trabajo son estos tres.</p>
@@ -202,7 +207,7 @@
     <div class="section-head split">
       <div>
         <p class="eyebrow" data-anim="up">Se aprende en 20 segundos</p>
-        <h2 class="display h2 grad" data-split>Cómo se usa</h2>
+        <h2 class="display h2" data-split>Cómo <em>se usa</em></h2>
       </div>
       <p class="lede" data-anim="up">No se mastica, no se traga y no se fuma. Se coloca y se olvida.</p>
     </div>
@@ -240,7 +245,7 @@
     <div class="section-head split">
       <div>
         <p class="eyebrow" data-anim="up">Elige tu ciudad</p>
-        <h2 class="display h2 grad" data-split>Haz tu pedido</h2>
+        <h2 class="display h2" data-split>Haz <em>tu pedido</em></h2>
       </div>
       <p class="lede" data-anim="up">Coordinamos todo por WhatsApp. Confirmamos disponibilidad,
         pago y hora de entrega antes de que pagues nada.</p>
@@ -328,7 +333,7 @@
     <div class="section-head split">
       <div>
         <p class="eyebrow" data-anim="up">Lo que siempre preguntan</p>
-        <h2 class="display h2 grad" data-split>Preguntas</h2>
+        <h2 class="display h2" data-split>Las <em>preguntas</em></h2>
       </div>
       <p class="lede" data-anim="up">Y si falta alguna, escríbenos por WhatsApp: contestamos en persona, no con bot.</p>
     </div>

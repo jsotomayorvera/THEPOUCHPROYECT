@@ -45,7 +45,7 @@ No hace falta tocar HTML para cambiar precios, nombres ni textos del producto.
 ```
 index.html                 La página completa
 assets/css/styles.css      Sistema de diseño y todos los estilos
-assets/css/fonts.css       Archivo · Barlow (autoalojadas, sin Google Fonts)
+assets/css/fonts.css       Fraunces · Instrument Sans (autoalojadas, sin Google Fonts)
 assets/js/config.js        ⚙️ Configuración: número, precios, catálogo
 assets/js/checkout.js      Construcción del pedido y del enlace de WhatsApp
 assets/js/fx.js            Animaciones del módulo de efectos (canvas, una por pestaña)

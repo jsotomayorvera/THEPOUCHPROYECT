@@ -10,6 +10,11 @@ así que el sitio nunca se ve roto y el logo siempre se lee.
 > centro del encuadre, pero **sigue sin ser material tuyo**: sustitúyelo por
 > grabación propia o con licencia antes de hacer publicidad con la página.
 
+El hero sirve dos formatos del mismo clip: `hero.webm` (VP9) primero y
+`hero.mp4` (H.264) de respaldo, más `poster-hero.jpg` siempre por debajo. Si
+un navegador no puede con ninguno de los dos, se queda el fotograma fijo en
+vez de un color plano.
+
 ## Cómo añadir tus vídeos
 
 1. Deja los archivos aquí, en `assets/video/`, con nombres tipo `hero-01.mp4`.

@@ -359,19 +359,47 @@
     gsap.registerPlugin(ScrollTrigger);
     gsap.defaults({ ease: 'power3.out', duration: .8 });
 
-    /* Parte cada [data-split] en palabras para animarlas de una en una.
-       Si el titular va en degradado, el degradado se muda a las palabras:
-       `background-clip:text` deja de pintar cuando un hijo lleva transform,
-       y las palabras se animan justamente con transform. */
-    $$('[data-split]').forEach(function (el) {
+    /* Parte cada [data-split] en palabras, respetando los <em> de acento:
+       cada <em> viaja entero dentro de su palabra para no perder la cursiva
+       ni el color. */
+    function partir(el) {
       if (el.dataset.splitDone) return;
       el.dataset.splitDone = '1';
-      var grad = el.classList.contains('grad');
-      if (grad) el.classList.remove('grad');
-      el.innerHTML = el.textContent.trim().split(/\s+/).map(function (w) {
-        return '<span class="word' + (grad ? ' grad' : '') + '">' + w + '</span>';
-      }).join(' ');
-    });
+      var salida = document.createDocumentFragment();
+
+      var ultima = null;
+
+      function palabra(contenido) {
+        var sp = document.createElement('span');
+        sp.className = 'word';
+        if (typeof contenido === 'string') sp.textContent = contenido;
+        else sp.appendChild(contenido);
+        salida.appendChild(sp);
+        salida.appendChild(document.createTextNode(' '));
+        ultima = sp;
+        return sp;
+      }
+
+      Array.prototype.slice.call(el.childNodes).forEach(function (nodo) {
+        if (nodo.nodeType === 3) {
+          var texto = nodo.textContent;
+          // El signo que sigue a un <em> se pega a esa palabra: si no,
+          // quedaría un espacio suelto antes del punto o la coma.
+          var pegado = texto.match(/^([.,;:!?)]+)/);
+          if (pegado && ultima) {
+            ultima.appendChild(document.createTextNode(pegado[1]));
+            texto = texto.slice(pegado[1].length);
+          }
+          texto.split(/\s+/).forEach(function (w) { if (w) palabra(w); });
+        } else if (nodo.nodeType === 1) {
+          palabra(nodo.cloneNode(true));
+        }
+      });
+
+      el.innerHTML = '';
+      el.appendChild(salida);
+    }
+    $$('[data-split]').forEach(partir);
 
     gsap.matchMedia().add({
       motion: '(prefers-reduced-motion: no-preference)',
@@ -431,7 +459,7 @@
         scrollTrigger: { trigger: '.hero', start: 'top top', end: 'bottom top', scrub: .6 },
       });
       gsap.to('#heroLogo', {
-        yPercent: -18, autoAlpha: .2, ease: 'none',
+        yPercent: -14, autoAlpha: .35, ease: 'none',
         scrollTrigger: { trigger: '.hero', start: 'top top', end: 'bottom top', scrub: .5 },
       });
 
@@ -464,33 +492,45 @@
   }
 
   /* ═══════════════════════════════════════════════ 8. VÍDEO DEL HERO */
-  var media = $('#heroMedia');
-  var clips = (cfg.heroVideos || []).filter(Boolean);
-  if (media && clips.length && !reduced) {
-    var els = clips.map(function (c, i) {
+  /* El clip principal vive en el HTML, así que se ve aunque este archivo
+     falle. Aquí solo se encadenan clips adicionales si los hay en config. */
+  (function heroVideo() {
+    var media = $('#heroMedia'), principal = $('#heroVideo');
+    if (!media || !principal) return;
+
+    if (reduced) { principal.pause(); return; }
+
+    // El vídeo solo se revela cuando de verdad está pintando fotogramas;
+    // hasta entonces manda el póster, así que el hero nunca se ve plano.
+    principal.addEventListener('playing', function () { principal.classList.add('is-on'); });
+    principal.addEventListener('error', function () { principal.classList.remove('is-on'); });
+
+    // Algunos navegadores ignoran el autoplay del atributo hasta que se pide
+    var intento = principal.play();
+    if (intento && intento.catch) intento.catch(function () {});
+
+    var extra = (cfg.heroVideos || []).slice(1);
+    if (!extra.length) return;
+
+    principal.loop = false;
+    var todos = [principal].concat(extra.map(function (c) {
       var v = document.createElement('video');
       v.src = c.src;
       if (c.poster) v.poster = c.poster;
-      v.muted = true; v.playsInline = true; v.loop = clips.length === 1;
+      v.muted = true; v.playsInline = true; v.preload = 'metadata';
       v.setAttribute('muted', ''); v.setAttribute('playsinline', '');
-      v.preload = i === 0 ? 'auto' : 'metadata';
       media.appendChild(v);
       return v;
+    }));
+    var i = 0;
+    todos.forEach(function (v) {
+      v.addEventListener('ended', function () {
+        i = (i + 1) % todos.length;
+        todos.forEach(function (x, n) { x.classList.toggle('is-on', n === i); });
+        todos[i].currentTime = 0;
+        var p = todos[i].play();
+        if (p && p.catch) p.catch(function () {});
+      });
     });
-    var idx = 0;
-    function show(i) {
-      els.forEach(function (v, n) { v.classList.toggle('is-on', n === i); });
-      els[i].currentTime = 0;
-      var pr = els[i].play();
-      if (pr && pr.catch) pr.catch(function () {});
-    }
-    if (clips.length > 1) {
-      els.forEach(function (v) { v.addEventListener('ended', function () { idx = (idx + 1) % els.length; show(idx); }); });
-    }
-    var poster = $('#heroPoster');
-    els[0].addEventListener('playing', function () {
-      if (poster) gsap && !reduced ? gsap.to(poster, { autoAlpha: 0, duration: .6 }) : (poster.hidden = true);
-    }, { once: true });
-    show(0);
-  }
+  })();
 })();

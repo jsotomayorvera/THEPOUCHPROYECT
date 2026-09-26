@@ -38,9 +38,12 @@
   --logo-ink:var(--ink);
   --logo-paper:var(--cream);
 
-  --display:'Archivo','Helvetica Neue',Arial,sans-serif;
-  --label:'Archivo','Helvetica Neue',Arial,sans-serif;
-  --body:'Barlow',system-ui,-apple-system,'Segoe UI',sans-serif;
+  --display:'Fraunces',Georgia,'Times New Roman',serif;
+  --label:'Instrument Sans',system-ui,-apple-system,'Segoe UI',sans-serif;
+  --body:'Instrument Sans',system-ui,-apple-system,'Segoe UI',sans-serif;
+
+  /* Acento cálido: la palabra que se destaca en cada titular */
+  --accent:#BE7B57;
 
   --gutter:clamp(16px,5vw,64px);
   --max:1240px;
@@ -54,10 +57,10 @@
   --grain-url:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.86' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='220' height='220' filter='url(%23n)' opacity='.55'/%3E%3C/svg%3E");
 }
 
-/* Tonos por módulo. El valor real lo aplica main.js sobre el body al
-   entrar en cada sección; aquí quedan documentados y sirven de respaldo. */
+/* Tonos por módulo. Cada sección pinta el suyo y, además, main.js tiñe el
+   body con el mismo valor para que el fondo acompañe al scroll. */
 .surface-2{--bg:var(--cream-2)}
-.surface-mint{--bg:var(--mint-2)}
+.surface-mint{--bg:#DCEFE2}
 .surface-sand{--bg:var(--sand)}
 .surface-sky{--bg:var(--sky)}
 
@@ -100,13 +103,31 @@ ul{margin:0; padding:0; list-style:none}
 
 /* --------------------------------------------------------- 3. PRIMITIVAS */
 .wrap{width:100%; max-width:var(--max); margin-inline:auto; padding-inline:var(--gutter)}
-.section{padding-block:var(--sec); background:transparent; color:var(--fg)}
+.section{
+  position:relative; z-index:1;
+  padding-block:var(--sec);
+  background:var(--bg); color:var(--fg);
+}
+/* Cada módulo monta sobre el anterior con la esquina redondeada:
+   ahí es donde se siente el corte entre bloques. */
+.section + .section,
+.valuebar + .section,
+.hero + .section{
+  margin-top:clamp(-72px,-6vw,-40px);
+  border-radius:clamp(26px,3.4vw,46px) clamp(26px,3.4vw,46px) 0 0;
+  box-shadow:0 -22px 46px -30px rgba(31,20,12,.38);
+}
+.section::before{
+  content:''; position:absolute; left:0; right:0; top:0; height:1px;
+  background:linear-gradient(90deg, transparent, color-mix(in srgb, var(--fg) 16%, transparent), transparent);
+  border-radius:inherit;
+}
 main section[id]{scroll-margin-top:calc(var(--nav-h) + 14px)}
 
 .eyebrow{
-  font-family:var(--label); font-weight:600;
-  font-size:clamp(11.5px,.25vw + 11px,13px);
-  letter-spacing:.22em; text-transform:uppercase; color:var(--ink-3);
+  font-family:var(--label); font-weight:500;
+  font-size:clamp(11.5px,.25vw + 11px,12.5px);
+  letter-spacing:.2em; text-transform:uppercase; color:var(--ink-3);
   display:flex; align-items:center; gap:10px;
 }
 .surface-ink .eyebrow{color:var(--sage)}
@@ -118,12 +139,21 @@ main section[id]{scroll-margin-top:calc(var(--nav-h) + 14px)}
 .cta-final .eyebrow{justify-content:center}
 
 .display{
-  font-family:var(--display); font-weight:800;
-  line-height:.92; letter-spacing:-.028em; text-transform:uppercase; text-wrap:balance;
+  font-family:var(--display); font-weight:700;
+  font-variation-settings:'SOFT' 28, 'WONK' 1;
+  line-height:1.02; letter-spacing:-.02em; text-wrap:balance;
 }
-.h1{font-size:clamp(40px,8.6vw,108px); letter-spacing:-.035em}
-.h2{font-size:clamp(30px,5vw,64px)}
-.h3{font-size:clamp(19px,2.1vw,29px); letter-spacing:-.02em}
+.h1{font-size:clamp(42px,8vw,104px); line-height:.98; letter-spacing:-.032em}
+.h2{font-size:clamp(33px,5.2vw,68px)}
+.h3{font-size:clamp(21px,2.3vw,31px); letter-spacing:-.018em}
+
+/* La palabra destacada: cursiva y color cálido. De aquí sale el carácter. */
+.display em{
+  font-style:italic; font-weight:600; font-variation-settings:'SOFT' 60, 'WONK' 1;
+  color:var(--accent); padding-right:.06em;
+}
+.surface-coffee .display em{color:var(--coffee-soft)}
+.hero__tagline em{font-style:italic; color:var(--mint)}
 
 .grad{
   background:linear-gradient(104deg, var(--ink) 0%, var(--ink-2) 42%, var(--ink-3) 76%, var(--volt) 100%);
@@ -236,8 +266,16 @@ main section[id]{scroll-margin-top:calc(var(--nav-h) + 14px)}
   background:var(--ink);
 }
 .hero__media{position:absolute; inset:0; width:100%; height:100%; z-index:-2}
-.hero__media img.hero__poster{width:100%; height:100%; object-fit:cover}
-.hero__media video{width:100%; height:100%; object-fit:cover; opacity:0; transition:opacity 1.2s linear}
+/* El póster se queda siempre por debajo: si el navegador no puede con el
+   vídeo, el hero enseña el fotograma en vez de un color plano. */
+.hero__media .hero__poster,
+.hero__media video{position:absolute; inset:0; width:100%; height:100%; object-fit:cover}
+.hero__media .hero__poster{z-index:0}
+.hero__media video{z-index:1}
+.hero__media video{
+  width:100%; height:100%; object-fit:cover;
+  opacity:0; transition:opacity 1.1s linear;
+}
 .hero__media video.is-on{opacity:1}
 .hero__veil{
   position:absolute; inset:0; z-index:-1;
@@ -279,11 +317,12 @@ main section[id]{scroll-margin-top:calc(var(--nav-h) + 14px)}
 .statement p{max-width:46ch; color:var(--muted); font-size:clamp(16px,.6vw + 15px,19px)}
 
 .valuebar{
-  background:var(--ink); color:var(--cream); padding-block:13px;
-  font-family:var(--display); font-weight:800; font-size:clamp(16px,2.1vw,26px);
-  text-transform:uppercase; letter-spacing:-.01em;
+  position:relative; z-index:3;
+  background:var(--ink); color:var(--cream); padding-block:15px;
+  font-family:var(--label); font-weight:500; font-size:clamp(12px,1vw,14px);
+  text-transform:uppercase; letter-spacing:.22em;
 }
-.valuebar .sep{color:var(--sage)}
+.valuebar .sep{color:var(--accent)}
 
 /* ------------------------------------------------------------ 7. PACKS */
 .product{display:grid; gap:clamp(26px,4vw,54px)}
@@ -308,7 +347,7 @@ main section[id]{scroll-margin-top:calc(var(--nav-h) + 14px)}
   transition:transform .6s var(--ease-out);
 }
 .shot:hover .shot__can{transform:rotate(0) scale(1.03)}
-.shot__can .mk{font-family:var(--display); font-weight:800; font-size:clamp(22px,3.4vw,38px); text-transform:uppercase; line-height:.9}
+.shot__can .mk{font-family:var(--display); font-weight:700; font-size:clamp(22px,3.4vw,36px); line-height:1; letter-spacing:-.02em}
 .shot__can .sm{font-family:var(--label); font-weight:500; letter-spacing:.24em; font-size:11px; text-transform:uppercase; opacity:.72}
 .shot__badge{
   position:absolute; top:18px; left:18px; z-index:2;
@@ -352,7 +391,7 @@ main section[id]{scroll-margin-top:calc(var(--nav-h) + 14px)}
 .pack__txt{display:grid; gap:2px; flex:1}
 .pack__txt b{font-family:var(--label); font-weight:600; font-size:16px; letter-spacing:.04em; text-transform:uppercase}
 .pack__txt small{color:var(--muted); font-size:13.5px}
-.pack__price{font-family:var(--display); font-weight:800; font-size:clamp(23px,2.7vw,30px); font-variant-numeric:tabular-nums}
+.pack__price{font-family:var(--display); font-weight:700; font-size:clamp(23px,2.7vw,30px); font-variant-numeric:tabular-nums}
 .pack__flag{
   position:absolute; top:-11px; right:16px; background:var(--volt); color:#04261A;
   font-family:var(--label); font-weight:600; font-size:11px; letter-spacing:.14em;
@@ -362,7 +401,7 @@ main section[id]{scroll-margin-top:calc(var(--nav-h) + 14px)}
 .qty{display:flex; align-items:center; gap:4px; border:2px solid var(--hairline); border-radius:999px; padding:5px; width:max-content; background:var(--card)}
 .qty button{width:38px; height:38px; border-radius:50%; border:0; background:transparent; cursor:pointer; font-size:21px; line-height:1; display:grid; place-items:center; transition:background .2s linear}
 .qty button:hover{background:var(--hairline)}
-.qty output{min-width:42px; text-align:center; font-family:var(--display); font-weight:800; font-size:22px; font-variant-numeric:tabular-nums}
+.qty output{min-width:42px; text-align:center; font-family:var(--display); font-weight:700; font-size:22px; font-variant-numeric:tabular-nums}
 
 /* ------------------------------------------------------- 8. INGREDIENTES */
 .rail{
@@ -381,7 +420,7 @@ main section[id]{scroll-margin-top:calc(var(--nav-h) + 14px)}
   height:100%;
 }
 .ing__rol{font-family:var(--label); font-weight:600; font-size:11.5px; letter-spacing:.24em; text-transform:uppercase; color:var(--ink-3)}
-.ing h3{font-family:var(--display); font-weight:800; font-size:clamp(21px,2.3vw,28px); text-transform:uppercase; line-height:.95}
+.ing h3{font-family:var(--display); font-weight:700; font-size:clamp(22px,2.4vw,29px); line-height:1.04; letter-spacing:-.02em}
 .ing > p:not([class]){color:var(--muted); font-size:15px}
 .rail__hint{margin-top:12px; font-size:13px; color:var(--muted)}
 @media (min-width:980px){.rail__hint{display:none}}
@@ -435,10 +474,11 @@ main section[id]{scroll-margin-top:calc(var(--nav-h) + 14px)}
 .step{background:var(--card); padding:clamp(24px,3vw,38px); display:grid; gap:11px; align-content:start; counter-increment:s}
 .step::before{
   content:counter(s,decimal-leading-zero);
-  font-family:var(--display); font-weight:800; font-size:clamp(38px,5.2vw,64px); line-height:.8;
-  color:color-mix(in srgb, var(--ink) 18%, transparent);
+  font-family:var(--display); font-weight:600; font-style:italic;
+  font-size:clamp(38px,5.2vw,62px); line-height:.9;
+  color:color-mix(in srgb, var(--accent) 66%, transparent);
 }
-.step h3{font-family:var(--display); font-weight:800; font-size:clamp(20px,2.2vw,27px); text-transform:uppercase; line-height:.98}
+.step h3{font-family:var(--display); font-weight:700; font-size:clamp(21px,2.3vw,28px); line-height:1.05; letter-spacing:-.018em}
 .step > p:not([class]){color:var(--muted); font-size:15.5px}
 
 .care{border:1px solid var(--hairline); border-radius:var(--r-lg); padding:clamp(22px,3vw,34px); display:grid; gap:11px; background:var(--card)}
@@ -464,7 +504,7 @@ main section[id]{scroll-margin-top:calc(var(--nav-h) + 14px)}
 .city__txt{display:grid; gap:1px; flex:1}
 .city__txt b{font-family:var(--label); font-weight:600; font-size:15.5px}
 .city__txt small{color:var(--muted); font-size:13px}
-.city__price{font-family:var(--display); font-weight:800; font-size:20px; font-variant-numeric:tabular-nums; color:var(--ink)}
+.city__price{font-family:var(--display); font-weight:700; font-size:20px; font-variant-numeric:tabular-nums; color:var(--ink)}
 .city__price.free{font-size:13.5px; letter-spacing:.14em; text-transform:uppercase; color:var(--volt)}
 
 .ship-note{
@@ -492,7 +532,7 @@ main section[id]{scroll-margin-top:calc(var(--nav-h) + 14px)}
 .sumrow span:last-child{font-variant-numeric:tabular-nums}
 .sumrow--total{
   border-top:1px solid var(--hairline); padding-top:10px; margin-top:2px;
-  font-family:var(--display); font-weight:800; font-size:23px; text-transform:uppercase;
+  font-family:var(--display); font-weight:700; font-size:24px;
 }
 .sumrow--save{color:var(--volt)}
 
@@ -527,8 +567,8 @@ main section[id]{scroll-margin-top:calc(var(--nav-h) + 14px)}
 .faq details{border-bottom:1px solid var(--hairline)}
 .faq summary{
   cursor:pointer; list-style:none; padding:20px 44px 20px 0; position:relative;
-  font-family:var(--label); font-weight:600; font-size:clamp(16px,1.4vw,19px);
-  letter-spacing:.02em; text-transform:uppercase;
+  font-family:var(--display); font-weight:600; font-size:clamp(17px,1.5vw,21px);
+  letter-spacing:-.012em;
 }
 .faq summary::-webkit-details-marker{display:none}
 .faq summary::after,.faq summary::before{
@@ -573,7 +613,7 @@ main section[id]{scroll-margin-top:calc(var(--nav-h) + 14px)}
 @media (min-width:720px){.buybar{display:none}}
 .buybar__price{display:grid; line-height:1.15}
 .buybar__price small{font-family:var(--label); font-weight:500; font-size:11.5px; letter-spacing:.14em; text-transform:uppercase; color:var(--ink-3)}
-.buybar__price b{font-family:var(--display); font-weight:800; font-size:23px; font-variant-numeric:tabular-nums}
+.buybar__price b{font-family:var(--display); font-weight:700; font-size:23px; font-variant-numeric:tabular-nums}
 .buybar .btn{flex:1; padding:13px 16px; font-size:14px}
 
 /* -------------------------------------------------------- 15. MOVIMIENTO */

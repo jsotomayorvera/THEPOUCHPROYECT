@@ -28,7 +28,9 @@ Alternativas de apoyo, para copys y piezas secundarias:
 | Menta | `#BEE7D1` | Fondos dinámicos |
 | Hielo | `#CBE2F1` | Fondos dinámicos (enlaza con el azul de la lata) |
 | Arena | `#EADCBC` | Fondos dinámicos |
-| Volt | `#00B862` | Señales y cierre del degradado de titulares |
+| Volt | `#1E9E63` | Señales: envío gratis, foco de teclado |
+| Acento arcilla | `#BE7B57` | La palabra en cursiva de cada titular y los números de paso |
+| Café | `#4A3428` | La banda de declaración de marca |
 
 Reglas:
 
@@ -41,12 +43,14 @@ Reglas:
 
 ## Tipografía
 
-Se eligió por parecido con la referencia de ULTRA: una grotesca ancha y pesada, no una
-condensada tipo Anton (que era la recomendación del plan original).
+Serif con carácter para titular, grotesca limpia para leer. Se eligió así
+después de descartar una grotesca pesada, que resultaba demasiado mecánica.
 
-- **Archivo 800** — titulares. Mayúsculas, interlineado 0.92, `letter-spacing` -0.028em.
-- **Archivo 500/600** — etiquetas, navegación, botones. Mayúsculas y `letter-spacing` amplio.
-- **Barlow 400** — texto corrido.
+- **Fraunces 700** — titulares, en caja baja. Ejes `SOFT 28` y `WONK 1`.
+- **Fraunces 600 cursiva** — la palabra destacada de cada titular, en color
+  acento. Es el gesto que le da vida a la página: un titular sin su cursiva
+  se queda plano.
+- **Instrument Sans 400/500** — texto corrido, etiquetas y botones.
 
 Ambas están autoalojadas en `assets/fonts/`, no dependen de Google Fonts.
 
