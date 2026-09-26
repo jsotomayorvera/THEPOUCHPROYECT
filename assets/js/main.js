@@ -39,12 +39,12 @@
       '<div class="card__media">' +
         '<img src="' + v.foto + '" alt="' + (live ? v.titulo : '') + '" loading="lazy" width="1100" height="1100">' +
         (live ? '' : '<p class="card__flag">Próximamente</p>') +
-      '</div>' +
-      '<div class="card__bar">' +
-        '<div class="card__name"><span>' + v.sabor + '</span><b>' + v.titulo + '</b></div>' +
-        (live
-          ? '<a class="btn" href="#pedido">Pedir</a>'
-          : '<a class="btn btn--ghost" data-wa="aviso" href="#">Avísame</a>') +
+        '<div class="card__bar">' +
+          '<div class="card__name"><span>' + v.sabor + '</span><b>' + v.titulo + '</b></div>' +
+          (live
+            ? '<a class="btn" href="#pedido">Pedir</a>'
+            : '<a class="btn btn--ghost" data-wa="aviso" href="#">Avísame</a>') +
+        '</div>' +
       '</div></article>';
   }).join('');
 
@@ -53,11 +53,27 @@
     return '<option value="' + p.id + '"' + (p.id === order.packId ? ' selected' : '') + '>' +
       p.titulo + ' — ' + C.money(p.precio) + '</option>';
   }).join('');
-  $('#f-ciudad').innerHTML = cfg.envios.ciudades.map(function (c) {
-    var extra = c.precio === 0 ? 'sin costo' : C.money(c.precio);
-    return '<option value="' + c.id + '"' + (c.id === order.ciudadId ? ' selected' : '') + '>' +
-      c.nombre + ' — ' + extra + '</option>';
+  $('#f-cantidad').innerHTML = [1,2,3,4,5,6,8,10].map(function (n) {
+    return '<option value="' + n + '"' + (n === order.cantidad ? ' selected' : '') + '>' + n + '</option>';
   }).join('');
+  $('#f-ciudad').innerHTML = cfg.envios.ciudades.map(function (c) {
+    return '<option value="' + c.id + '"' + (c.id === order.ciudadId ? ' selected' : '') + '>' +
+      c.nombre + '</option>';
+  }).join('');
+
+  $('#cities').innerHTML = cfg.envios.ciudades.map(function (c) {
+    var precio = c.precio === 0
+      ? '<span class="city__price free">Gratis</span>'
+      : '<span class="city__price">' + C.money(c.precio) + '</span>';
+    return '<label class="city">' +
+      '<input type="radio" name="ciudad" value="' + c.id + '"' + (c.id === order.ciudadId ? ' checked' : '') + '>' +
+      '<svg class="city__pin" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">' +
+        '<path d="M12 21s7-6.4 7-11a7 7 0 1 0-14 0c0 4.6 7 11 7 11Z"/><circle cx="12" cy="10" r="2.6"/></svg>' +
+      '<span class="city__txt"><b>' + c.nombre + '</b><small>' + c.eta + '</small></span>' + precio + '</label>';
+  }).join('');
+
+  $('#cutoffText').textContent =
+    'Los pedidos de hoy salen mañana. Cierre de despacho: ' + cfg.envios.cierreDespacho + '.';
 
   $$('[data-wa]').forEach(function (el) {
     el.href = C.link(null, el.getAttribute('data-wa'));
@@ -67,13 +83,62 @@
   /* ═══════════════════════════════════════════════ 2. PEDIDO */
   function resumen() {
     var t = C.totals(order);
-    var envio = t.ciudad.retiro ? 'retiro sin costo'
-              : t.envioGratis ? 'envío gratis'
-              : 'envío ' + C.money(t.envio);
-    $('#totalNote').textContent = t.pack.titulo + ' × ' + order.cantidad + ' · ' + envio +
-      ' · total ' + C.money(t.total);
+    var filas = [
+      '<div class="sumrow"><span>' + t.pack.titulo + ' × ' + order.cantidad +
+        '</span><span>' + C.money(t.subtotal) + '</span></div>',
+    ];
+    if (t.pct) {
+      filas.push('<div class="sumrow sumrow--save"><span>Descuento ' + order.codigo.toUpperCase() +
+        ' (-' + t.pct + '%)</span><span>-' + C.money(t.ahorro) + '</span></div>');
+    }
+    filas.push('<div class="sumrow"><span>Envío · ' + t.ciudad.nombre + '</span><span>' +
+      (t.ciudad.retiro ? 'Sin costo' : (t.envioGratis ? 'Gratis' : C.money(t.envio))) + '</span></div>');
+    filas.push('<div class="sumrow sumrow--total"><span>Total</span><span>' + C.money(t.total) + '</span></div>');
+    $('#summary').innerHTML = filas.join('');
+
+    var nota = $('#shipNote');
+    if (t.faltaGratis > 0) {
+      nota.hidden = false;
+      $('#shipNoteText').innerHTML = 'Te faltan <b>' + C.money(t.faltaGratis) +
+        '</b> para el envío gratis en ' + t.ciudad.nombre + '.';
+      var pct = Math.max(0, Math.min(100, (t.subtotal - t.ahorro) / cfg.envios.gratisDesde * 100));
+      $('#shipBar').style.width = pct + '%';
+    } else if (t.envioGratis) {
+      nota.hidden = false;
+      $('#shipNoteText').innerHTML = '<b>Envío gratis</b> desbloqueado en ' + t.ciudad.nombre + '.';
+      $('#shipBar').style.width = '100%';
+    } else {
+      nota.hidden = true;
+    }
+
     $('#wrap-direccion').hidden = !!t.ciudad.retiro;
   }
+
+  function setCiudad(id, desde) {
+    order.ciudadId = id;
+    if (desde !== 'radio') {
+      var r = $('input[name="ciudad"][value="' + id + '"]');
+      if (r) r.checked = true;
+    }
+    if (desde !== 'select') $('#f-ciudad').value = id;
+    resumen();
+  }
+
+  $$('input[name="ciudad"]').forEach(function (i) {
+    i.addEventListener('change', function () { setCiudad(i.value, 'radio'); });
+  });
+  $('#f-ciudad').addEventListener('change', function () { setCiudad(this.value, 'select'); });
+  $('#f-pack').addEventListener('change', function () { order.packId = this.value; resumen(); });
+  $('#f-cantidad').addEventListener('change', function () { order.cantidad = Number(this.value); resumen(); });
+
+  $('#applyCode').addEventListener('click', function () {
+    var v = $('#f-codigo').value.trim();
+    var pct = C.descuento(v), err = $('#e-codigo');
+    if (!v) { order.codigo = ''; err.textContent = ''; err.className = 'err'; resumen(); return; }
+    if (pct) { order.codigo = v; err.textContent = 'Código aplicado: -' + pct + '%'; err.className = 'promo-ok'; }
+    else { order.codigo = ''; err.textContent = 'Ese código no existe o ya venció.'; err.className = 'err'; }
+    resumen();
+  });
 
   var CAMPOS = ['nombre', 'telefono', 'direccion', 'notas'];
   CAMPOS.forEach(function (f) {
@@ -84,8 +149,6 @@
       var e = $('#e-' + f); if (e) e.textContent = '';
     });
   });
-  $('#f-pack').addEventListener('change', function () { order.packId = this.value; resumen(); });
-  $('#f-ciudad').addEventListener('change', function () { order.ciudadId = this.value; resumen(); });
 
   $('#orderForm').addEventListener('submit', function (e) {
     e.preventDefault();
@@ -95,6 +158,7 @@
     $$('.field').forEach(function (w) { w.classList.remove('has-error'); });
     ['nombre', 'telefono', 'ciudad', 'direccion'].forEach(function (k) {
       var e2 = $('#e-' + k); if (!e2) return;
+      e2.className = 'err';
       e2.textContent = errs[k] || '';
       if (errs[k]) {
         var el = $('#f-' + k);

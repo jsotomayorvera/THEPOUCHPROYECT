@@ -32,6 +32,7 @@
   --card:var(--cream-2);
 
   --display:'Fraunces',Georgia,'Times New Roman',serif;
+  --claim:'Outfit','Helvetica Neue',Arial,sans-serif;
   --body:'Instrument Sans',system-ui,-apple-system,'Segoe UI',sans-serif;
   --label:var(--body);
 
@@ -211,11 +212,14 @@ main section[id]{scroll-margin-top:calc(var(--nav-h) + 12px)}
 }
 .hero__inner{position:relative; z-index:2; width:100%; text-align:center}
 .hero__claim{
+  font-family:var(--claim); font-weight:800;
+  font-size:clamp(50px,11vw,158px); line-height:.86;
+  letter-spacing:-.045em; text-transform:none;
   color:var(--cream);
-  text-shadow:0 6px 40px rgba(0,0,0,.42);
-  max-width:14ch; margin-inline:auto;
+  text-shadow:0 8px 46px rgba(0,0,0,.45);
+  max-width:11ch; margin-inline:auto; text-wrap:balance;
 }
-.hero__claim em{color:var(--sage)}
+.hero__claim em{font-style:normal; color:var(--sage)}
 .hero__scroll{
   position:absolute; left:50%; bottom:30px; transform:translateX(-50%);
   z-index:2; width:26px; height:44px; display:grid; place-items:center;
@@ -392,17 +396,18 @@ main section[id]{scroll-margin-top:calc(var(--nav-h) + 12px)}
 .field{display:grid; gap:6px}
 .field > label{
   font-family:var(--label); font-weight:500; font-size:11.5px;
-  letter-spacing:.16em; text-transform:uppercase; color:var(--coffee-soft);
+  letter-spacing:.16em; text-transform:uppercase;
+  color:color-mix(in srgb, var(--cream) 82%, transparent);
 }
 .field input,.field select,.field textarea{
   width:100%; padding:14px 16px; border-radius:var(--r);
-  border:1px solid var(--hairline);
-  background:color-mix(in srgb, var(--cream) 9%, transparent);
+  border:1px solid color-mix(in srgb, var(--cream) 30%, transparent);
+  background:color-mix(in srgb, var(--cream) 14%, transparent);
   color:var(--cream); transition:border-color .2s linear, background .2s linear;
 }
 .field select{appearance:none; background-image:linear-gradient(45deg,transparent 50%,var(--coffee-soft) 50%),linear-gradient(135deg,var(--coffee-soft) 50%,transparent 50%); background-position:calc(100% - 20px) 50%,calc(100% - 14px) 50%; background-size:6px 6px,6px 6px; background-repeat:no-repeat; padding-right:44px}
 .field select option{background:var(--coffee); color:var(--cream)}
-.field input::placeholder,.field textarea::placeholder{color:color-mix(in srgb, var(--cream) 46%, transparent)}
+.field input::placeholder,.field textarea::placeholder{color:color-mix(in srgb, var(--cream) 62%, transparent)}
 .field input:focus,.field select:focus,.field textarea:focus{
   outline:none; border-color:var(--coffee-soft);
   background:color-mix(in srgb, var(--cream) 14%, transparent);
@@ -468,3 +473,157 @@ main section[id]{scroll-margin-top:calc(var(--nav-h) + 12px)}
 }
 
 .visually-hidden{position:absolute!important; width:1px; height:1px; margin:-1px; padding:0; overflow:hidden; clip:rect(0 0 0 0); white-space:nowrap; border:0}
+
+/* ==========================================================================
+   AMPLIACIÓN — colores fuertes, mármol, banda de atletas y pedido completo
+   ========================================================================== */
+
+/* Superficies de color pleno ---------------------------------------------- */
+.surface-cream{--bg:var(--cream)}
+.surface-ink{
+  --bg:var(--ink); --fg:var(--cream);
+  --muted:color-mix(in srgb, var(--cream) 74%, transparent);
+  --hairline:color-mix(in srgb, var(--cream) 20%, transparent);
+  --card:color-mix(in srgb, var(--cream) 7%, transparent);
+  --accent:var(--sage);
+}
+.surface-ink .eyebrow{color:var(--sage)}
+
+/* Mármol: textura de piedra por encima del color, sin tapar el texto */
+.marble{position:relative; isolation:isolate}
+.marble::after{
+  content:''; position:absolute; inset:0; z-index:0; pointer-events:none;
+  border-radius:inherit;
+  background-image:var(--marble, url('../img/marmol-crema.webp'));
+  background-size:min(60vw,760px);
+  opacity:.5; mix-blend-mode:soft-light;
+}
+.marble > *{position:relative; z-index:1}
+.surface-ink.marble{--marble:url('../img/marmol-verde.webp')}
+.surface-coffee.marble{--marble:url('../img/marmol-cafe.webp')}
+.surface-coffee.marble::after{opacity:.34}
+
+/* Vitrina editorial ------------------------------------------------------- */
+.cards{display:grid; gap:18px}
+@media (min-width:900px){
+  .cards{grid-template-columns:1fr 1.38fr 1fr; align-items:end}
+}
+.card{
+  position:relative; overflow:hidden; border:0; background:none;
+  border-radius:var(--r-lg); display:block;
+  transition:transform .55s var(--ease), box-shadow .55s var(--ease);
+}
+.card__media{position:relative; aspect-ratio:4/5; overflow:hidden; background:var(--ink-2); border-radius:inherit}
+.card--live .card__media{aspect-ratio:3/4}
+.card__media img{width:100%; height:100%; object-fit:cover; transition:transform .8s var(--ease)}
+.card:hover .card__media img{transform:scale(1.06)}
+.card__bar{
+  position:absolute; inset:auto 0 0 0; z-index:2;
+  display:flex; align-items:flex-end; justify-content:space-between; gap:14px;
+  padding:clamp(18px,2vw,26px);
+  background:linear-gradient(to top, rgba(4,18,11,.86) 8%, rgba(4,18,11,.42) 52%, transparent);
+}
+.card__name{display:grid; gap:3px}
+.card__name span{
+  font-family:var(--label); font-weight:500; font-size:11px;
+  letter-spacing:.2em; text-transform:uppercase; color:var(--sage);
+}
+.card__name b{
+  font-family:var(--display); font-weight:700; font-size:clamp(18px,1.8vw,26px);
+  line-height:1.05; letter-spacing:-.02em; color:var(--cream);
+}
+.card .btn{padding:10px 18px; font-size:13px; --btn-bg:var(--cream); --btn-fg:var(--ink)}
+.card .btn--ghost{--btn-bg:transparent; --btn-fg:var(--cream); border-color:color-mix(in srgb, var(--cream) 45%, transparent)}
+.card--live{box-shadow:0 40px 70px -44px rgba(0,0,0,.8)}
+.card--soon .card__media img{filter:blur(3px) saturate(.55) brightness(.92); transform:scale(1.08)}
+.card__flag{
+  position:absolute; top:16px; left:16px; z-index:3;
+  padding:7px 14px; border-radius:999px;
+  background:color-mix(in srgb, var(--cream) 18%, transparent);
+  border:1px solid color-mix(in srgb, var(--cream) 40%, transparent);
+  backdrop-filter:blur(6px);
+  font-family:var(--label); font-weight:500; font-size:10.5px;
+  letter-spacing:.24em; text-transform:uppercase; color:var(--cream);
+}
+
+/* Banda de atletas -------------------------------------------------------- */
+.band{position:relative; z-index:1; background:var(--coffee); padding-block:0}
+.band__grid{display:grid; grid-template-columns:repeat(2,1fr)}
+@media (min-width:760px){.band__grid{grid-template-columns:repeat(4,1fr)}}
+.band__grid li{position:relative; aspect-ratio:3/4; overflow:hidden}
+.band__grid img{
+  width:100%; height:100%; object-fit:cover;
+  filter:grayscale(.72) contrast(1.06) brightness(.82);
+  transition:filter .6s var(--ease), transform .8s var(--ease);
+}
+.band__grid li:hover img{filter:grayscale(0) contrast(1.02) brightness(.95); transform:scale(1.05)}
+.band__grid span{
+  position:absolute; left:0; right:0; bottom:0; z-index:2; padding:16px;
+  font-family:var(--label); font-weight:500; font-size:11px;
+  letter-spacing:.24em; text-transform:uppercase; color:var(--cream);
+  background:linear-gradient(to top, rgba(4,18,11,.72), transparent);
+}
+.band__note{
+  padding:22px var(--gutter) 28px; text-align:center;
+  font-family:var(--display); font-style:italic; font-weight:600;
+  font-size:clamp(15px,1.5vw,19px); color:var(--coffee-soft);
+}
+
+/* Pedido: ciudades y formulario ------------------------------------------- */
+.field-title{
+  font-family:var(--label); font-weight:500; font-size:11.5px;
+  letter-spacing:.18em; text-transform:uppercase; color:var(--coffee-soft);
+  margin-bottom:12px;
+}
+.form__intro{font-size:14px; color:var(--muted); margin-top:-6px}
+.cities{display:grid; gap:9px}
+.city{
+  position:relative; display:flex; align-items:center; gap:13px;
+  border:1px solid color-mix(in srgb, var(--cream) 26%, transparent);
+  border-radius:var(--r); padding:14px 16px;
+  cursor:pointer; background:color-mix(in srgb, var(--cream) 10%, transparent);
+  transition:border-color .25s linear, transform .25s var(--ease), background .25s linear;
+}
+.city:hover{transform:translateX(3px)}
+.city:has(input:checked){border-color:var(--coffee-soft); background:color-mix(in srgb, var(--cream) 12%, transparent)}
+.city:has(input:focus-visible){outline:3px solid var(--accent); outline-offset:3px}
+.city input{position:absolute; opacity:0; pointer-events:none}
+.city__pin{width:20px; height:20px; flex:none; color:var(--coffee-soft)}
+.city__txt{display:grid; gap:1px; flex:1}
+.city__txt b{font-family:var(--label); font-weight:500; font-size:15px}
+.city__txt small{color:var(--muted); font-size:12.5px}
+.city__price{font-family:var(--display); font-weight:700; font-size:19px; font-variant-numeric:tabular-nums}
+.city__price.free{font-size:12px; letter-spacing:.16em; text-transform:uppercase; color:var(--sage)}
+
+.ship-note{
+  margin-top:14px; border:1px solid var(--hairline); border-radius:var(--r);
+  padding:14px 16px; background:var(--card); display:grid; gap:10px;
+}
+.ship-note p{font-size:14px; color:var(--muted)}
+.ship-note b{color:var(--cream)}
+.bar{height:5px; border-radius:999px; background:var(--hairline); overflow:hidden}
+.bar i{display:block; height:100%; width:0; border-radius:999px; background:var(--sage); transition:width .6s var(--ease)}
+.cutoff{display:flex; align-items:center; gap:9px; margin-top:14px; font-size:13px; color:var(--muted)}
+.cutoff svg{width:16px; height:16px; flex:none; color:var(--coffee-soft)}
+
+.form__summary{
+  border:1px dashed color-mix(in srgb, var(--cream) 30%, transparent);
+  border-radius:var(--r); padding:14px 16px; display:grid; gap:8px;
+}
+.sumrow{display:flex; justify-content:space-between; gap:14px; font-size:14px}
+.sumrow span:last-child{font-variant-numeric:tabular-nums}
+.sumrow--save{color:var(--sage)}
+.sumrow--total{
+  border-top:1px solid var(--hairline); padding-top:9px; margin-top:2px;
+  font-family:var(--display); font-weight:700; font-size:21px;
+}
+.promo{display:flex; gap:9px; align-items:end}
+.promo .field{flex:1}
+.promo .btn{padding:14px 20px; font-size:13px; white-space:nowrap}
+.promo-ok{color:var(--sage); font-size:12.5px; font-weight:600}
+.btn--block{width:100%}
+
+.order{display:grid; gap:clamp(26px,3.6vw,48px)}
+@media (min-width:980px){.order{grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr); align-items:start}}
+.contact{margin-top:clamp(38px,5vw,60px); padding-top:clamp(26px,3vw,38px);
+  border-top:1px solid var(--hairline)}

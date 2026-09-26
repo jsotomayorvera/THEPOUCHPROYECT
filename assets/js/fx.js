@@ -20,7 +20,8 @@
       var cx = w / 2, cy = h / 2;
       for (var i = 0; i < 5; i++) {
         var p = ((t / 3400) + i / 5) % 1;
-        var r = p * Math.max(w, h) * 0.62;
+        var r = Math.max(0, p * Math.max(w, h) * 0.62);
+        if (r < 0.5) continue;
         ctx.beginPath();
         ctx.arc(cx, cy, r, 0, 6.2832);
         ctx.strokeStyle = 'rgba(' + INK3 + ',' + (0.20 * (1 - p)) + ')';
@@ -152,7 +153,7 @@
 
     function loop(now) {
       if (!running) return;
-      t += Math.min(now - last, 48);
+      t += Math.max(0, Math.min(now - last, 48));
       last = now;
       frame();
       raf = global.requestAnimationFrame(loop);

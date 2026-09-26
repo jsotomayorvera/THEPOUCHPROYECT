@@ -52,6 +52,8 @@ assets/js/fx.js            Animaciones del módulo de efectos (una por pestaña)
 assets/js/main.js          Comportamiento y animación de la página
 assets/js/vendor/          GSAP + ScrollTrigger alojados en el proyecto
 assets/img/                Logo, iconos, foto del producto y latas de "próximamente"
+assets/img/atletas/        Fotos de la banda de atletas (ver aviso abajo)
+assets/img/marmol-*.webp   Texturas de piedra generadas, una por color de módulo
 assets/fonts/              Tipografías (no dependen de Google Fonts)
 assets/video/              Clip del hero (webm + mp4) e instrucciones
 docs/MARCA.md              Guía de marca: paleta, tipografía, voz, precios
