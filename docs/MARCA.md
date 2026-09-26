@@ -18,21 +18,37 @@ Alternativas de apoyo, para copys y piezas secundarias:
 
 | Token | Hex | Uso |
 |---|---|---|
-| Verde marca | `#003F25` | Tinta del logo, fondos sólidos, botones primarios |
-| Verde profundo | `#012B19` | Texto sobre crema, degradados |
-| Verde medio | `#0B5735` | Degradados, estados hover |
-| Crema | `#F6EFE2` | Fondo principal, texto sobre verde |
-| Crema 2 | `#EDE3CE` | Superficies secundarias |
-| Negro cálido | `#0D100F` | Secciones nocturnas, hero (tomado de la referencia de velocidad) |
-| Volt | `#00E07A` | Solo señales: punto "en vivo", foco de teclado, aciertos en tablas |
+| Verde marca | `#003F25` | Tinta del logo, texto principal, botones |
+| Verde medio | `#0B5735` | Degradados de titular, estados |
+| Verde claro | `#2E7A55` | Antetítulos, citas, detalles |
+| Crema | `#F7F2E6` | Fondo principal |
+| Crema 2 | `#FFFCF4` | Tarjetas y superficies elevadas |
+| Crema 3 | `#EFE7D5` | Sección alterna |
+| Menta lavada | `#E6F3EA` | Sección alterna |
+| Menta | `#BEE7D1` | Fondos dinámicos |
+| Hielo | `#CBE2F1` | Fondos dinámicos (enlaza con el azul de la lata) |
+| Arena | `#EADCBC` | Fondos dinámicos |
+| Volt | `#00B862` | Señales y cierre del degradado de titulares |
 
-Regla: verde y crema mandan. El volt nunca ocupa áreas grandes.
+Reglas:
+
+- **Todo el fondo es claro.** Las secciones se diferencian por tono, nunca por valor:
+  el salto crema → menta lavada es mínimo a propósito, para que no haya contraste de fondo.
+- **La variedad de color vive en lo dinámico**: titulares en degradado (`.grad`) y los campos
+  iridiscentes animados del hero, del módulo de efectos y del cierre.
+- El texto siempre es verde de marca sobre claro. Nunca al revés salvo en la barra superior,
+  el pie y los botones primarios.
 
 ## Tipografía
 
-- **Anton** — titulares. Mayúsculas, interlineado apretado (0.9).
-- **Barlow Condensed** — etiquetas, navegación, botones. Mayúsculas y `letter-spacing` amplio.
-- **Inter** — texto corrido.
+Se eligió por parecido con la referencia de ULTRA: una grotesca ancha y pesada, no una
+condensada tipo Anton (que era la recomendación del plan original).
+
+- **Archivo 800** — titulares. Mayúsculas, interlineado 0.92, `letter-spacing` -0.028em.
+- **Archivo 500/600** — etiquetas, navegación, botones. Mayúsculas y `letter-spacing` amplio.
+- **Barlow 400** — texto corrido.
+
+Ambas están autoalojadas en `assets/fonts/`, no dependen de Google Fonts.
 
 ## Voz
 
@@ -52,11 +68,15 @@ Quieren energía sin nervios, foco para rendir e hidratación para recuperar.
 
 ## Catálogo por etapas
 
-1. **Ahora** — Cafeína NZE Peppermint. $12 la lata de 15, 2×$20.
-2. **Siguiente** — Otras marcas de cafeína: niveles y sabores.
+1. **Ahora** — NZE Peppermint · FOCUS, **sin cafeína** (Alpha GPC, L-Tirosina, L-Teanina).
+   $12 la lata de 15, 2×$20.
+2. **Siguiente** — Línea con cafeína: niveles suave / fuerte y sabores.
 3. **El diferenciador** — Electrolitos en pouch: hidratación y anti-calambres.
 
-El movimiento que sube el ticket: *cafeína antes · foco durante · electrolitos después.*
+El movimiento que sube el ticket: *foco para la cabeza · energía para arrancar · sales para recuperar.*
+
+> ⚠️ El plan original ponía la cafeína en la etapa 1. La lata real de la foto es **caffeine-free**,
+> así que el orden cambió. Confirma la formulación antes de publicar: ver `docs/CIENCIA.md`.
 
 ## Precio
 
@@ -67,7 +87,7 @@ Un descuento por volumen se ve premio; un precio bajo suelto se ve barato.
 
 ```
 Pouches de rendimiento en Ecuador
-Energía · Foco · Hidratación — sin azúcar, sin tabaco
+Foco · Energía · Hidratación — sin azúcar, sin tabaco
 Retiro en gym · Envíos a todo el país
 Pídelo por WhatsApp →
 ```

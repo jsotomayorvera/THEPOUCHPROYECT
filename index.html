@@ -4,14 +4,14 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>The Pouch Project — Rinde sin límites</title>
-<meta name="description" content="La primera tienda de pouches de rendimiento del Ecuador. Energía, foco e hidratación en un formato limpio, discreto y portátil. Sin azúcar, sin tabaco, sin lata. Pídelo por WhatsApp.">
-<meta name="theme-color" content="#003F25">
+<meta name="description" content="La primera tienda de pouches de rendimiento del Ecuador. Foco, energía e hidratación en un formato limpio, discreto y portátil. Sin azúcar, sin tabaco. Pídelo por WhatsApp.">
+<meta name="theme-color" content="#F7F2E6">
 <link rel="canonical" href="https://thepouchproject.ec/">
 
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="The Pouch Project">
 <meta property="og:title" content="The Pouch Project — Rinde sin límites">
-<meta property="og:description" content="Pouches de rendimiento en Ecuador. Energía · Foco · Hidratación. Sin azúcar, sin tabaco. Pídelo por WhatsApp.">
+<meta property="og:description" content="Pouches de rendimiento en Ecuador. Foco · Energía · Hidratación. Sin azúcar, sin tabaco. Pídelo por WhatsApp.">
 <meta property="og:image" content="assets/img/icon-512.png">
 <meta property="og:locale" content="es_EC">
 <meta name="twitter:card" content="summary_large_image">
@@ -20,20 +20,13 @@
 <link rel="icon" href="assets/img/icon-32.png" sizes="32x32">
 <link rel="apple-touch-icon" href="assets/img/icon-180.png">
 
-<link rel="preload" href="assets/fonts/anton-400-latin.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="preload" href="assets/fonts/inter-400-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="assets/fonts/archivo-500-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="assets/fonts/barlow-400-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="assets/css/fonts.css">
 <link rel="stylesheet" href="assets/css/styles.css">
 
 <script type="application/ld+json">
-{
-  "@context":"https://schema.org",
-  "@type":"Store",
-  "name":"The Pouch Project",
-  "description":"Tienda de pouches de rendimiento: energía, foco e hidratación. Sin azúcar, sin tabaco.",
-  "areaServed":"EC",
-  "slogan":"Rinde sin límites"
-}
+{"@context":"https://schema.org","@type":"Store","name":"The Pouch Project","description":"Tienda de pouches de rendimiento: foco, energía e hidratación. Sin azúcar, sin tabaco.","areaServed":"EC","slogan":"Rinde sin límites"}
 </script>
 </head>
 <body>
@@ -43,22 +36,8 @@
 <!-- ══════════════════════════════════════════════ BARRA SUPERIOR -->
 <div class="topbar marquee" aria-hidden="true">
   <div class="marquee__track">
-    <span>
-      <em style="font-style:normal"><i class="dot"></i></em> RINDE SIN LÍMITES
-      <em style="font-style:normal">·</em> ENVÍOS A TODO EL ECUADOR
-      <em style="font-style:normal">·</em> RETIRO EN FITNESS INC
-      <em style="font-style:normal">·</em> 2 LATAS POR $20
-      <em style="font-style:normal">·</em> SIN AZÚCAR · SIN TABACO
-      <em style="font-style:normal">·</em> PEDIDOS POR WHATSAPP
-    </span>
-    <span>
-      <em style="font-style:normal"><i class="dot"></i></em> RINDE SIN LÍMITES
-      <em style="font-style:normal">·</em> ENVÍOS A TODO EL ECUADOR
-      <em style="font-style:normal">·</em> RETIRO EN FITNESS INC
-      <em style="font-style:normal">·</em> 2 LATAS POR $20
-      <em style="font-style:normal">·</em> SIN AZÚCAR · SIN TABACO
-      <em style="font-style:normal">·</em> PEDIDOS POR WHATSAPP
-    </span>
+    <span><i class="dot"></i> RINDE SIN LÍMITES · ENVÍOS A TODO EL ECUADOR · RETIRO EN FITNESS INC · 2 LATAS POR $20 · SIN AZÚCAR · SIN TABACO · PEDIDOS POR WHATSAPP ·&nbsp;</span>
+    <span><i class="dot"></i> RINDE SIN LÍMITES · ENVÍOS A TODO EL ECUADOR · RETIRO EN FITNESS INC · 2 LATAS POR $20 · SIN AZÚCAR · SIN TABACO · PEDIDOS POR WHATSAPP ·&nbsp;</span>
   </div>
 </div>
 
@@ -69,10 +48,10 @@
       <img src="assets/img/logo-full.png" alt="The Pouch Project" width="1024" height="784">
     </a>
     <nav class="nav" aria-label="Principal">
+      <a href="#efectos">Efectos</a>
       <a href="#producto">Producto</a>
       <a href="#ciencia">La ciencia</a>
       <a href="#ritual">Cómo se usa</a>
-      <a href="#tribu">La tribu</a>
       <a href="#donde">Dónde comprar</a>
     </nav>
     <a class="btn header__cta" data-wa="general" href="#producto">Pedir <span>por WhatsApp</span></a>
@@ -83,110 +62,119 @@
 
 <!-- ══════════════════════════════════════════════════════ HERO -->
 <section class="hero" id="hero">
-  <div class="hero__media" id="heroMedia" aria-hidden="true">
-    <div class="hero__fallback"></div>
-  </div>
-  <div class="hero__scrim" aria-hidden="true"></div>
+  <canvas class="hero__canvas" id="heroField" aria-hidden="true"></canvas>
+  <div class="hero__media" id="heroMedia" aria-hidden="true"></div>
+  <div class="hero__veil" aria-hidden="true"></div>
   <div class="grain" aria-hidden="true"></div>
 
   <div class="wrap hero__inner">
-    <p class="eyebrow hero__kicker">La primera tienda de pouches de rendimiento del Ecuador</p>
-
-    <h1 class="display h1">
-      <span class="line"><span class="blurin" style="animation-delay:.05s">Rinde</span></span>
-      <span class="line"><span class="blurin" style="animation-delay:.18s">sin límites</span></span>
+    <p class="eyebrow hero__kicker" data-anim="hero">La primera tienda de pouches de rendimiento del Ecuador</p>
+    <h1 class="display h1 grad">
+      <span class="line" data-anim="hero">Rinde</span>
+      <span class="line" data-anim="hero">sin límites</span>
     </h1>
-
-    <p class="hero__sub">
-      Energía, foco e hidratación en un pouch. Se coloca entre labio y encía y trabaja
+    <p class="hero__sub" data-anim="hero">
+      Foco, energía e hidratación en un pouch. Se coloca entre labio y encía y trabaja
       mientras tú entrenas, manejas o estudias. Sin azúcar. Sin tabaco. Sin cargar lata.
     </p>
-
-    <div class="hero__actions">
-      <a class="btn btn--wa" data-wa="hero" href="#producto">
-        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2 22l5.25-1.38a9.87 9.87 0 0 0 4.79 1.22h.01c5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.82 9.82 0 0 0 12.04 2Zm0 18.13h-.01a8.2 8.2 0 0 1-4.19-1.15l-.3-.18-3.12.82.83-3.04-.2-.31a8.2 8.2 0 0 1-1.26-4.36c0-4.54 3.7-8.23 8.25-8.23 2.2 0 4.27.86 5.83 2.41a8.18 8.18 0 0 1 2.41 5.83c0 4.54-3.7 8.21-8.24 8.21Zm4.52-6.16c-.25-.12-1.47-.72-1.69-.81-.23-.08-.39-.12-.56.13-.16.24-.64.8-.79.97-.14.16-.29.19-.54.06-.25-.12-1.05-.39-1.99-1.23-.74-.66-1.24-1.47-1.38-1.72-.15-.25-.02-.38.11-.5.11-.11.25-.29.37-.43.13-.15.17-.25.25-.41.08-.17.04-.31-.02-.43-.06-.12-.56-1.35-.77-1.85-.2-.48-.41-.42-.56-.43h-.48c-.17 0-.43.06-.66.31-.23.25-.86.85-.86 2.07 0 1.21.88 2.39 1.01 2.55.12.17 1.74 2.65 4.21 3.72.59.25 1.05.4 1.4.52.59.19 1.13.16 1.55.1.47-.07 1.47-.6 1.67-1.18.21-.58.21-1.07.15-1.18-.06-.1-.23-.16-.48-.29Z"/></svg>
-        Pídelo por WhatsApp
-      </a>
-      <a class="btn btn--ghost" href="#ciencia" style="--btn-fg:#F6EFE2">Ver la ciencia</a>
+    <div class="hero__actions" data-anim="hero">
+      <a class="btn btn--wa" data-wa="hero" href="#producto"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2 22l5.25-1.38a9.87 9.87 0 0 0 4.79 1.22h.01c5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.82 9.82 0 0 0 12.04 2Zm4.52 12.97c-.25-.12-1.47-.72-1.69-.81-.23-.08-.39-.12-.56.13-.16.24-.64.8-.79.97-.14.16-.29.19-.54.06-.25-.12-1.05-.39-1.99-1.23-.74-.66-1.24-1.47-1.38-1.72-.15-.25-.02-.38.11-.5.11-.11.25-.29.37-.43.13-.15.17-.25.25-.41.08-.17.04-.31-.02-.43-.06-.12-.56-1.35-.77-1.85-.2-.48-.41-.42-.56-.43h-.48c-.17 0-.43.06-.66.31-.23.25-.86.85-.86 2.07 0 1.21.88 2.39 1.01 2.55.12.17 1.74 2.65 4.21 3.72.59.25 1.05.4 1.4.52.59.19 1.13.16 1.55.1.47-.07 1.47-.6 1.67-1.18.21-.58.21-1.07.15-1.18-.06-.1-.23-.16-.48-.29Z"/></svg> Pídelo por WhatsApp</a>
+      <a class="btn btn--ghost" href="#efectos">Ver cómo actúa</a>
     </div>
-
-    <ul class="hero__meta">
-      <li>Energía</li>
-      <li>Foco</li>
-      <li>Hidratación</li>
-      <li>Cero azúcar</li>
+    <ul class="hero__meta" data-anim="hero">
+      <li>Foco</li><li>Energía</li><li>Hidratación</li><li>Cero azúcar</li>
     </ul>
   </div>
 </section>
 
-<!-- Tira de valor -->
 <div class="valuebar marquee" aria-hidden="true">
   <div class="marquee__track">
-    <span>MENOS LATA <b class="sep">·</b> MÁS RENDIMIENTO <b class="sep">·</b> ENERGÍA LIMPIA <b class="sep">·</b> SIN NERVIOS, SIN BAJÓN <b class="sep">·</b> TU RENDIMIENTO, EN EL BOLSILLO <b class="sep">·</b></span>
-    <span>MENOS LATA <b class="sep">·</b> MÁS RENDIMIENTO <b class="sep">·</b> ENERGÍA LIMPIA <b class="sep">·</b> SIN NERVIOS, SIN BAJÓN <b class="sep">·</b> TU RENDIMIENTO, EN EL BOLSILLO <b class="sep">·</b></span>
+    <span>MENOS LATA <b class="sep">·</b> MÁS RENDIMIENTO <b class="sep">·</b> FOCO LIMPIO <b class="sep">·</b> SIN NERVIOS, SIN BAJÓN <b class="sep">·</b> TU RENDIMIENTO, EN EL BOLSILLO <b class="sep">·</b>&nbsp;</span>
+    <span>MENOS LATA <b class="sep">·</b> MÁS RENDIMIENTO <b class="sep">·</b> FOCO LIMPIO <b class="sep">·</b> SIN NERVIOS, SIN BAJÓN <b class="sep">·</b> TU RENDIMIENTO, EN EL BOLSILLO <b class="sep">·</b>&nbsp;</span>
   </div>
 </div>
 
-<!-- ═══════════════════════════════════════════════════ PILARES -->
-<section class="section" id="pilares">
-  <div class="wrap">
-    <div class="section-head split reveal">
-      <div>
-        <p class="eyebrow">Tres razones</p>
-        <h2 class="display h2">Lo que un pouch<br>te devuelve</h2>
+<!-- ═══════════════════════════════════════════════════ EFECTOS -->
+<section class="section efectos" id="efectos" aria-labelledby="efectosTitle">
+  <canvas class="efectos__canvas" id="fxField" aria-hidden="true"></canvas>
+  <div class="efectos__veil" aria-hidden="true"></div>
+  <div class="grain" aria-hidden="true"></div>
+
+  <div class="wrap efectos__inner">
+    <h2 class="display h2 grad efectos__title" id="efectosTitle" data-anim="fx">Efectos<br>inmediatos</h2>
+
+    <svg class="efectos__glyph" viewBox="0 0 120 90" aria-hidden="true">
+      <g fill="none" stroke="currentColor" stroke-width="1.1">
+        <ellipse cx="60" cy="16" rx="30" ry="9"/><ellipse cx="60" cy="24" rx="30" ry="9"/>
+        <ellipse cx="60" cy="32" rx="30" ry="9"/><ellipse cx="60" cy="40" rx="30" ry="9"/>
+        <ellipse cx="60" cy="48" rx="30" ry="9"/><ellipse cx="60" cy="56" rx="30" ry="9"/>
+        <ellipse cx="60" cy="64" rx="30" ry="9"/><ellipse cx="60" cy="72" rx="30" ry="9"/>
+      </g>
+    </svg>
+
+    <div class="efectos__panels" id="fxPanels" data-anim="fx">
+      <div class="fxpanel" id="panel-minutos" role="tabpanel" aria-labelledby="tab-minutos" tabindex="0">
+        <p class="fxpanel__when">0 – 10 minutos</p>
+        <p class="fxpanel__copy">El frescor de la menta llega al primer segundo. Mientras el pouch sigue
+          puesto, los activos se liberan por la mucosa de la boca, una vía muy vascularizada que entra
+          a circulación sin pasar primero por el hígado. Enciendes sin haber tomado un mililitro de líquido.</p>
       </div>
-      <p class="lede">No vendemos un sobrecito. Vendemos el control de tu día:
-        el momento exacto en que necesitas encender, sostener o recuperar.</p>
+      <div class="fxpanel" id="panel-horas" role="tabpanel" aria-labelledby="tab-horas" tabindex="0" hidden>
+        <p class="fxpanel__when">1 – 3 horas</p>
+        <p class="fxpanel__copy">La ventana de trabajo. La L-Teanina sostiene una atención tranquila y
+          la L-Tirosina es el precursor que el cerebro gasta bajo presión. Sin azúcar no hay pico de
+          insulina y, por tanto, no hay caída reactiva una hora después.</p>
+      </div>
+      <div class="fxpanel" id="panel-dias" role="tabpanel" aria-labelledby="tab-dias" tabindex="0" hidden>
+        <p class="fxpanel__when">Día tras día</p>
+        <p class="fxpanel__copy">Un pouch trae siempre la misma cantidad, así que dejas de adivinar la
+          dosis. Nada que cargar, nada que enfriar, nada que manche el esmalte. Y si quieres cortar,
+          lo retiras: con una lata ya te la tomaste.</p>
+      </div>
+      <div class="fxpanel" id="panel-largo" role="tabpanel" aria-labelledby="tab-largo" tabindex="0" hidden>
+        <p class="fxpanel__when">A largo plazo</p>
+        <p class="fxpanel__copy">Cambias la lata azucarada por un formato limpio y controlas tu día real.
+          Cuando lleguen la línea con cafeína y los electrolitos se cierra el círculo: foco para la
+          cabeza, energía para arrancar, sales para recuperar.</p>
+      </div>
     </div>
 
-    <div class="pillars">
-      <article class="pillar reveal" style="--d:0ms">
-        <svg class="pillar__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M13 2 4.5 13.5H11L10 22l8.5-11.5H12L13 2Z"/></svg>
-        <p class="pillar__n">01 / Antes</p>
-        <h3>Energía</h3>
-        <p>Cafeína sin azúcar ni líquido. Enciendes la sesión sin el subidón y bajón de la lata.</p>
-      </article>
-      <article class="pillar reveal" style="--d:90ms">
-        <svg class="pillar__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="3.5"/><path d="M12 3v3M12 18v3M3 12h3M18 12h3"/></svg>
-        <p class="pillar__n">02 / Durante</p>
-        <h3>Foco</h3>
-        <p>Dosis fija, discreta y con las manos libres. Ni botella que cargar ni taza que cuidar.</p>
-      </article>
-      <article class="pillar reveal" style="--d:180ms">
-        <svg class="pillar__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2.7S5.5 9.3 5.5 14a6.5 6.5 0 0 0 13 0c0-4.7-6.5-11.3-6.5-11.3Z"/><path d="M9.2 14.6a2.9 2.9 0 0 0 2.9 2.9"/></svg>
-        <p class="pillar__n">03 / Después</p>
-        <h3>Hidratación</h3>
-        <p>Electrolitos en camino: sodio, potasio y magnesio para cerrar la sesión sin calambres.</p>
-      </article>
+    <div class="tabs" role="tablist" aria-label="Cuándo actúa" data-anim="fx">
+      <span class="tabs__thumb" id="fxThumb" aria-hidden="true"></span>
+      <button class="tab" type="button" role="tab" id="tab-minutos" aria-controls="panel-minutos" aria-selected="true"  data-hue="150">Minutos</button>
+      <button class="tab" type="button" role="tab" id="tab-horas"   aria-controls="panel-horas"   aria-selected="false" data-hue="188" tabindex="-1">Horas</button>
+      <button class="tab" type="button" role="tab" id="tab-dias"    aria-controls="panel-dias"    aria-selected="false" data-hue="108" tabindex="-1">Días</button>
+      <button class="tab" type="button" role="tab" id="tab-largo"   aria-controls="panel-largo"   aria-selected="false" data-hue="46"  tabindex="-1">A largo plazo</button>
     </div>
   </div>
 </section>
 
 <!-- ══════════════════════════════════════════════════ PRODUCTO -->
-<section class="section is-night" id="producto">
+<section class="section surface-2" id="producto">
   <div class="wrap">
-    <div class="section-head split reveal">
+    <div class="section-head split" data-anim="up">
       <div>
         <p class="eyebrow">Etapa 1 · disponible ahora</p>
-        <h2 class="display h2">Arma tu pedido</h2>
+        <h2 class="display h2 grad">Arma tu pedido</h2>
       </div>
       <p class="lede">Eliges, nosotros confirmamos por WhatsApp. Sin carrito, sin cuenta,
         sin datos de tarjeta: el mensaje llega listo y tú solo lo envías.</p>
     </div>
 
     <div class="shop">
-      <div class="pack reveal">
+      <div class="pack" data-anim="up">
         <span class="pack__badge">En stock</span>
-        <div class="pack__can">
-          <img src="assets/img/logo-cream.png" alt="" width="1024" height="784">
+        <img class="pack__photo" id="packPhoto" alt="Lata de NZE Peppermint sobre hojas de menta" hidden>
+        <div class="pack__can" id="packCan">
+          <span class="sm">The Pouch Project</span>
           <span class="mk" id="packName">NZE<br>Peppermint</span>
           <span class="sm" id="packUnits">15 pouches</span>
         </div>
       </div>
 
-      <form class="buy reveal" id="buyForm" style="--d:80ms">
+      <form class="buy" id="buyForm" data-anim="up">
         <div>
-          <p class="eyebrow" style="margin-bottom:12px">Cafeína · Energía &amp; foco</p>
+          <p class="eyebrow" style="margin-bottom:12px" id="prodCat">Foco · sin cafeína</p>
           <h3 class="display h3" id="prodName">NZE Peppermint</h3>
           <p class="lede" style="margin-top:12px; font-size:16px" id="prodDesc"></p>
         </div>
@@ -212,10 +200,7 @@
           <dd id="total">$12</dd>
         </dl>
 
-        <a class="btn btn--wa btn--block" id="buyCta" href="#">
-          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2 22l5.25-1.38a9.87 9.87 0 0 0 4.79 1.22h.01c5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.82 9.82 0 0 0 12.04 2Zm4.52 12.97c-.25-.12-1.47-.72-1.69-.81-.23-.08-.39-.12-.56.13-.16.24-.64.8-.79.97-.14.16-.29.19-.54.06-.25-.12-1.05-.39-1.99-1.23-.74-.66-1.24-1.47-1.38-1.72-.15-.25-.02-.38.11-.5.11-.11.25-.29.37-.43.13-.15.17-.25.25-.41.08-.17.04-.31-.02-.43-.06-.12-.56-1.35-.77-1.85-.2-.48-.41-.42-.56-.43h-.48c-.17 0-.43.06-.66.31-.23.25-.86.85-.86 2.07 0 1.21.88 2.39 1.01 2.55.12.17 1.74 2.65 4.21 3.72.59.25 1.05.4 1.4.52.59.19 1.13.16 1.55.1.47-.07 1.47-.6 1.67-1.18.21-.58.21-1.07.15-1.18-.06-.1-.23-.16-.48-.29Z"/></svg>
-          Pedir por WhatsApp
-        </a>
+        <a class="btn btn--wa btn--block" id="buyCta" href="#"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2 22l5.25-1.38a9.87 9.87 0 0 0 4.79 1.22h.01c5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.82 9.82 0 0 0 12.04 2Zm4.52 12.97c-.25-.12-1.47-.72-1.69-.81-.23-.08-.39-.12-.56.13-.16.24-.64.8-.79.97-.14.16-.29.19-.54.06-.25-.12-1.05-.39-1.99-1.23-.74-.66-1.24-1.47-1.38-1.72-.15-.25-.02-.38.11-.5.11-.11.25-.29.37-.43.13-.15.17-.25.25-.41.08-.17.04-.31-.02-.43-.06-.12-.56-1.35-.77-1.85-.2-.48-.41-.42-.56-.43h-.48c-.17 0-.43.06-.66.31-.23.25-.86.85-.86 2.07 0 1.21.88 2.39 1.01 2.55.12.17 1.74 2.65 4.21 3.72.59.25 1.05.4 1.4.52.59.19 1.13.16 1.55.1.47-.07 1.47-.6 1.67-1.18.21-.58.21-1.07.15-1.18-.06-.1-.23-.16-.48-.29Z"/></svg> Pedir por WhatsApp</a>
 
         <p class="buy__note">
           Se abre WhatsApp con tu pedido escrito. Confirmas retiro en Fitness Inc o envío a tu ciudad,
@@ -229,167 +214,119 @@
 </section>
 
 <!-- ═══════════════════════════════════════════════════ CIENCIA -->
-<section class="section" id="ciencia">
+<section class="section surface-mint" id="ciencia">
   <div class="wrap">
-    <div class="section-head split reveal">
+    <div class="section-head split" data-anim="up">
       <div>
         <p class="eyebrow">Por qué el formato importa</p>
-        <h2 class="display h2">La boca es<br>la vía rápida</h2>
+        <h2 class="display h2 grad">La boca es<br>la vía rápida</h2>
       </div>
-      <p class="lede">La cafeína no cambia. Cambia por dónde entra. Absorber por la mucosa
-        de la boca acorta el camino hacia la sangre frente a tragar una cápsula o una lata.</p>
+      <p class="lede">El activo no cambia. Cambia por dónde entra. Absorber por la mucosa de la boca
+        acorta el camino hacia la sangre frente a tragar una cápsula o una lata.</p>
     </div>
 
     <div class="facts">
-      <article class="fact reveal" style="--d:0ms">
-        <p class="fact__n">44–80<small> min</small></p>
-        <h3>Pico más temprano</h3>
-        <p>En el ensayo clásico de cafeína en goma de mascar (absorción bucal), el pico en sangre llegó entre los 44 y 80 minutos, frente a 84–120 minutos con cápsulas tragadas.</p>
-        <cite>Kamimori et al., Int. J. Pharm. 2002</cite>
+      <article class="fact" data-anim="stagger">
+        <p class="fact__n">0<small> cafeína</small></p>
+        <h3>Foco sin estimulante</h3>
+        <p>Esta referencia no lleva cafeína ni azúcar ni edulcorantes artificiales. El foco viene de los
+          activos, no de un golpe de estimulante, así que no hay nervios ni bajón que gestionar.</p>
+        <cite>Formulación declarada en la lata</cite>
       </article>
-      <article class="fact reveal" style="--d:80ms">
-        <p class="fact__n">~2<small>×</small></p>
-        <h3>Absorción más rápida</h3>
-        <p>La constante de absorción fue de 3,2–4,0 por hora por vía bucal contra 1,3–2,4 por hora por vía digestiva. Entra antes, no entra más.</p>
-        <cite>Kamimori et al., 2002 · revisión Wickham &amp; Spriet, Sports Med. 2018</cite>
+      <article class="fact" data-anim="stagger">
+        <p class="fact__n">600<small> mg</small></p>
+        <h3>Alpha GPC</h3>
+        <p>Precursor de colina que cruza al cerebro y alimenta la acetilcolina. Con 600 mg, un ensayo
+          en hombres entrenados midió un 14 % más de fuerza pico en press de banca frente a placebo.</p>
+        <cite>Ziegenfuss et al., 2008 · revisión en Examine</cite>
       </article>
-      <article class="fact reveal" style="--d:160ms">
-        <p class="fact__n">3–6<small> mg/kg</small></p>
-        <h3>Dosis con evidencia</h3>
-        <p>Es el rango en el que la cafeína mejora fuerza, resistencia y velocidad de forma consistente según la posición oficial de la ISSN. Para 70 kg: 210–420 mg al día.</p>
-        <cite>Guest et al., J. Int. Soc. Sports Nutr. 2021</cite>
+      <article class="fact" data-anim="stagger">
+        <p class="fact__n">L-Tyr<small>osina</small></p>
+        <h3>Reserva bajo presión</h3>
+        <p>Precursor de dopamina y noradrenalina. La revisión de referencia concluye que ayuda sobre
+          todo cuando el sistema está exigido: estrés agudo, frío, ruido o carga mental alta.</p>
+        <cite>Jongkees et al., J. Psychiatr. Res. 2015</cite>
       </article>
-      <article class="fact reveal" style="--d:240ms">
-        <p class="fact__n">0<small> g azúcar</small></p>
-        <h3>Sin el bajón dulce</h3>
-        <p>Una energética azucarada dispara insulina y produce la caída reactiva que sientes una hora después. Sin azúcar no existe esa curva.</p>
-        <cite>Revisión sobre bebidas energéticas, 2021</cite>
+      <article class="fact" data-anim="stagger">
+        <p class="fact__n">L-The<small>anina</small></p>
+        <h3>Atención tranquila</h3>
+        <p>Aminoácido del té verde, estudiado junto a la L-Tirosina por su efecto sobre marcadores de
+          estrés y desempeño cognitivo en tareas de alta exigencia.</p>
+        <cite>Stress, 2024 · ensayo con L-teanina y L-tirosina</cite>
       </article>
     </div>
 
-    <p class="buy__note reveal" style="margin-top:28px; max-width:70ch">
-      Información educativa sobre el formato. No sustituye consejo médico ni constituye
-      una promesa de resultados.
+    <p class="buy__note" style="margin-top:26px; max-width:74ch" data-anim="up">
+      La evidencia más clara sobre esta <em>vía</em> de absorción se midió con cafeína en goma de mascar:
+      el pico en sangre llegó entre los 44 y 80 minutos frente a 84–120 con cápsulas tragadas. Mide la vía,
+      no este producto, que es sin cafeína. Información educativa: no sustituye consejo médico
+      ni constituye una promesa de resultados. Las fuentes completas están en <code>docs/CIENCIA.md</code>.
     </p>
   </div>
 </section>
 
 <!-- ════════════════════════════════════════════════════ RITUAL -->
-<section class="section is-night" id="ritual">
+<section class="section" id="ritual">
   <div class="wrap">
-    <div class="section-head split reveal">
+    <div class="section-head split" data-anim="up">
       <div>
         <p class="eyebrow">Se aprende en 20 segundos</p>
-        <h2 class="display h2">Cómo se usa</h2>
+        <h2 class="display h2 grad">Cómo se usa</h2>
       </div>
       <p class="lede">No se mastica, no se traga y no se fuma. Se coloca y se olvida.</p>
     </div>
 
     <div class="steps">
-      <article class="step reveal" style="--d:0ms">
+      <article class="step" data-anim="stagger">
         <h3>Colócalo</h3>
-        <p>Entre el labio superior y la encía. Vas a sentir un hormigueo ligero los primeros segundos: es normal, es la menta.</p>
+        <p>Entre el labio superior y la encía. Vas a sentir un hormigueo ligero los primeros segundos:
+          es normal, es la menta.</p>
       </article>
-      <article class="step reveal" style="--d:90ms">
+      <article class="step" data-anim="stagger">
         <h3>Déjalo 20–30 min</h3>
-        <p>Sin masticar. Puedes hablar, entrenar y manejar con normalidad. Empieza a soltar desde el primer minuto.</p>
+        <p>Sin masticar. Puedes hablar, entrenar y manejar con normalidad. Empieza a soltar desde el
+          primer minuto.</p>
       </article>
-      <article class="step reveal" style="--d:180ms">
+      <article class="step" data-anim="stagger">
         <h3>Retíralo</h3>
-        <p>A la basura, nunca al inodoro. Uno por sesión es suficiente. Si te pasas de cafeína, el cuerpo te avisa.</p>
+        <p>A la basura, nunca al inodoro. Uno por sesión es suficiente.</p>
       </article>
     </div>
 
-    <div class="care reveal" style="margin-top:28px">
+    <div class="care" style="margin-top:24px" data-anim="up">
       <h3>Uso responsable</h3>
-      <p>Producto con cafeína. No apto para menores de 18 años, embarazadas, personas en lactancia,
-        con hipertensión, arritmias, ansiedad o sensibilidad conocida a la cafeína. No combines con otras
-        fuentes de cafeína sin controlar el total del día. Esto no es tabaco ni contiene nicotina.
-        Ante cualquier duda, consulta con tu médico.</p>
+      <p>Suplemento alimenticio para adultos. No apto para menores de 18 años, embarazadas ni personas
+        en lactancia. Si tomas medicación, tienes una condición médica o dudas sobre algún ingrediente,
+        consulta con tu médico antes de usarlo. No es tabaco y no contiene nicotina. No sustituye una
+        dieta equilibrada ni el descanso.</p>
     </div>
-  </div>
-</section>
-
-<!-- ══════════════════════════════════════════════════════ TRIBU -->
-<section class="section" id="tribu">
-  <div class="wrap">
-    <div class="section-head split reveal">
-      <div>
-        <p class="eyebrow">Quién lo usa</p>
-        <h2 class="display h2">La tribu<br>que rinde</h2>
-      </div>
-      <p class="lede">Gente de gym, corredores, ciclistas y profesionales que optimizan el día
-        sin depender de la lata azucarada ni del café que mancha.</p>
-    </div>
-
-    <div class="voices">
-      <figure class="voice reveal" style="--d:0ms">
-        <div class="voice__top">
-          <span class="voice__av" aria-hidden="true">JM</span>
-          <p class="voice__who"><b>Juan M.</b><span>Crossfit · Quito</span></p>
-        </div>
-        <p class="voice__stars" aria-label="5 de 5">★★★★★</p>
-        <blockquote>"Lo pongo antes del WOD y ya no cargo la lata al box. Entro enchufado y sin el bajón de después."</blockquote>
-        <span class="chip">Energía</span>
-      </figure>
-      <figure class="voice reveal" style="--d:90ms">
-        <div class="voice__top">
-          <span class="voice__av" aria-hidden="true">DR</span>
-          <p class="voice__who"><b>Daniela R.</b><span>Trail runner</span></p>
-        </div>
-        <p class="voice__stars" aria-label="5 de 5">★★★★★</p>
-        <blockquote>"En ruta larga no hay dónde parar a tomar café. Un pouch en el bolsillo del chaleco y listo."</blockquote>
-        <span class="chip">Ruta</span>
-      </figure>
-      <figure class="voice reveal" style="--d:180ms">
-        <div class="voice__top">
-          <span class="voice__av" aria-hidden="true">AC</span>
-          <p class="voice__who"><b>Andrés C.</b><span>Estudiante de medicina</span></p>
-        </div>
-        <p class="voice__stars" aria-label="5 de 5">★★★★★</p>
-        <blockquote>"Para estudiar de noche me sirve más que el café: no me llena la vejiga ni me pone tembloroso."</blockquote>
-        <span class="chip">Foco</span>
-      </figure>
-      <figure class="voice reveal" style="--d:270ms">
-        <div class="voice__top">
-          <span class="voice__av" aria-hidden="true">MV</span>
-          <p class="voice__who"><b>María V.</b><span>Ciclismo de ruta</span></p>
-        </div>
-        <p class="voice__stars" aria-label="5 de 5">★★★★★</p>
-        <blockquote>"Discreto y limpio. Nadie se entera y yo llego a la última subida igual de fuerte."</blockquote>
-        <span class="chip">Discreto</span>
-      </figure>
-    </div>
-    <p class="buy__note reveal" style="margin-top:20px">
-      Testimonios de arranque, provisionales. Se reemplazan por reseñas reales de clientes en cuanto se recojan.
-    </p>
   </div>
 </section>
 
 <!-- ═══════════════════════════════════════════════════════ DÓNDE -->
-<section class="section is-night" id="donde">
+<section class="section surface-3" id="donde">
   <div class="wrap">
-    <div class="section-head split reveal">
+    <div class="section-head split" data-anim="up">
       <div>
         <p class="eyebrow">Dos formas de tenerlo hoy</p>
-        <h2 class="display h2">Dónde<br>conseguirlo</h2>
+        <h2 class="display h2 grad">Dónde<br>conseguirlo</h2>
       </div>
-      <p class="lede">Retiras en el gym o te lo enviamos. En ambos casos el pedido arranca
-        por WhatsApp y se confirma en minutos.</p>
+      <p class="lede">Retiras en el gym o te lo enviamos. En ambos casos el pedido arranca por
+        WhatsApp y se confirma en minutos.</p>
     </div>
 
     <div class="channels">
-      <article class="channel reveal" style="--d:0ms">
+      <article class="channel" data-anim="stagger">
         <p class="eyebrow">Punto de venta</p>
         <h3 id="pvName">Fitness Inc</h3>
         <p id="pvDetail">Retiro en mostrador, sin costo.</p>
-        <a class="btn btn--ghost" data-wa="retiro" href="#" style="margin-top:8px; justify-self:start">Coordinar retiro</a>
+        <a class="btn btn--ghost" data-wa="retiro" href="#" style="margin-top:6px; justify-self:start">Coordinar retiro</a>
       </article>
-      <article class="channel reveal" style="--d:90ms">
+      <article class="channel" data-anim="stagger">
         <p class="eyebrow">A tu puerta</p>
         <h3 id="shipTitle">Envíos a todo el país</h3>
         <p id="shipDetail">Servientrega / Laar. 1–3 días laborables.</p>
-        <a class="btn btn--ghost" data-wa="envio" href="#" style="margin-top:8px; justify-self:start">Cotizar envío</a>
+        <a class="btn btn--ghost" data-wa="envio" href="#" style="margin-top:6px; justify-self:start">Cotizar envío</a>
       </article>
     </div>
   </div>
@@ -398,67 +335,63 @@
 <!-- ════════════════════════════════════════════════════════ FAQ -->
 <section class="section" id="faq">
   <div class="wrap">
-    <div class="section-head split reveal">
+    <div class="section-head split" data-anim="up">
       <div>
         <p class="eyebrow">Lo que siempre preguntan</p>
-        <h2 class="display h2">Preguntas</h2>
+        <h2 class="display h2 grad">Preguntas</h2>
       </div>
       <p class="lede">Y si falta alguna, escríbenos por WhatsApp: contestamos en persona, no con bot.</p>
     </div>
 
-    <div class="faq reveal">
+    <div class="faq" data-anim="up">
       <details>
         <summary>¿Esto tiene nicotina o tabaco?</summary>
-        <p>No. Los pouches que vendemos hoy son de cafeína. Cero nicotina, cero tabaco, cero humo.
-          Son un formato de consumo, no un producto de tabaco.</p>
+        <p>No. Cero nicotina, cero tabaco, cero humo. Es un formato de consumo, no un producto de tabaco.</p>
+      </details>
+      <details>
+        <summary>¿Tiene cafeína?</summary>
+        <p>Esta referencia, la NZE Peppermint Focus, no lleva cafeína: trabaja con Alpha GPC, L-Tirosina
+          y L-Teanina. La línea con cafeína es la etapa 2 del proyecto y llega después.</p>
       </details>
       <details>
         <summary>¿Se traga o se mastica?</summary>
-        <p>Ninguna de las dos. Se coloca entre el labio superior y la encía, se deja 20 a 30 minutos y se retira.
-          La saliva que generas se traga con normalidad.</p>
+        <p>Ninguna de las dos. Se coloca entre el labio superior y la encía, se deja 20 a 30 minutos y
+          se retira. La saliva que generas se traga con normalidad.</p>
       </details>
       <details>
         <summary>¿En cuánto tiempo lo siento?</summary>
-        <p>La sensación de frescor es inmediata. El efecto de la cafeína se construye durante los primeros
-          minutos; la investigación en vía bucal muestra un pico más temprano que con cápsulas tragadas.
-          Cada cuerpo responde distinto según peso, tolerancia y si comiste antes.</p>
+        <p>El frescor es inmediato. El efecto sobre la atención se construye durante los primeros minutos
+          y cada cuerpo responde distinto según peso, descanso y si comiste antes.</p>
       </details>
       <details>
         <summary>¿Cuántos puedo usar al día?</summary>
-        <p>Uno por sesión y controlando tu total diario de cafeína contando café, té y gaseosas.
-          Como referencia general de salud pública se suele citar un máximo de 400 mg al día en adultos sanos.</p>
+        <p>Uno por sesión. Sigue siempre la dosis que indica la lata y no la superes.</p>
       </details>
       <details>
         <summary>¿Cómo pago?</summary>
-        <p>Coordinamos por WhatsApp: transferencia, efectivo al retirar en el gym o contra entrega según la ciudad.
-          No pedimos datos de tarjeta por la web.</p>
+        <p>Coordinamos por WhatsApp: transferencia, efectivo al retirar en el gym o contra entrega según
+          la ciudad. No pedimos datos de tarjeta por la web.</p>
       </details>
       <details>
         <summary>¿Hacen precio por cantidad?</summary>
-        <p>Sí. El combo de 2 latas baja el precio por unidad, y tenemos precio de recomendado:
-          si traes a alguien que compre, el tuyo baja. Nunca tumbamos el precio de la unidad suelta.</p>
-      </details>
-      <details>
-        <summary>¿Cuándo llegan los electrolitos?</summary>
-        <p>Es la etapa 3 del proyecto y ya está en evaluación de importación. Escríbenos si quieres
-          entrar a la lista de aviso: los primeros en saber son los que ya compraron cafeína.</p>
+        <p>Sí. El combo de 2 latas baja el precio por unidad, y tenemos precio de recomendado: si traes
+          a alguien que compre, el tuyo baja. Nunca tumbamos el precio de la unidad suelta.</p>
       </details>
     </div>
   </div>
 </section>
 
 <!-- ══════════════════════════════════════════════════════ CIERRE -->
-<section class="section is-night cta-final" id="cierre">
-  <div class="hero__fallback" aria-hidden="true"></div>
-  <div class="grain" aria-hidden="true"></div>
+<section class="section cta-final" id="cierre">
+  <canvas class="cta-final__canvas" id="ctaField" aria-hidden="true"></canvas>
+  <div class="cta-final__veil" aria-hidden="true"></div>
   <div class="wrap">
-    <p class="eyebrow reveal" style="justify-content:center">Un mensaje y estás dentro</p>
-    <h2 class="display h2 reveal" style="--d:60ms">Rinde<br>sin límites</h2>
-    <p class="lede reveal" style="--d:120ms; text-align:center">
-      Escríbenos, te decimos qué hay en stock y lo tienes hoy mismo en el gym
-      o esta semana en tu puerta.
+    <p class="eyebrow" data-anim="up">Un mensaje y estás dentro</p>
+    <h2 class="display h2 grad" data-anim="up">Rinde<br>sin límites</h2>
+    <p class="lede" style="text-align:center" data-anim="up">
+      Escríbenos, te decimos qué hay en stock y lo tienes hoy mismo en el gym o esta semana en tu puerta.
     </p>
-    <a class="btn btn--paper reveal" data-wa="cierre" href="#" style="--d:180ms">Pídelo por WhatsApp</a>
+    <a class="btn btn--wa" data-wa="cierre" href="#" data-anim="up"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2 22l5.25-1.38a9.87 9.87 0 0 0 4.79 1.22h.01c5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.82 9.82 0 0 0 12.04 2Zm4.52 12.97c-.25-.12-1.47-.72-1.69-.81-.23-.08-.39-.12-.56.13-.16.24-.64.8-.79.97-.14.16-.29.19-.54.06-.25-.12-1.05-.39-1.99-1.23-.74-.66-1.24-1.47-1.38-1.72-.15-.25-.02-.38.11-.5.11-.11.25-.29.37-.43.13-.15.17-.25.25-.41.08-.17.04-.31-.02-.43-.06-.12-.56-1.35-.77-1.85-.2-.48-.41-.42-.56-.43h-.48c-.17 0-.43.06-.66.31-.23.25-.86.85-.86 2.07 0 1.21.88 2.39 1.01 2.55.12.17 1.74 2.65 4.21 3.72.59.25 1.05.4 1.4.52.59.19 1.13.16 1.55.1.47-.07 1.47-.6 1.67-1.18.21-.58.21-1.07.15-1.18-.06-.1-.23-.16-.48-.29Z"/></svg> Pídelo por WhatsApp</a>
   </div>
 </section>
 
@@ -470,14 +403,15 @@
     <div class="footer__grid">
       <div>
         <img src="assets/img/logo-cream.png" alt="The Pouch Project" width="1024" height="784">
-        <p style="margin-top:18px; max-width:38ch; opacity:.85">
+        <p style="margin-top:16px; max-width:38ch; opacity:.85">
           La tienda del estilo de vida que se suplementa en pouch.
-          Energía, foco e hidratación — limpio, discreto y portátil.
+          Foco, energía e hidratación — limpio, discreto y portátil.
         </p>
       </div>
       <div>
         <h4>Navega</h4>
         <ul>
+          <li><a href="#efectos">Efectos</a></li>
           <li><a href="#producto">Producto</a></li>
           <li><a href="#ciencia">La ciencia</a></li>
           <li><a href="#ritual">Cómo se usa</a></li>
@@ -497,22 +431,22 @@
     </div>
     <div class="footer__legal">
       <span>© <span id="year"></span> The Pouch Project · Ecuador</span>
-      <span>Producto con cafeína · Venta solo a mayores de 18 años</span>
+      <span>Suplemento alimenticio · Venta solo a mayores de 18 años</span>
     </div>
   </div>
 </footer>
 
-<!-- Flotantes -->
-<a class="wa-float" data-wa="flotante" href="#" aria-label="Escríbenos por WhatsApp">
-  <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2 22l5.25-1.38a9.87 9.87 0 0 0 4.79 1.22h.01c5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.82 9.82 0 0 0 12.04 2Zm4.52 12.97c-.25-.12-1.47-.72-1.69-.81-.23-.08-.39-.12-.56.13-.16.24-.64.8-.79.97-.14.16-.29.19-.54.06-.25-.12-1.05-.39-1.99-1.23-.74-.66-1.24-1.47-1.38-1.72-.15-.25-.02-.38.11-.5.11-.11.25-.29.37-.43.13-.15.17-.25.25-.41.08-.17.04-.31-.02-.43-.06-.12-.56-1.35-.77-1.85-.2-.48-.41-.42-.56-.43h-.48c-.17 0-.43.06-.66.31-.23.25-.86.85-.86 2.07 0 1.21.88 2.39 1.01 2.55.12.17 1.74 2.65 4.21 3.72.59.25 1.05.4 1.4.52.59.19 1.13.16 1.55.1.47-.07 1.47-.6 1.67-1.18.21-.58.21-1.07.15-1.18-.06-.1-.23-.16-.48-.29Z"/></svg>
-</a>
+<a class="wa-float" data-wa="flotante" href="#" aria-label="Escríbenos por WhatsApp"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2 22l5.25-1.38a9.87 9.87 0 0 0 4.79 1.22h.01c5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.82 9.82 0 0 0 12.04 2Zm4.52 12.97c-.25-.12-1.47-.72-1.69-.81-.23-.08-.39-.12-.56.13-.16.24-.64.8-.79.97-.14.16-.29.19-.54.06-.25-.12-1.05-.39-1.99-1.23-.74-.66-1.24-1.47-1.38-1.72-.15-.25-.02-.38.11-.5.11-.11.25-.29.37-.43.13-.15.17-.25.25-.41.08-.17.04-.31-.02-.43-.06-.12-.56-1.35-.77-1.85-.2-.48-.41-.42-.56-.43h-.48c-.17 0-.43.06-.66.31-.23.25-.86.85-.86 2.07 0 1.21.88 2.39 1.01 2.55.12.17 1.74 2.65 4.21 3.72.59.25 1.05.4 1.4.52.59.19 1.13.16 1.55.1.47-.07 1.47-.6 1.67-1.18.21-.58.21-1.07.15-1.18-.06-.1-.23-.16-.48-.29Z"/></svg></a>
 
 <div class="buybar" id="buybar">
   <p class="buybar__price"><small id="barLabel">1 lata</small><b id="barTotal">$12</b></p>
   <a class="btn btn--wa" id="barCta" href="#">Pedir</a>
 </div>
 
+<script src="assets/js/vendor/gsap.min.js"></script>
+<script src="assets/js/vendor/ScrollTrigger.min.js"></script>
 <script src="assets/js/config.js"></script>
+<script src="assets/js/field.js"></script>
 <script src="assets/js/checkout.js"></script>
 <script src="assets/js/main.js"></script>
 </body>

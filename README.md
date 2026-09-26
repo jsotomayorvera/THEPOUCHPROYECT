@@ -34,6 +34,7 @@ Abre **`assets/js/config.js`**. Todo lo editable está ahí y en un solo lugar:
 | `productos` | Catálogo. `stage: 'live'` se vende hoy; `stage: 'soon'` sale como "próximamente" |
 | `productos[].opciones` | Presentaciones y precios ($12 la lata, 2×$20) |
 | `heroVideos` | Los clips del banner principal (ver más abajo) |
+| `productos[].foto` | Ruta de la foto del producto. Si el archivo no existe, la web dibuja una lata de respaldo y no se rompe nada |
 
 No hace falta tocar HTML para cambiar precios, nombres ni textos del producto.
 
@@ -42,10 +43,12 @@ No hace falta tocar HTML para cambiar precios, nombres ni textos del producto.
 ```
 index.html                 La página completa
 assets/css/styles.css      Sistema de diseño y todos los estilos
-assets/css/fonts.css       Anton · Barlow Condensed · Inter (autoalojadas)
+assets/css/fonts.css       Archivo · Barlow (autoalojadas, sin Google Fonts)
 assets/js/config.js        ⚙️ Configuración: número, precios, catálogo
 assets/js/checkout.js      Construcción del pedido y del enlace de WhatsApp
-assets/js/main.js          Comportamiento de la página
+assets/js/field.js         Fondo iridiscente animado (canvas, sin librerías)
+assets/js/main.js          Comportamiento y animación de la página
+assets/js/vendor/          GSAP + ScrollTrigger alojados en el proyecto
 assets/img/                Logo vectorizado, versiones con transparencia e iconos
 assets/fonts/              Tipografías (no dependen de Google Fonts)
 assets/video/              Clips del hero + instrucciones de exportación
@@ -92,8 +95,10 @@ Partimos de tu imagen y generamos los formatos que faltaban:
 
 ## Pendientes conocidos
 
+- [ ] **Confirmar la formulación.** La web está escrita para la lata de la foto: NZE Peppermint
+      FOCUS **sin cafeína** (Alpha GPC, L-Tirosina, L-Teanina). El plan original hablaba de una
+      referencia con cafeína. Ver el aviso en `docs/CIENCIA.md`
 - [ ] Poner el número real de WhatsApp en `config.js`
+- [ ] Guardar la foto del producto en `assets/img/producto-nze-peppermint.jpg`
 - [ ] Grabar o licenciar los 3 clips del hero
-- [ ] Reemplazar los testimonios provisionales por reseñas reales de clientes
-- [ ] Fotografiar el producto en contexto para sustituir la lata dibujada en CSS
 - [ ] Confirmar usuario de Instagram y dominio definitivos
