@@ -45,18 +45,23 @@ No hace falta tocar HTML para cambiar precios, nombres ni textos del producto.
 ```
 index.html                 La página completa
 assets/css/styles.css      Sistema de diseño y todos los estilos
-assets/css/fonts.css       Fraunces · Instrument Sans (autoalojadas, sin Google Fonts)
-assets/js/config.js        ⚙️ Configuración: número, precios, catálogo
-assets/js/checkout.js      Construcción del pedido y del enlace de WhatsApp
-assets/js/fx.js            Animaciones del módulo de efectos (canvas, una por pestaña)
+assets/css/fonts.css       Fraunces · Instrument Sans (autoalojadas)
+assets/js/config.js        ⚙️ Configuración: contacto, producto, vitrina, packs, envíos
+assets/js/checkout.js      Cálculo del pedido y enlace de WhatsApp
+assets/js/fx.js            Animaciones del módulo de efectos (una por pestaña)
 assets/js/main.js          Comportamiento y animación de la página
 assets/js/vendor/          GSAP + ScrollTrigger alojados en el proyecto
-assets/img/                Logo vectorizado, versiones con transparencia e iconos
+assets/img/                Logo, iconos, foto del producto y latas de "próximamente"
 assets/fonts/              Tipografías (no dependen de Google Fonts)
-assets/video/              Clips del hero + instrucciones de exportación
+assets/video/              Clip del hero (webm + mp4) e instrucciones
 docs/MARCA.md              Guía de marca: paleta, tipografía, voz, precios
-docs/CIENCIA.md            Respaldo de cada dato de la sección científica, con fuentes
+docs/CIENCIA.md            Respaldo de cada dato científico, con fuentes
+DEPLOY.md                  Cómo publicarlo en Vercel
 ```
+
+Los módulos, en orden: hero con el eslogan sobre vídeo · vitrina de producto ·
+dos bloques mitad y mitad · efectos por pestañas · cierre de venta por WhatsApp ·
+pie con el rótulo grande.
 
 ## El banner de vídeo
 

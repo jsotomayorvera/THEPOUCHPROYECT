@@ -34,12 +34,19 @@ window.TPP = {
       { nombre: 'L-Tirosina',  rol: 'Reserva', texto: 'Precursor de dopamina y noradrenalina. Su efecto aparece cuando el sistema está exigido: estrés, frío o carga mental alta.' },
       { nombre: 'L-Teanina',   rol: 'Calma',   texto: 'Aminoácido del té verde asociado a una atención tranquila, sin el filo nervioso de un estimulante.' },
     ],
-    // Sabores de la línea. `activo:false` = todavía no lo traemos.
-    sabores: [
-      { nombre: 'Peppermint',   activo: true  },
-      { nombre: 'Black Cherry', activo: false },
-    ],
   },
+
+  /* ---- TARJETAS DE PRODUCTO -------------------------------------------- */
+  // La del medio es la que se vende; las de los lados salen difuminadas
+  // con el sello "Próximamente".
+  vitrina: [
+    { id: 'cafeina', estado: 'soon', titulo: 'Línea con cafeína', sabor: 'Energía',
+      foto: 'assets/img/proximo-cafeina.webp' },
+    { id: 'nze',     estado: 'live', titulo: 'NZE Peppermint',    sabor: 'Focus · sin cafeína',
+      foto: 'assets/img/producto-nze-peppermint.webp' },
+    { id: 'electro', estado: 'soon', titulo: 'Electrolitos',      sabor: 'Hidratación',
+      foto: 'assets/img/proximo-electrolitos.webp' },
+  ],
 
   /* ---- PACKS ----------------------------------------------------------- */
   packs: [

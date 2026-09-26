@@ -80,6 +80,7 @@
     cierre:   '¡Hola! Vengo de la web y quiero hacer un pedido.',
     footer:   '¡Hola! Vengo de la web de The Pouch Project.',
     flotante: '¡Hola! Tengo una pregunta sobre los pouches.',
+    aviso:    '¡Hola! Quiero que me avisen cuando llegue esa referencia.',
   };
 
   /** Arma el texto del pedido completo. */

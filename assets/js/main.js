@@ -12,13 +12,7 @@
   var $$ = function (s, c) { return Array.prototype.slice.call((c || document).querySelectorAll(s)); };
   var hasGsap = typeof window.gsap !== 'undefined';
   var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  var P = cfg.producto;
 
-  if (/^593900000000$/.test(String(cfg.whatsapp))) {
-    console.warn('[TPP] Falta el número real de WhatsApp: edítalo en assets/js/config.js');
-  }
-
-  /* Estado único del pedido */
   var order = {
     packId: (cfg.packs.filter(function (p) { return p.destacado; })[0] || cfg.packs[0]).id,
     cantidad: 1,
@@ -28,195 +22,99 @@
   };
 
   /* ═══════════════════════════════════════════════ 1. CONTENIDO */
+  var waLegible = String(cfg.whatsapp).replace(/^593/, '0');
   $('#year').textContent = new Date().getFullYear();
-  $('#statementCopy').textContent = cfg.marca.tagline;
-  $('#footerTagline').textContent = cfg.marca.tagline;
-  $('#igLink').href = 'https://instagram.com/' + cfg.instagram;
-  $('#igLink').textContent = '@' + cfg.instagram;
+  $('#waLine').textContent = waLegible;
   $('#mailLink').href = 'mailto:' + cfg.email;
   $('#mailLink').textContent = cfg.email;
-  $('#cutoffText').textContent =
-    'Los pedidos de hoy salen mañana. Cierre de despacho: ' + cfg.envios.cierreDespacho + '.';
+  $('#igLink').href = 'https://instagram.com/' + cfg.instagram;
+  $('#igLink').textContent = '@' + cfg.instagram;
+  $('#igFoot').textContent = '@' + cfg.instagram;
+  $('#zonaLine').textContent = 'Ecuador · 24–72 h';
 
-  $('#prodLinea').textContent = P.linea;
-  $('#prodNombre').textContent = P.nombre;
-  $('#prodResumen').textContent = P.resumen;
-  $('#shotName').innerHTML = P.nombre.replace(' ', '<br>');
-  $('#shotUnits').textContent = P.unidades + ' pouches';
-  $('#seals').innerHTML = P.sellos.map(function (s) { return '<li class="seal">' + s + '</li>'; }).join('');
-
-  $('#flavours').innerHTML = P.sabores.map(function (s) {
-    return '<span class="flavour" data-on="' + (s.activo ? 'true' : 'false') + '"' +
-      (s.activo ? '' : ' aria-disabled="true" title="Todavía no lo traemos"') + '>' +
-      s.nombre + (s.activo ? '' : ' · pronto') + '</span>';
+  /* Vitrina de producto */
+  $('#cards').innerHTML = cfg.vitrina.map(function (v) {
+    var live = v.estado === 'live';
+    return '<article class="card ' + (live ? 'card--live' : 'card--soon') + '" data-anim="stagger">' +
+      '<div class="card__media">' +
+        '<img src="' + v.foto + '" alt="' + (live ? v.titulo : '') + '" loading="lazy" width="1100" height="1100">' +
+        (live ? '' : '<p class="card__flag">Próximamente</p>') +
+      '</div>' +
+      '<div class="card__bar">' +
+        '<div class="card__name"><span>' + v.sabor + '</span><b>' + v.titulo + '</b></div>' +
+        (live
+          ? '<a class="btn" href="#pedido">Pedir</a>'
+          : '<a class="btn btn--ghost" data-wa="aviso" href="#">Avísame</a>') +
+      '</div></article>';
   }).join('');
 
-  $('#ingredientes').innerHTML = P.activos.map(function (a) {
-    return '<article class="ing pop" data-anim="stagger">' +
-      '<p class="ing__rol">' + a.rol + '</p>' +
-      '<h3>' + a.nombre + '</h3><p>' + a.texto + '</p></article>';
+  /* Selectores del pedido */
+  $('#f-pack').innerHTML = cfg.packs.map(function (p) {
+    return '<option value="' + p.id + '"' + (p.id === order.packId ? ' selected' : '') + '>' +
+      p.titulo + ' — ' + C.money(p.precio) + '</option>';
   }).join('');
-
-  $('#packs').innerHTML = cfg.packs.map(function (p) {
-    return '<label class="pack">' +
-      (p.destacado ? '<span class="pack__flag">Más pedido</span>' : '') +
-      '<input type="radio" name="pack" value="' + p.id + '"' + (p.id === order.packId ? ' checked' : '') + '>' +
-      '<span class="pack__mark" aria-hidden="true"></span>' +
-      '<span class="pack__txt"><b>' + p.titulo + '</b><small>' + (p.nota || '') + '</small></span>' +
-      '<span class="pack__price">' + C.money(p.precio) + '</span></label>';
-  }).join('');
-
-  $('#cities').innerHTML = cfg.envios.ciudades.map(function (c) {
-    var precio = c.precio === 0
-      ? '<span class="city__price free">Gratis</span>'
-      : '<span class="city__price">' + C.money(c.precio) + '</span>';
-    return '<label class="city">' +
-      '<input type="radio" name="ciudad" value="' + c.id + '"' + (c.id === order.ciudadId ? ' checked' : '') + '>' +
-      '<svg class="city__pin" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">' +
-        '<path d="M12 21s7-6.4 7-11a7 7 0 1 0-14 0c0 4.6 7 11 7 11Z"/><circle cx="12" cy="10" r="2.6"/></svg>' +
-      '<span class="city__txt"><b>' + c.nombre + '</b><small>' + c.eta + '</small></span>' + precio + '</label>';
-  }).join('');
-
   $('#f-ciudad').innerHTML = cfg.envios.ciudades.map(function (c) {
-    return '<option value="' + c.id + '"' + (c.id === order.ciudadId ? ' selected' : '') + '>' + c.nombre + '</option>';
+    var extra = c.precio === 0 ? 'sin costo' : C.money(c.precio);
+    return '<option value="' + c.id + '"' + (c.id === order.ciudadId ? ' selected' : '') + '>' +
+      c.nombre + ' — ' + extra + '</option>';
   }).join('');
-
-  if (P.foto) {
-    var photo = $('#shotPhoto'), can = $('#shotCan');
-    photo.addEventListener('load', function () { photo.hidden = false; if (can) can.hidden = true; });
-    photo.addEventListener('error', function () { photo.remove(); });
-    photo.src = P.foto;
-  }
 
   $$('[data-wa]').forEach(function (el) {
     el.href = C.link(null, el.getAttribute('data-wa'));
     el.target = '_blank'; el.rel = 'noopener';
   });
 
-  /* ═══════════════════════════════════════════════ 2. RESUMEN Y TOTALES */
-  function renderSummary() {
+  /* ═══════════════════════════════════════════════ 2. PEDIDO */
+  function resumen() {
     var t = C.totals(order);
-    var box = $('#summary');
-
-    box.classList.remove('is-empty');
-    var rows = [
-      '<div class="sumrow"><span>' + t.pack.titulo + ' × ' + order.cantidad +
-        '</span><span>' + C.money(t.subtotal) + '</span></div>',
-    ];
-    if (t.pct) {
-      rows.push('<div class="sumrow sumrow--save"><span>Descuento ' +
-        order.codigo.toUpperCase() + ' (-' + t.pct + '%)</span><span>-' + C.money(t.ahorro) + '</span></div>');
-    }
-    rows.push('<div class="sumrow"><span>Envío · ' + t.ciudad.nombre + '</span><span>' +
-      (t.ciudad.retiro ? 'Sin costo' : (t.envioGratis ? 'Gratis' : C.money(t.envio))) + '</span></div>');
-    rows.push('<div class="sumrow sumrow--total"><span>Total</span><span>' + C.money(t.total) + '</span></div>');
-    box.innerHTML = rows.join('');
-
-    $('#barTotal').textContent = C.money(t.total);
-    $('#barLabel').textContent = t.pack.titulo + ' × ' + order.cantidad;
-    $('#qty').textContent = order.cantidad;
-
-    // Aviso de envío gratis
-    var note = $('#shipNote');
-    if (t.faltaGratis > 0) {
-      note.hidden = false;
-      $('#shipNoteText').innerHTML = 'Te faltan <b>' + C.money(t.faltaGratis) +
-        '</b> para el envío gratis en ' + t.ciudad.nombre + '.';
-      var pct = Math.max(0, Math.min(100, (t.subtotal - t.ahorro) / cfg.envios.gratisDesde * 100));
-      $('#shipBar').style.width = pct + '%';
-    } else if (t.envioGratis) {
-      note.hidden = false;
-      $('#shipNoteText').innerHTML = '<b>Envío gratis</b> desbloqueado en ' + t.ciudad.nombre + '.';
-      $('#shipBar').style.width = '100%';
-    } else {
-      note.hidden = true;
-    }
-
-    // La dirección no aplica si retira en persona
+    var envio = t.ciudad.retiro ? 'retiro sin costo'
+              : t.envioGratis ? 'envío gratis'
+              : 'envío ' + C.money(t.envio);
+    $('#totalNote').textContent = t.pack.titulo + ' × ' + order.cantidad + ' · ' + envio +
+      ' · total ' + C.money(t.total);
     $('#wrap-direccion').hidden = !!t.ciudad.retiro;
   }
 
-  function setCiudad(id, from) {
-    order.ciudadId = id;
-    var radio = $('input[name="ciudad"][value="' + id + '"]');
-    if (radio && from !== 'radio') radio.checked = true;
-    if (from !== 'select') $('#f-ciudad').value = id;
-    renderSummary();
-  }
-
-  $$('input[name="pack"]').forEach(function (i) {
-    i.addEventListener('change', function () {
-      order.packId = i.value; renderSummary();
-      if (hasGsap && !reduced) gsap.fromTo('.sumrow--total span:last-child', { scale: 1.16 }, { scale: 1, duration: .45, ease: 'back.out(2)' });
-    });
-  });
-  $$('input[name="ciudad"]').forEach(function (i) {
-    i.addEventListener('change', function () { setCiudad(i.value, 'radio'); });
-  });
-  $('#f-ciudad').addEventListener('change', function () { setCiudad(this.value, 'select'); });
-
-  $('#plus').addEventListener('click', function () { order.cantidad = Math.min(20, order.cantidad + 1); renderSummary(); });
-  $('#minus').addEventListener('click', function () { order.cantidad = Math.max(1, order.cantidad - 1); renderSummary(); });
-
-  /* Código de descuento */
-  $('#applyCode').addEventListener('click', function () {
-    var v = $('#f-codigo').value.trim();
-    var pct = C.descuento(v);
-    var err = $('#e-codigo');
-    if (!v) { order.codigo = ''; err.textContent = ''; err.className = 'err'; renderSummary(); return; }
-    if (pct) {
-      order.codigo = v; err.textContent = 'Código aplicado: -' + pct + '%'; err.className = 'promo-ok';
-    } else {
-      order.codigo = ''; err.textContent = 'Ese código no existe o ya venció.'; err.className = 'err';
-    }
-    renderSummary();
-  });
-
-  /* ═══════════════════════════════════════════════ 3. ENVÍO DEL PEDIDO */
-  var FIELDS = ['nombre', 'telefono', 'direccion', 'notas'];
-  FIELDS.forEach(function (f) {
-    var el = $('#f-' + f);
-    if (!el) return;
+  var CAMPOS = ['nombre', 'telefono', 'direccion', 'notas'];
+  CAMPOS.forEach(function (f) {
+    var el = $('#f-' + f); if (!el) return;
     el.addEventListener('input', function () {
       order[f] = el.value;
-      var wrap = el.closest('.field');
-      if (wrap) wrap.classList.remove('has-error');
-      var err = $('#e-' + f);
-      if (err) err.textContent = '';
+      var w = el.closest('.field'); if (w) w.classList.remove('has-error');
+      var e = $('#e-' + f); if (e) e.textContent = '';
     });
   });
+  $('#f-pack').addEventListener('change', function () { order.packId = this.value; resumen(); });
+  $('#f-ciudad').addEventListener('change', function () { order.ciudadId = this.value; resumen(); });
 
   $('#orderForm').addEventListener('submit', function (e) {
     e.preventDefault();
-    FIELDS.forEach(function (f) { var el = $('#f-' + f); if (el) order[f] = el.value; });
+    CAMPOS.forEach(function (f) { var el = $('#f-' + f); if (el) order[f] = el.value; });
 
     var errs = C.validate(order);
     $$('.field').forEach(function (w) { w.classList.remove('has-error'); });
     ['nombre', 'telefono', 'ciudad', 'direccion'].forEach(function (k) {
-      var err = $('#e-' + k);
-      if (!err) return;
-      err.className = 'err';
-      err.textContent = errs[k] || '';
+      var e2 = $('#e-' + k); if (!e2) return;
+      e2.textContent = errs[k] || '';
       if (errs[k]) {
         var el = $('#f-' + k);
         if (el && el.closest('.field')) el.closest('.field').classList.add('has-error');
       }
     });
 
-    var keys = Object.keys(errs);
+    var keys = Object.keys(errs).filter(function (k) { return k !== 'pack'; });
     if (keys.length) {
-      var first = $('#f-' + (keys.indexOf('pack') === 0 ? 'nombre' : keys[0]));
+      var first = $('#f-' + keys[0]);
       if (first) first.focus();
       if (hasGsap && !reduced) gsap.fromTo('#orderForm', { x: -7 }, { x: 0, duration: .5, ease: 'elastic.out(1,0.35)' });
       return;
     }
-
     window.open(C.link(order), '_blank', 'noopener');
   });
 
-  renderSummary();
+  resumen();
 
-  /* ═══════════════════════════════════════════════ 4. EFECTOS: PESTAÑAS */
+  /* ═══════════════════════════════════════════════ 3. EFECTOS */
   var fx = window.TPPFx ? window.TPPFx($('#fxField')) : null;
 
   (function tabs() {
@@ -237,8 +135,7 @@
         (i ? ' tabindex="-1"' : '') + '>' + d.label + '</button>';
     }).join(''));
 
-    var btns = $$('.tab', list);
-    var media = $('#fxMedia');
+    var btns = $$('.tab', list), media = $('#fxMedia');
 
     function moveThumb(btn, animate) {
       var x = btn.offsetLeft - list.clientLeft, w = btn.offsetWidth;
@@ -262,21 +159,16 @@
       });
       moveThumb(btns[i], animate);
 
-      // Cada pestaña trae su propia animación; si algún día tiene un clip real
-      // en config (`video`), ese clip manda sobre la animación generada.
       if (media) {
-        if (d.video) {
-          media.innerHTML = '<video src="' + d.video + '" muted playsinline loop autoplay></video>';
-          media.hidden = false;
-        } else {
-          media.innerHTML = ''; media.hidden = true;
-        }
+        if (d.video) { media.innerHTML = '<video src="' + d.video + '" muted playsinline loop autoplay></video>'; media.hidden = false; }
+        else { media.innerHTML = ''; media.hidden = true; }
       }
       if (fx && !d.video) fx.setTema(d.tema);
-      // El tono del módulo de efectos lo decide la pestaña activa
+
       var sec = document.getElementById('efectos');
       if (d.tono && sec) {
         sec.dataset.tone = d.tono;
+        sec.style.setProperty('--bg', d.tono);
         if (toneOwner === sec) setTone(d.tono);
       }
     }
@@ -292,33 +184,29 @@
       });
     });
 
-    function init() { select(0, false); }
-    init();
-    if (document.fonts && document.fonts.ready) document.fonts.ready.then(function () {
+    select(0, false);
+    function recolocar() {
       var on = btns.filter(function (b) { return b.getAttribute('aria-selected') === 'true'; })[0] || btns[0];
       moveThumb(on, false);
-    });
-    window.addEventListener('resize', function () {
-      var on = btns.filter(function (b) { return b.getAttribute('aria-selected') === 'true'; })[0] || btns[0];
-      moveThumb(on, false);
-    });
+    }
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(recolocar);
+    window.addEventListener('resize', recolocar);
   })();
 
-  /* ═══════════════════════════════════════════════ 5. TONO DE LA PÁGINA */
-  /* El fondo del sitio va tomando la tonalidad del módulo en el que estás. */
+  /* ═══════════════════════════════════════════════ 4. TONO DE LA PÁGINA */
   var toneNow = '', toneOwner = null;
   function setTone(hex) {
     if (!hex || hex === toneNow) return;
     toneNow = hex;
     document.body.style.backgroundColor = hex;
-    document.querySelector('meta[name="theme-color"]').setAttribute('content', hex);
+    var meta = document.querySelector('meta[name="theme-color"]');
+    if (meta) meta.setAttribute('content', hex);
   }
 
   (function tones() {
     var secciones = $$('[data-tone]');
     if (!('IntersectionObserver' in window) || !secciones.length) return;
     var io = new IntersectionObserver(function (entries) {
-      // El módulo que más superficie ocupa manda sobre el tono
       var mejor = null;
       entries.forEach(function (e) {
         if (e.isIntersecting && (!mejor || e.intersectionRatio > mejor.intersectionRatio)) mejor = e;
@@ -328,21 +216,14 @@
     secciones.forEach(function (s) { io.observe(s); });
   })();
 
-  /* ═══════════════════════════════════════════════ 6. NAV Y BARRA MÓVIL */
-  var nav = $('#nav'), buybar = $('#buybar'), hero = $('#hero'), prod = $('#producto');
-  function onScroll() {
-    nav.classList.toggle('is-solid', window.scrollY > hero.offsetHeight - 90);
-    if (buybar && prod) {
-      var past = prod.getBoundingClientRect().top < window.innerHeight * .4;
-      var atEnd = window.scrollY + window.innerHeight > document.body.scrollHeight - 220;
-      buybar.classList.toggle('is-on', past && !atEnd);
-    }
-  }
+  /* ═══════════════════════════════════════════════ 5. NAV */
+  var nav = $('#nav'), hero = $('#hero');
+  function onScroll() { nav.classList.toggle('is-solid', window.scrollY > hero.offsetHeight - 90); }
   window.addEventListener('scroll', onScroll, { passive: true });
   onScroll();
 
   if ('IntersectionObserver' in window) {
-    var links = $$('.nav__links a');
+    var links = $$('.nav__side a');
     var spy = new IntersectionObserver(function (entries) {
       entries.forEach(function (e) {
         if (!e.isIntersecting) return;
@@ -354,20 +235,16 @@
     $$('main section[id]').forEach(function (s) { spy.observe(s); });
   }
 
-  /* ═══════════════════════════════════════════════ 7. ANIMACIÓN (GSAP) */
+  /* ═══════════════════════════════════════════════ 6. ANIMACIÓN */
   if (hasGsap) {
     gsap.registerPlugin(ScrollTrigger);
     gsap.defaults({ ease: 'power3.out', duration: .8 });
 
-    /* Parte cada [data-split] en palabras, respetando los <em> de acento:
-       cada <em> viaja entero dentro de su palabra para no perder la cursiva
-       ni el color. */
+    /* Parte cada [data-split] en palabras, respetando los <em> de acento. */
     function partir(el) {
       if (el.dataset.splitDone) return;
       el.dataset.splitDone = '1';
-      var salida = document.createDocumentFragment();
-
-      var ultima = null;
+      var salida = document.createDocumentFragment(), ultima = null;
 
       function palabra(contenido) {
         var sp = document.createElement('span');
@@ -377,14 +254,11 @@
         salida.appendChild(sp);
         salida.appendChild(document.createTextNode(' '));
         ultima = sp;
-        return sp;
       }
 
       Array.prototype.slice.call(el.childNodes).forEach(function (nodo) {
         if (nodo.nodeType === 3) {
           var texto = nodo.textContent;
-          // El signo que sigue a un <em> se pega a esa palabra: si no,
-          // quedaría un espacio suelto antes del punto o la coma.
           var pegado = texto.match(/^([.,;:!?)]+)/);
           if (pegado && ultima) {
             ultima.appendChild(document.createTextNode(pegado[1]));
@@ -395,7 +269,6 @@
           palabra(nodo.cloneNode(true));
         }
       });
-
       el.innerHTML = '';
       el.appendChild(salida);
     }
@@ -407,19 +280,15 @@
     }, function (ctx) {
       if (ctx.conditions.reduce) return;
 
-      /* Entrada: logo, tagline palabra a palabra, botones */
+      /* Entrada del hero: solo el eslogan, palabra a palabra */
       gsap.timeline({ defaults: { ease: 'power3.out' } })
-        .from('#heroLogo', { autoAlpha: 0, scale: .9, yPercent: 6, duration: 1.2 })
-        .from('.hero__tagline .word', { autoAlpha: 0, yPercent: 110, duration: .7, stagger: .035 }, '-=.55')
-        .from('[data-anim="hero"]', { autoAlpha: 0, y: 20, duration: .7 }, '-=.35')
-        .from('.hero__scroll', { autoAlpha: 0, duration: .6 }, '-=.3');
+        .from('.hero__claim .word', { autoAlpha: 0, yPercent: 110, duration: 1, stagger: .09 })
+        .from('.hero__scroll', { autoAlpha: 0, duration: .7 }, '-=.3');
 
-      /* Titulares: palabra a palabra al entrar en pantalla.
-         El tween se crea DENTRO de onEnter a propósito: si se creara antes,
-         `from` escondería las palabras desde el primer momento y un titular
-         cuyo disparador no llegue a saltar se quedaría invisible. */
+      /* Titulares: el tween se crea dentro de onEnter para que el texto
+         esté visible aunque el disparador no llegue a saltar. */
       $$('[data-split]').forEach(function (el) {
-        if (el.classList.contains('hero__tagline')) return;
+        if (el.classList.contains('hero__claim')) return;
         ScrollTrigger.create({
           trigger: el, start: 'top 90%', once: true,
           onEnter: function () {
@@ -430,107 +299,66 @@
         });
       });
 
-      /* Glifo que respira */
-      gsap.to('.efectos__glyph ellipse', {
-        scaleX: 1.08, yPercent: -6, duration: 1.9, ease: 'sine.inOut',
-        stagger: { each: .08, yoyo: true, repeat: -1 }, yoyo: true, repeat: -1,
-      });
-
-      /* Revelado por lotes */
       ['up', 'fx'].forEach(function (kind) {
         ScrollTrigger.batch('[data-anim="' + kind + '"]', {
-          start: 'top 88%', once: true,   // una vez y ya: no reaparece al volver a pasar
+          start: 'top 88%', once: true,
           onEnter: function (b) { gsap.from(b, { autoAlpha: 0, y: 28, duration: .8, stagger: .09, overwrite: true }); },
         });
       });
       ScrollTrigger.batch('[data-anim="stagger"]', {
-        start: 'top 86%', batchMax: 4, once: true,
-        onEnter: function (b) { gsap.from(b, { autoAlpha: 0, y: 32, scale: .98, duration: .8, stagger: .09, overwrite: true }); },
+        start: 'top 86%', once: true, batchMax: 3,
+        onEnter: function (b) { gsap.from(b, { autoAlpha: 0, y: 36, duration: .9, stagger: .12, overwrite: true }); },
       });
 
       /* Paralaje del hero */
+      gsap.to('.hero__media', {
+        yPercent: 12, scale: 1.06, ease: 'none',
+        scrollTrigger: { trigger: '.hero', start: 'top top', end: 'bottom top', scrub: .6 },
+      });
+      gsap.to('.hero__claim', {
+        yPercent: -16, autoAlpha: .3, ease: 'none',
+        scrollTrigger: { trigger: '.hero', start: 'top top', end: 'bottom top', scrub: .5 },
+      });
       gsap.to('.hero__scroll', {
         autoAlpha: 0, ease: 'none',
         scrollTrigger: { trigger: '.hero', start: 'top top', end: '35% top', scrub: true },
       });
 
-      gsap.to('#heroMedia', {
-        yPercent: 12, scale: 1.06, ease: 'none',
-        scrollTrigger: { trigger: '.hero', start: 'top top', end: 'bottom top', scrub: .6 },
-      });
-      gsap.to('#heroLogo', {
-        yPercent: -14, autoAlpha: .35, ease: 'none',
-        scrollTrigger: { trigger: '.hero', start: 'top top', end: 'bottom top', scrub: .5 },
+      /* El rótulo del pie se desplaza al pasar: da sensación de remate */
+      gsap.to('.footer__word span', {
+        xPercent: -4, ease: 'none',
+        scrollTrigger: { trigger: '.footer', start: 'top bottom', end: 'bottom bottom', scrub: .8 },
+        startAt: { xPercent: 4 },
       });
 
-      /* La lata se acerca al subir */
-      gsap.from('.shot', {
-        scale: .94, autoAlpha: .65, ease: 'none',
-        scrollTrigger: { trigger: '#producto', start: 'top 80%', end: 'top 30%', scrub: .5 },
-      });
-
-      /* Seguimiento suave del ratón en las tarjetas que hacen "pop" */
+      /* Seguimiento del ratón en las tarjetas */
       if (window.matchMedia('(hover:hover)').matches) {
-        $$('.pop').forEach(function (card) {
+        $$('.pop, .card').forEach(function (card) {
           var qx = gsap.quickTo(card, 'rotationY', { duration: .6, ease: 'power3.out' });
           var qy = gsap.quickTo(card, 'rotationX', { duration: .6, ease: 'power3.out' });
           card.addEventListener('mousemove', function (e) {
             var r = card.getBoundingClientRect();
-            qx(((e.clientX - r.left) / r.width - .5) * 9);
-            qy(((e.clientY - r.top) / r.height - .5) * -9);
+            qx(((e.clientX - r.left) / r.width - .5) * 7);
+            qy(((e.clientY - r.top) / r.height - .5) * -7);
           });
           card.addEventListener('mouseleave', function () { qx(0); qy(0); });
         });
       }
     });
 
-    // Las posiciones dependen de la altura real del texto: recalcula cuando
-    // las fuentes ya midieron y cuando todo (imágenes incluidas) terminó de cargar.
     ScrollTrigger.refresh();
     if (document.fonts && document.fonts.ready) document.fonts.ready.then(function () { ScrollTrigger.refresh(); });
     window.addEventListener('load', function () { ScrollTrigger.refresh(); });
   }
 
-  /* ═══════════════════════════════════════════════ 8. VÍDEO DEL HERO */
-  /* El clip principal vive en el HTML, así que se ve aunque este archivo
-     falle. Aquí solo se encadenan clips adicionales si los hay en config. */
+  /* ═══════════════════════════════════════════════ 7. VÍDEO DEL HERO */
   (function heroVideo() {
-    var media = $('#heroMedia'), principal = $('#heroVideo');
-    if (!media || !principal) return;
-
-    if (reduced) { principal.pause(); return; }
-
-    // El vídeo solo se revela cuando de verdad está pintando fotogramas;
-    // hasta entonces manda el póster, así que el hero nunca se ve plano.
-    principal.addEventListener('playing', function () { principal.classList.add('is-on'); });
-    principal.addEventListener('error', function () { principal.classList.remove('is-on'); });
-
-    // Algunos navegadores ignoran el autoplay del atributo hasta que se pide
-    var intento = principal.play();
+    var v = $('#heroVideo');
+    if (!v) return;
+    if (reduced) { v.pause(); return; }
+    v.addEventListener('playing', function () { v.classList.add('is-on'); });
+    v.addEventListener('error', function () { v.classList.remove('is-on'); });
+    var intento = v.play();
     if (intento && intento.catch) intento.catch(function () {});
-
-    var extra = (cfg.heroVideos || []).slice(1);
-    if (!extra.length) return;
-
-    principal.loop = false;
-    var todos = [principal].concat(extra.map(function (c) {
-      var v = document.createElement('video');
-      v.src = c.src;
-      if (c.poster) v.poster = c.poster;
-      v.muted = true; v.playsInline = true; v.preload = 'metadata';
-      v.setAttribute('muted', ''); v.setAttribute('playsinline', '');
-      media.appendChild(v);
-      return v;
-    }));
-    var i = 0;
-    todos.forEach(function (v) {
-      v.addEventListener('ended', function () {
-        i = (i + 1) % todos.length;
-        todos.forEach(function (x, n) { x.classList.toggle('is-on', n === i); });
-        todos[i].currentTime = 0;
-        var p = todos[i].play();
-        if (p && p.catch) p.catch(function () {});
-      });
-    });
   })();
 })();
