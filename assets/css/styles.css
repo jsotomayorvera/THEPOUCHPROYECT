@@ -289,7 +289,7 @@ main section[id]{scroll-margin-top:92px}
 .pillar{background:var(--bg); padding:clamp(26px,3vw,40px); display:grid; gap:12px; align-content:start}
 .pillar__n{font-family:var(--label); font-size:14px; letter-spacing:.22em; color:var(--muted)}
 .pillar h3{font-family:var(--display); font-size:clamp(26px,3vw,40px); text-transform:uppercase; line-height:.95}
-.pillar p{color:var(--muted); font-size:15.5px}
+.pillar > p:not([class]){color:var(--muted); font-size:15.5px}
 .pillar__icon{width:40px; height:40px; color:var(--ink)}
 .is-night .pillar__icon{color:var(--volt)}
 
@@ -395,7 +395,7 @@ main section[id]{scroll-margin-top:92px}
 }
 .soon-card .eyebrow{color:var(--muted)}
 .soon-card h3{font-family:var(--display); text-transform:uppercase; font-size:clamp(24px,2.6vw,32px); line-height:.95}
-.soon-card p{color:var(--muted); font-size:15.5px}
+.soon-card > p:not([class]){color:var(--muted); font-size:15.5px}
 
 /* ---------------------------------------------------------- 8. CIENCIA */
 .facts{display:grid; gap:2px; background:var(--hairline); border:1px solid var(--hairline); border-radius:var(--r-lg); overflow:hidden}
@@ -405,36 +405,8 @@ main section[id]{scroll-margin-top:92px}
 .fact__n{font-family:var(--display); font-size:clamp(40px,5vw,64px); line-height:.86; color:var(--fg)}
 .fact__n small{font-size:.44em; letter-spacing:.02em}
 .fact h3{font-family:var(--label); font-size:17px; letter-spacing:.14em; text-transform:uppercase; font-weight:600}
-.fact p{color:var(--muted); font-size:14.5px}
+.fact > p:not([class]){color:var(--muted); font-size:14.5px}
 .fact cite{display:block; font-style:normal; font-size:12.5px; color:var(--muted); opacity:.8}
-
-.mech{display:grid; gap:clamp(26px,4vw,52px); margin-top:clamp(44px,5vw,76px)}
-@media (min-width:920px){ .mech{grid-template-columns:minmax(0,1fr) minmax(0,1fr); align-items:center} }
-.mech__body{display:grid; gap:18px}
-.mech__body p{color:var(--muted)}
-.mech__list{display:grid; gap:14px; margin-top:6px}
-.mech__list li{display:grid; grid-template-columns:auto 1fr; gap:14px; align-items:start}
-.mech__list li::before{
-  content:''; width:10px; height:10px; margin-top:8px; border-radius:50%;
-  background:var(--volt); box-shadow:0 0 0 4px color-mix(in srgb, var(--volt) 22%, transparent);
-}
-
-/* Tabla comparativa */
-.compare{width:100%; border-collapse:collapse; font-size:15px; overflow:hidden}
-.compare caption{text-align:left; font-family:var(--label); letter-spacing:.2em; text-transform:uppercase; color:var(--muted); font-size:13px; padding-bottom:14px}
-.compare th, .compare td{padding:14px 12px; text-align:left; border-bottom:1px solid var(--hairline); vertical-align:middle}
-.compare thead th{font-family:var(--label); letter-spacing:.14em; text-transform:uppercase; font-size:14px; font-weight:600}
-.compare thead th:first-child{width:34%}
-.compare tbody th{font-weight:500; color:var(--muted); font-family:var(--body); font-size:14.5px; letter-spacing:0; text-transform:none}
-.compare .own{background:color-mix(in srgb, var(--volt) 9%, transparent)}
-.compare .yes{color:var(--ink); font-weight:700}
-.is-night .compare .yes{color:var(--volt)}
-.compare .no{color:var(--muted)}
-.table-scroll{overflow-x:auto; -webkit-overflow-scrolling:touch; margin-top:clamp(40px,5vw,72px)}
-
-.sources{margin-top:28px; font-size:13px; color:var(--muted); display:grid; gap:7px}
-.sources a{color:inherit; text-underline-offset:3px}
-.sources a:hover{color:var(--fg)}
 
 /* ------------------------------------------------------------ 9. RITUAL */
 .steps{counter-reset:s; display:grid; gap:2px; background:var(--hairline); border:1px solid var(--hairline); border-radius:var(--r-lg); overflow:hidden}
@@ -446,7 +418,7 @@ main section[id]{scroll-margin-top:92px}
   color:color-mix(in srgb, var(--fg) 16%, transparent);
 }
 .step h3{font-family:var(--display); font-size:clamp(22px,2.4vw,30px); text-transform:uppercase; line-height:.98}
-.step p{color:var(--muted); font-size:15.5px}
+.step > p:not([class]){color:var(--muted); font-size:15.5px}
 
 /* ------------------------------------------------------- 10. TESTIMONIOS */
 .voices{display:grid; gap:18px}
@@ -479,7 +451,7 @@ main section[id]{scroll-margin-top:92px}
   display:grid; gap:12px; align-content:start; background:var(--card);
 }
 .channel h3{font-family:var(--display); font-size:clamp(24px,2.8vw,34px); text-transform:uppercase; line-height:.95}
-.channel p{color:var(--muted); font-size:15.5px}
+.channel > p:not([class]){color:var(--muted); font-size:15.5px}
 
 /* --------------------------------------------------------------- 12. FAQ */
 .faq{display:grid; gap:0; border-top:1px solid var(--hairline)}
@@ -506,7 +478,7 @@ main section[id]{scroll-margin-top:92px}
   padding:clamp(24px,3vw,38px); display:grid; gap:12px; background:var(--card);
 }
 .care h3{font-family:var(--label); font-size:19px; letter-spacing:.16em; text-transform:uppercase; font-weight:600}
-.care p{color:var(--muted); font-size:15px; max-width:76ch}
+.care > p:not([class]){color:var(--muted); font-size:15px; max-width:76ch}
 
 /* ------------------------------------------------------------ 14. CIERRE */
 .cta-final{position:relative; overflow:hidden; isolation:isolate}
