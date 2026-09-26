@@ -1,8 +1,9 @@
 # Clips del hero
 
-El banner principal está preparado para vídeo. Mientras no haya clips, muestra un
-fondo animado de respaldo (barrido de velocidad + grano) que ya da la vibra correcta,
-así que el sitio nunca se ve roto.
+El banner principal está preparado para vídeo, con el formato de referencia: el logo
+grande al centro sin caja detrás, la barra de navegación encima y el vídeo a pantalla
+completa por debajo. Mientras no haya clips muestra un campo animado en verde profundo,
+así que el sitio nunca se ve roto y el logo siempre se lee.
 
 ## Cómo añadir tus vídeos
 

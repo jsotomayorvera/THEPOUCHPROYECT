@@ -18,6 +18,7 @@
       intensity: 1,    // fuerza del color (0–1.4)
       speed: 1,        // multiplicador de velocidad
       hue: 150,        // matiz base: 150 = verde menta de marca
+      dark: false,     // true = base verde profunda (hero sobre vídeo)
     }, opts || {});
 
     var w = 0, h = 0, dpr = 1;
@@ -63,9 +64,10 @@
       var r = b.r * Math.max(w, h) * 0.62;
       var g = ctx.createRadialGradient(cx, cy, 0, cx, cy, r);
       var hh = hue + b.h;
-      g.addColorStop(0, 'hsla(' + hh + ',62%,84%,' + (b.a * o.intensity) + ')');
-      g.addColorStop(0.55, 'hsla(' + (hh + 26) + ',58%,88%,' + (b.a * 0.45 * o.intensity) + ')');
-      g.addColorStop(1, 'hsla(' + (hh + 50) + ',55%,92%,0)');
+      var L = o.dark ? 34 : 84;
+      g.addColorStop(0, 'hsla(' + hh + ',62%,' + L + '%,' + (b.a * o.intensity) + ')');
+      g.addColorStop(0.55, 'hsla(' + (hh + 26) + ',58%,' + (L + 4) + '%,' + (b.a * 0.45 * o.intensity) + ')');
+      g.addColorStop(1, 'hsla(' + (hh + 50) + ',55%,' + (L + 8) + '%,0)');
       ctx.fillStyle = g;
       ctx.fillRect(0, 0, w, h);
     }
@@ -97,8 +99,8 @@
       hue += (hueTarget - hue) * 0.045;
 
       var base = ctx.createLinearGradient(0, 0, w * 0.35, h);
-      base.addColorStop(0, '#FBF7EE');
-      base.addColorStop(1, '#F1EBDC');
+      if (o.dark) { base.addColorStop(0, '#02150D'); base.addColorStop(1, '#003F25'); }
+      else        { base.addColorStop(0, '#FBF7EE'); base.addColorStop(1, '#F1EBDC'); }
       ctx.fillStyle = base;
       ctx.fillRect(0, 0, w, h);
 

@@ -4,14 +4,14 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>The Pouch Project — Rinde sin límites</title>
-<meta name="description" content="La primera tienda de pouches de rendimiento del Ecuador. Foco, energía e hidratación en un formato limpio, discreto y portátil. Sin azúcar, sin tabaco. Pídelo por WhatsApp.">
-<meta name="theme-color" content="#F7F2E6">
+<meta name="description" content="Pouches de rendimiento en Ecuador. NZE Peppermint Focus: foco limpio sin cafeína, sin azúcar y sin tabaco. Pedidos por WhatsApp con envío a todo el país.">
+<meta name="theme-color" content="#003F25">
 <link rel="canonical" href="https://thepouchproject.ec/">
 
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="The Pouch Project">
 <meta property="og:title" content="The Pouch Project — Rinde sin límites">
-<meta property="og:description" content="Pouches de rendimiento en Ecuador. Foco · Energía · Hidratación. Sin azúcar, sin tabaco. Pídelo por WhatsApp.">
+<meta property="og:description" content="Pouches de rendimiento en Ecuador. Foco limpio, sin azúcar y sin tabaco. Pídelo por WhatsApp.">
 <meta property="og:image" content="assets/img/icon-512.png">
 <meta property="og:locale" content="es_EC">
 <meta name="twitter:card" content="summary_large_image">
@@ -26,73 +26,130 @@
 <link rel="stylesheet" href="assets/css/styles.css">
 
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"Store","name":"The Pouch Project","description":"Tienda de pouches de rendimiento: foco, energía e hidratación. Sin azúcar, sin tabaco.","areaServed":"EC","slogan":"Rinde sin límites"}
+{"@context":"https://schema.org","@type":"Store","name":"The Pouch Project","description":"Tienda de pouches de rendimiento en Ecuador.","areaServed":"EC","slogan":"Rinde sin límites"}
 </script>
 </head>
 <body>
 
-<a class="visually-hidden" href="#producto">Saltar al producto</a>
+<a class="visually-hidden" href="#pedido">Saltar al pedido</a>
 
-<!-- ══════════════════════════════════════════════ BARRA SUPERIOR -->
-<div class="topbar marquee" aria-hidden="true">
-  <div class="marquee__track">
-    <span><i class="dot"></i> RINDE SIN LÍMITES · ENVÍOS A TODO EL ECUADOR · RETIRO EN FITNESS INC · 2 LATAS POR $20 · SIN AZÚCAR · SIN TABACO · PEDIDOS POR WHATSAPP ·&nbsp;</span>
-    <span><i class="dot"></i> RINDE SIN LÍMITES · ENVÍOS A TODO EL ECUADOR · RETIRO EN FITNESS INC · 2 LATAS POR $20 · SIN AZÚCAR · SIN TABACO · PEDIDOS POR WHATSAPP ·&nbsp;</span>
-  </div>
-</div>
-
-<!-- ══════════════════════════════════════════════════ CABECERA -->
-<header class="header" id="header">
-  <div class="wrap header__inner">
-    <a class="brand" href="#top" aria-label="The Pouch Project — inicio">
-      <img src="assets/img/logo-full.png" alt="The Pouch Project" width="1024" height="784">
+<!-- ═══════════════════════════════════════════════════════ NAV -->
+<header class="nav" id="nav">
+  <div class="wrap nav__inner">
+    <a class="nav__brand" href="#top" aria-label="The Pouch Project — inicio">
+      <img class="on-hero"  src="assets/img/logo-cream.png" alt="The Pouch Project" width="1024" height="784">
+      <img class="on-solid" src="assets/img/logo-full.png"  alt="" aria-hidden="true" width="1024" height="784">
     </a>
-    <nav class="nav" aria-label="Principal">
-      <a href="#efectos">Efectos</a>
+    <nav class="nav__links" aria-label="Principal">
       <a href="#producto">Producto</a>
-      <a href="#ciencia">La ciencia</a>
+      <a href="#efectos">Efectos</a>
+      <a href="#formula">Fórmula</a>
       <a href="#ritual">Cómo se usa</a>
-      <a href="#donde">Dónde comprar</a>
+      <a href="#pedido">Pedir</a>
     </nav>
-    <a class="btn header__cta" data-wa="general" href="#producto">Pedir <span>por WhatsApp</span></a>
+    <a class="btn nav__cta" href="#pedido">Pedir <span>ahora</span></a>
   </div>
 </header>
 
 <main id="top">
 
 <!-- ══════════════════════════════════════════════════════ HERO -->
-<section class="hero" id="hero">
+<section class="hero" id="hero" aria-label="The Pouch Project">
   <canvas class="hero__canvas" id="heroField" aria-hidden="true"></canvas>
   <div class="hero__media" id="heroMedia" aria-hidden="true"></div>
   <div class="hero__veil" aria-hidden="true"></div>
-  <div class="grain" aria-hidden="true"></div>
 
   <div class="wrap hero__inner">
-    <p class="eyebrow hero__kicker" data-anim="hero">La primera tienda de pouches de rendimiento del Ecuador</p>
-    <h1 class="display h1 grad">
-      <span class="line" data-anim="hero">Rinde</span>
-      <span class="line" data-anim="hero">sin límites</span>
-    </h1>
-    <p class="hero__sub" data-anim="hero">
-      Foco, energía e hidratación en un pouch. Se coloca entre labio y encía y trabaja
-      mientras tú entrenas, manejas o estudias. Sin azúcar. Sin tabaco. Sin cargar lata.
-    </p>
+    <img class="hero__logo" id="heroLogo" src="assets/img/logo-cream.png"
+         alt="The Pouch Project" width="1024" height="784" fetchpriority="high">
+    <p class="hero__tagline" data-split>Rinde sin límites. Foco limpio en un pouch, sin azúcar y sin tabaco.</p>
     <div class="hero__actions" data-anim="hero">
-      <a class="btn btn--wa" data-wa="hero" href="#producto"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2 22l5.25-1.38a9.87 9.87 0 0 0 4.79 1.22h.01c5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.82 9.82 0 0 0 12.04 2Zm4.52 12.97c-.25-.12-1.47-.72-1.69-.81-.23-.08-.39-.12-.56.13-.16.24-.64.8-.79.97-.14.16-.29.19-.54.06-.25-.12-1.05-.39-1.99-1.23-.74-.66-1.24-1.47-1.38-1.72-.15-.25-.02-.38.11-.5.11-.11.25-.29.37-.43.13-.15.17-.25.25-.41.08-.17.04-.31-.02-.43-.06-.12-.56-1.35-.77-1.85-.2-.48-.41-.42-.56-.43h-.48c-.17 0-.43.06-.66.31-.23.25-.86.85-.86 2.07 0 1.21.88 2.39 1.01 2.55.12.17 1.74 2.65 4.21 3.72.59.25 1.05.4 1.4.52.59.19 1.13.16 1.55.1.47-.07 1.47-.6 1.67-1.18.21-.58.21-1.07.15-1.18-.06-.1-.23-.16-.48-.29Z"/></svg> Pídelo por WhatsApp</a>
-      <a class="btn btn--ghost" href="#efectos">Ver cómo actúa</a>
+      <a class="btn btn--cream" href="#pedido">Pedir ahora</a>
+      <a class="btn btn--ghost" href="#producto" style="--btn-fg:var(--cream)">Ver el producto</a>
     </div>
-    <ul class="hero__meta" data-anim="hero">
-      <li>Foco</li><li>Energía</li><li>Hidratación</li><li>Cero azúcar</li>
-    </ul>
   </div>
+
+  <a class="hero__scroll" href="#declaracion" aria-label="Bajar">Desliza<i></i></a>
 </section>
 
 <div class="valuebar marquee" aria-hidden="true">
   <div class="marquee__track">
-    <span>MENOS LATA <b class="sep">·</b> MÁS RENDIMIENTO <b class="sep">·</b> FOCO LIMPIO <b class="sep">·</b> SIN NERVIOS, SIN BAJÓN <b class="sep">·</b> TU RENDIMIENTO, EN EL BOLSILLO <b class="sep">·</b>&nbsp;</span>
-    <span>MENOS LATA <b class="sep">·</b> MÁS RENDIMIENTO <b class="sep">·</b> FOCO LIMPIO <b class="sep">·</b> SIN NERVIOS, SIN BAJÓN <b class="sep">·</b> TU RENDIMIENTO, EN EL BOLSILLO <b class="sep">·</b>&nbsp;</span>
+    <span>FOCO LIMPIO <b class="sep">·</b> SIN CAFEÍNA <b class="sep">·</b> SIN AZÚCAR <b class="sep">·</b> SIN TABACO <b class="sep">·</b> ENVÍOS A TODO EL ECUADOR <b class="sep">·</b> PEDIDOS POR WHATSAPP <b class="sep">·</b>&nbsp;</span>
+    <span>FOCO LIMPIO <b class="sep">·</b> SIN CAFEÍNA <b class="sep">·</b> SIN AZÚCAR <b class="sep">·</b> SIN TABACO <b class="sep">·</b> ENVÍOS A TODO EL ECUADOR <b class="sep">·</b> PEDIDOS POR WHATSAPP <b class="sep">·</b>&nbsp;</span>
   </div>
 </div>
+
+<!-- ══════════════════════════════════════════════ DECLARACIÓN -->
+<section class="section surface-ink" id="declaracion">
+  <div class="wrap statement">
+    <svg class="statement__icon" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.2"
+         stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" data-anim="up">
+      <path d="M9 19h26v12a9 9 0 0 1-9 9h-8a9 9 0 0 1-9-9V19Z"/>
+      <path d="M35 22h3.5a4.5 4.5 0 0 1 0 9H35"/>
+      <path d="M17 12c0-2 1.6-2.6 1.6-4.6M24 12c0-2 1.6-2.6 1.6-4.6"/>
+    </svg>
+    <img class="statement__logo" src="assets/img/logo-cream.png" alt="The Pouch Project"
+         width="1024" height="784" data-anim="up">
+    <p data-split id="statementCopy"></p>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════ PRODUCTO -->
+<section class="section surface-2" id="producto">
+  <div class="wrap">
+    <div class="section-head split">
+      <div>
+        <p class="eyebrow" data-anim="up">El producto</p>
+        <h2 class="display h2 grad" data-split>Un pouch, una dosis</h2>
+      </div>
+      <p class="lede" data-anim="up">Por ahora traemos una sola referencia y la traemos bien.
+        Eliges el pack aquí y terminas el pedido más abajo.</p>
+    </div>
+
+    <div class="product">
+      <div class="shot pop" data-anim="up">
+        <span class="shot__badge">En stock</span>
+        <img class="shot__photo" id="shotPhoto" alt="Lata de NZE Peppermint" hidden>
+        <div class="shot__can" id="shotCan">
+          <span class="sm">The Pouch Project</span>
+          <span class="mk" id="shotName">NZE<br>Peppermint</span>
+          <span class="sm" id="shotUnits">15 pouches</span>
+        </div>
+      </div>
+
+      <div class="buy">
+        <div data-anim="up">
+          <p class="eyebrow" style="margin-bottom:10px" id="prodLinea">Focus · Nootropic Pouches</p>
+          <h3 class="display h3" id="prodNombre">NZE Peppermint</h3>
+          <p class="lede" style="margin-top:10px; font-size:16px" id="prodResumen"></p>
+        </div>
+
+        <ul class="seals" id="seals" data-anim="up"></ul>
+
+        <fieldset data-anim="up">
+          <legend class="fieldset-label" style="margin-bottom:10px">Sabor</legend>
+          <div class="flavours" id="flavours"></div>
+        </fieldset>
+
+        <fieldset data-anim="up">
+          <legend class="fieldset-label" style="margin-bottom:10px">Pack</legend>
+          <div class="packs" id="packs"></div>
+        </fieldset>
+
+        <div data-anim="up">
+          <p class="fieldset-label" style="margin-bottom:10px">Cantidad</p>
+          <div class="qty">
+            <button type="button" id="minus" aria-label="Quitar uno">−</button>
+            <output id="qty" for="minus plus" aria-live="polite">1</output>
+            <button type="button" id="plus" aria-label="Añadir uno">+</button>
+          </div>
+        </div>
+
+        <a class="btn btn--block" href="#pedido" data-anim="up">Continuar al pedido</a>
+      </div>
+    </div>
+  </div>
+</section>
 
 <!-- ═══════════════════════════════════════════════════ EFECTOS -->
 <section class="section efectos" id="efectos" aria-labelledby="efectosTitle">
@@ -101,7 +158,7 @@
   <div class="grain" aria-hidden="true"></div>
 
   <div class="wrap efectos__inner">
-    <h2 class="display h2 grad efectos__title" id="efectosTitle" data-anim="fx">Efectos<br>inmediatos</h2>
+    <h2 class="display h2 grad efectos__title" id="efectosTitle" data-split>Efectos inmediatos</h2>
 
     <svg class="efectos__glyph" viewBox="0 0 120 90" aria-hidden="true">
       <g fill="none" stroke="currentColor" stroke-width="1.1">
@@ -149,131 +206,31 @@
   </div>
 </section>
 
-<!-- ══════════════════════════════════════════════════ PRODUCTO -->
-<section class="section surface-2" id="producto">
+<!-- ═══════════════════════════════════════════════════ FÓRMULA -->
+<section class="section surface-mint" id="formula">
   <div class="wrap">
-    <div class="section-head split" data-anim="up">
+    <div class="section-head split">
       <div>
-        <p class="eyebrow">Etapa 1 · disponible ahora</p>
-        <h2 class="display h2 grad">Arma tu pedido</h2>
+        <p class="eyebrow" data-anim="up">Qué lleva dentro</p>
+        <h2 class="display h2 grad" data-split>Tres activos, cero ruido</h2>
       </div>
-      <p class="lede">Eliges, nosotros confirmamos por WhatsApp. Sin carrito, sin cuenta,
-        sin datos de tarjeta: el mensaje llega listo y tú solo lo envías.</p>
+      <p class="lede" data-anim="up">Sin cafeína, sin azúcar y sin edulcorantes artificiales.
+        Lo que hace el trabajo son estos tres.</p>
     </div>
-
-    <div class="shop">
-      <div class="pack" data-anim="up">
-        <span class="pack__badge">En stock</span>
-        <img class="pack__photo" id="packPhoto" alt="Lata de NZE Peppermint sobre hojas de menta" hidden>
-        <div class="pack__can" id="packCan">
-          <span class="sm">The Pouch Project</span>
-          <span class="mk" id="packName">NZE<br>Peppermint</span>
-          <span class="sm" id="packUnits">15 pouches</span>
-        </div>
-      </div>
-
-      <form class="buy" id="buyForm" data-anim="up">
-        <div>
-          <p class="eyebrow" style="margin-bottom:12px" id="prodCat">Foco · sin cafeína</p>
-          <h3 class="display h3" id="prodName">NZE Peppermint</h3>
-          <p class="lede" style="margin-top:12px; font-size:16px" id="prodDesc"></p>
-        </div>
-
-        <ul class="buy__tags" id="prodTags"></ul>
-
-        <fieldset style="border:0; padding:0; margin:0">
-          <legend class="eyebrow" style="margin-bottom:12px">Presentación</legend>
-          <div class="opts" id="opts"></div>
-        </fieldset>
-
-        <div>
-          <p class="eyebrow" style="margin-bottom:12px">Cantidad</p>
-          <div class="qty">
-            <button type="button" id="minus" aria-label="Quitar uno">−</button>
-            <output id="qty" for="minus plus" aria-live="polite">1</output>
-            <button type="button" id="plus" aria-label="Añadir uno">+</button>
-          </div>
-        </div>
-
-        <dl class="total">
-          <dt>Total estimado</dt>
-          <dd id="total">$12</dd>
-        </dl>
-
-        <a class="btn btn--wa btn--block" id="buyCta" href="#"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2 22l5.25-1.38a9.87 9.87 0 0 0 4.79 1.22h.01c5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.82 9.82 0 0 0 12.04 2Zm4.52 12.97c-.25-.12-1.47-.72-1.69-.81-.23-.08-.39-.12-.56.13-.16.24-.64.8-.79.97-.14.16-.29.19-.54.06-.25-.12-1.05-.39-1.99-1.23-.74-.66-1.24-1.47-1.38-1.72-.15-.25-.02-.38.11-.5.11-.11.25-.29.37-.43.13-.15.17-.25.25-.41.08-.17.04-.31-.02-.43-.06-.12-.56-1.35-.77-1.85-.2-.48-.41-.42-.56-.43h-.48c-.17 0-.43.06-.66.31-.23.25-.86.85-.86 2.07 0 1.21.88 2.39 1.01 2.55.12.17 1.74 2.65 4.21 3.72.59.25 1.05.4 1.4.52.59.19 1.13.16 1.55.1.47-.07 1.47-.6 1.67-1.18.21-.58.21-1.07.15-1.18-.06-.1-.23-.16-.48-.29Z"/></svg> Pedir por WhatsApp</a>
-
-        <p class="buy__note">
-          Se abre WhatsApp con tu pedido escrito. Confirmas retiro en Fitness Inc o envío a tu ciudad,
-          y coordinamos el pago ahí mismo. Precios en USD.
-        </p>
-      </form>
-    </div>
-
-    <div class="soon" id="soon"></div>
-  </div>
-</section>
-
-<!-- ═══════════════════════════════════════════════════ CIENCIA -->
-<section class="section surface-mint" id="ciencia">
-  <div class="wrap">
-    <div class="section-head split" data-anim="up">
-      <div>
-        <p class="eyebrow">Por qué el formato importa</p>
-        <h2 class="display h2 grad">La boca es<br>la vía rápida</h2>
-      </div>
-      <p class="lede">El activo no cambia. Cambia por dónde entra. Absorber por la mucosa de la boca
-        acorta el camino hacia la sangre frente a tragar una cápsula o una lata.</p>
-    </div>
-
-    <div class="facts">
-      <article class="fact" data-anim="stagger">
-        <p class="fact__n">0<small> cafeína</small></p>
-        <h3>Foco sin estimulante</h3>
-        <p>Esta referencia no lleva cafeína ni azúcar ni edulcorantes artificiales. El foco viene de los
-          activos, no de un golpe de estimulante, así que no hay nervios ni bajón que gestionar.</p>
-        <cite>Formulación declarada en la lata</cite>
-      </article>
-      <article class="fact" data-anim="stagger">
-        <p class="fact__n">600<small> mg</small></p>
-        <h3>Alpha GPC</h3>
-        <p>Precursor de colina que cruza al cerebro y alimenta la acetilcolina. Con 600 mg, un ensayo
-          en hombres entrenados midió un 14 % más de fuerza pico en press de banca frente a placebo.</p>
-        <cite>Ziegenfuss et al., 2008 · revisión en Examine</cite>
-      </article>
-      <article class="fact" data-anim="stagger">
-        <p class="fact__n">L-Tyr<small>osina</small></p>
-        <h3>Reserva bajo presión</h3>
-        <p>Precursor de dopamina y noradrenalina. La revisión de referencia concluye que ayuda sobre
-          todo cuando el sistema está exigido: estrés agudo, frío, ruido o carga mental alta.</p>
-        <cite>Jongkees et al., J. Psychiatr. Res. 2015</cite>
-      </article>
-      <article class="fact" data-anim="stagger">
-        <p class="fact__n">L-The<small>anina</small></p>
-        <h3>Atención tranquila</h3>
-        <p>Aminoácido del té verde, estudiado junto a la L-Tirosina por su efecto sobre marcadores de
-          estrés y desempeño cognitivo en tareas de alta exigencia.</p>
-        <cite>Stress, 2024 · ensayo con L-teanina y L-tirosina</cite>
-      </article>
-    </div>
-
-    <p class="buy__note" style="margin-top:26px; max-width:74ch" data-anim="up">
-      La evidencia más clara sobre esta <em>vía</em> de absorción se midió con cafeína en goma de mascar:
-      el pico en sangre llegó entre los 44 y 80 minutos frente a 84–120 con cápsulas tragadas. Mide la vía,
-      no este producto, que es sin cafeína. Información educativa: no sustituye consejo médico
-      ni constituye una promesa de resultados. Las fuentes completas están en <code>docs/CIENCIA.md</code>.
-    </p>
+    <div class="rail" id="ingredientes"></div>
+    <p class="rail__hint">Desliza para ver los tres →</p>
   </div>
 </section>
 
 <!-- ════════════════════════════════════════════════════ RITUAL -->
 <section class="section" id="ritual">
   <div class="wrap">
-    <div class="section-head split" data-anim="up">
+    <div class="section-head split">
       <div>
-        <p class="eyebrow">Se aprende en 20 segundos</p>
-        <h2 class="display h2 grad">Cómo se usa</h2>
+        <p class="eyebrow" data-anim="up">Se aprende en 20 segundos</p>
+        <h2 class="display h2 grad" data-split>Cómo se usa</h2>
       </div>
-      <p class="lede">No se mastica, no se traga y no se fuma. Se coloca y se olvida.</p>
+      <p class="lede" data-anim="up">No se mastica, no se traga y no se fuma. Se coloca y se olvida.</p>
     </div>
 
     <div class="steps">
@@ -293,7 +250,7 @@
       </article>
     </div>
 
-    <div class="care" style="margin-top:24px" data-anim="up">
+    <div class="care" style="margin-top:22px" data-anim="up">
       <h3>Uso responsable</h3>
       <p>Suplemento alimenticio para adultos. No apto para menores de 18 años, embarazadas ni personas
         en lactancia. Si tomas medicación, tienes una condición médica o dudas sobre algún ingrediente,
@@ -303,31 +260,90 @@
   </div>
 </section>
 
-<!-- ═══════════════════════════════════════════════════════ DÓNDE -->
-<section class="section surface-3" id="donde">
+<!-- ═══════════════════════════════════════════════════ PEDIDO -->
+<section class="section surface-2" id="pedido">
   <div class="wrap">
-    <div class="section-head split" data-anim="up">
+    <div class="section-head split">
       <div>
-        <p class="eyebrow">Dos formas de tenerlo hoy</p>
-        <h2 class="display h2 grad">Dónde<br>conseguirlo</h2>
+        <p class="eyebrow" data-anim="up">Elige tu ciudad</p>
+        <h2 class="display h2 grad" data-split>Haz tu pedido</h2>
       </div>
-      <p class="lede">Retiras en el gym o te lo enviamos. En ambos casos el pedido arranca por
-        WhatsApp y se confirma en minutos.</p>
+      <p class="lede" data-anim="up">Coordinamos todo por WhatsApp. Confirmamos disponibilidad,
+        pago y hora de entrega antes de que pagues nada.</p>
     </div>
 
-    <div class="channels">
-      <article class="channel" data-anim="stagger">
-        <p class="eyebrow">Punto de venta</p>
-        <h3 id="pvName">Fitness Inc</h3>
-        <p id="pvDetail">Retiro en mostrador, sin costo.</p>
-        <a class="btn btn--ghost" data-wa="retiro" href="#" style="margin-top:6px; justify-self:start">Coordinar retiro</a>
-      </article>
-      <article class="channel" data-anim="stagger">
-        <p class="eyebrow">A tu puerta</p>
-        <h3 id="shipTitle">Envíos a todo el país</h3>
-        <p id="shipDetail">Servientrega / Laar. 1–3 días laborables.</p>
-        <a class="btn btn--ghost" data-wa="envio" href="#" style="margin-top:6px; justify-self:start">Cotizar envío</a>
-      </article>
+    <div class="order">
+      <div data-anim="up">
+        <fieldset>
+          <legend class="fieldset-label" style="margin-bottom:12px">A dónde va</legend>
+          <div class="cities" id="cities"></div>
+        </fieldset>
+
+        <div class="ship-note" id="shipNote" hidden>
+          <p id="shipNoteText"></p>
+          <div class="bar"><i id="shipBar"></i></div>
+        </div>
+
+        <p class="cutoff">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+            <circle cx="12" cy="12" r="9"/><path d="M12 7v5l3.2 2"/>
+          </svg>
+          <span id="cutoffText"></span>
+        </p>
+      </div>
+
+      <form class="form" id="orderForm" novalidate data-anim="up">
+        <div>
+          <p class="eyebrow" style="margin-bottom:8px">Tu pedido</p>
+          <p style="font-size:14.5px; color:var(--muted)">Al enviar se abre WhatsApp con el detalle listo.
+            No se cobra nada automáticamente.</p>
+        </div>
+
+        <div class="form__summary" id="summary"></div>
+
+        <div class="field">
+          <label for="f-nombre">Nombre completo</label>
+          <input id="f-nombre" name="nombre" type="text" autocomplete="name" placeholder="Tu nombre y apellido">
+          <p class="err" id="e-nombre"></p>
+        </div>
+
+        <div class="grid-2">
+          <div class="field">
+            <label for="f-telefono">Teléfono</label>
+            <input id="f-telefono" name="telefono" type="tel" inputmode="numeric" autocomplete="tel" placeholder="09XXXXXXXX">
+            <p class="err" id="e-telefono"></p>
+          </div>
+          <div class="field">
+            <label for="f-ciudad">Ciudad</label>
+            <select id="f-ciudad" name="ciudad"></select>
+            <p class="err" id="e-ciudad"></p>
+          </div>
+        </div>
+
+        <div class="field" id="wrap-direccion">
+          <label for="f-direccion">Dirección de entrega</label>
+          <input id="f-direccion" name="direccion" type="text" autocomplete="street-address" placeholder="Calle principal, número, referencia">
+          <p class="err" id="e-direccion"></p>
+        </div>
+
+        <div class="field">
+          <label for="f-notas">Notas para la entrega</label>
+          <textarea id="f-notas" name="notas" placeholder="Horario preferido, punto de referencia"></textarea>
+          <small>Opcional, pero ayuda a que llegue a la primera.</small>
+        </div>
+
+        <div class="promo">
+          <div class="field">
+            <label for="f-codigo">Código de descuento</label>
+            <input id="f-codigo" name="codigo" type="text" autocapitalize="characters" placeholder="POUCH10">
+            <p class="err" id="e-codigo"></p>
+          </div>
+          <button class="btn btn--ghost" type="button" id="applyCode">Aplicar</button>
+        </div>
+
+        <button class="btn btn--wa btn--block" type="submit" id="sendOrder"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2 22l5.25-1.38a9.87 9.87 0 0 0 4.79 1.22h.01c5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.82 9.82 0 0 0 12.04 2Zm4.52 12.97c-.25-.12-1.47-.72-1.69-.81-.23-.08-.39-.12-.56.13-.16.24-.64.8-.79.97-.14.16-.29.19-.54.06-.25-.12-1.05-.39-1.99-1.23-.74-.66-1.24-1.47-1.38-1.72-.15-.25-.02-.38.11-.5.11-.11.25-.29.37-.43.13-.15.17-.25.25-.41.08-.17.04-.31-.02-.43-.06-.12-.56-1.35-.77-1.85-.2-.48-.41-.42-.56-.43h-.48c-.17 0-.43.06-.66.31-.23.25-.86.85-.86 2.07 0 1.21.88 2.39 1.01 2.55.12.17 1.74 2.65 4.21 3.72.59.25 1.05.4 1.4.52.59.19 1.13.16 1.55.1.47-.07 1.47-.6 1.67-1.18.21-.58.21-1.07.15-1.18-.06-.1-.23-.16-.48-.29Z"/></svg> Enviar pedido por WhatsApp</button>
+        <p style="font-size:13px; color:var(--muted)">Precios en USD. El envío se confirma al cerrar el pedido.</p>
+      </form>
     </div>
   </div>
 </section>
@@ -335,63 +351,33 @@
 <!-- ════════════════════════════════════════════════════════ FAQ -->
 <section class="section" id="faq">
   <div class="wrap">
-    <div class="section-head split" data-anim="up">
+    <div class="section-head split">
       <div>
-        <p class="eyebrow">Lo que siempre preguntan</p>
-        <h2 class="display h2 grad">Preguntas</h2>
+        <p class="eyebrow" data-anim="up">Lo que siempre preguntan</p>
+        <h2 class="display h2 grad" data-split>Preguntas</h2>
       </div>
-      <p class="lede">Y si falta alguna, escríbenos por WhatsApp: contestamos en persona, no con bot.</p>
+      <p class="lede" data-anim="up">Y si falta alguna, escríbenos por WhatsApp: contestamos en persona, no con bot.</p>
     </div>
 
     <div class="faq" data-anim="up">
-      <details>
-        <summary>¿Esto tiene nicotina o tabaco?</summary>
-        <p>No. Cero nicotina, cero tabaco, cero humo. Es un formato de consumo, no un producto de tabaco.</p>
-      </details>
-      <details>
-        <summary>¿Tiene cafeína?</summary>
-        <p>Esta referencia, la NZE Peppermint Focus, no lleva cafeína: trabaja con Alpha GPC, L-Tirosina
-          y L-Teanina. La línea con cafeína es la etapa 2 del proyecto y llega después.</p>
-      </details>
-      <details>
-        <summary>¿Se traga o se mastica?</summary>
-        <p>Ninguna de las dos. Se coloca entre el labio superior y la encía, se deja 20 a 30 minutos y
-          se retira. La saliva que generas se traga con normalidad.</p>
-      </details>
-      <details>
-        <summary>¿En cuánto tiempo lo siento?</summary>
+      <details><summary>¿Esto tiene nicotina o tabaco?</summary>
+        <p>No. Cero nicotina, cero tabaco, cero humo. Es un formato de consumo, no un producto de tabaco.</p></details>
+      <details><summary>¿Tiene cafeína?</summary>
+        <p>No. La NZE Peppermint es de la línea Focus, sin cafeína: trabaja con Alpha GPC, L-Tirosina y L-Teanina.</p></details>
+      <details><summary>¿Se traga o se mastica?</summary>
+        <p>Ninguna de las dos. Se coloca entre el labio superior y la encía, se deja 20 a 30 minutos y se retira.</p></details>
+      <details><summary>¿En cuánto tiempo lo siento?</summary>
         <p>El frescor es inmediato. El efecto sobre la atención se construye durante los primeros minutos
-          y cada cuerpo responde distinto según peso, descanso y si comiste antes.</p>
-      </details>
-      <details>
-        <summary>¿Cuántos puedo usar al día?</summary>
-        <p>Uno por sesión. Sigue siempre la dosis que indica la lata y no la superes.</p>
-      </details>
-      <details>
-        <summary>¿Cómo pago?</summary>
-        <p>Coordinamos por WhatsApp: transferencia, efectivo al retirar en el gym o contra entrega según
-          la ciudad. No pedimos datos de tarjeta por la web.</p>
-      </details>
-      <details>
-        <summary>¿Hacen precio por cantidad?</summary>
-        <p>Sí. El combo de 2 latas baja el precio por unidad, y tenemos precio de recomendado: si traes
-          a alguien que compre, el tuyo baja. Nunca tumbamos el precio de la unidad suelta.</p>
-      </details>
+          y cada cuerpo responde distinto según peso, descanso y si comiste antes.</p></details>
+      <details><summary>¿Cómo pago?</summary>
+        <p>Coordinamos por WhatsApp: transferencia, efectivo al entregar o contra entrega según la ciudad.
+          No pedimos datos de tarjeta por la web.</p></details>
+      <details><summary>¿Cuánto tarda el envío?</summary>
+        <p>Entre 24 y 72 horas según la ciudad. El tiempo exacto aparece al elegir tu ciudad en el pedido.</p></details>
+      <details><summary>¿Hay más sabores?</summary>
+        <p>La línea tiene más, pero por ahora traemos Peppermint y la traemos bien. Escríbenos si quieres
+          que avisemos cuando llegue otro.</p></details>
     </div>
-  </div>
-</section>
-
-<!-- ══════════════════════════════════════════════════════ CIERRE -->
-<section class="section cta-final" id="cierre">
-  <canvas class="cta-final__canvas" id="ctaField" aria-hidden="true"></canvas>
-  <div class="cta-final__veil" aria-hidden="true"></div>
-  <div class="wrap">
-    <p class="eyebrow" data-anim="up">Un mensaje y estás dentro</p>
-    <h2 class="display h2 grad" data-anim="up">Rinde<br>sin límites</h2>
-    <p class="lede" style="text-align:center" data-anim="up">
-      Escríbenos, te decimos qué hay en stock y lo tienes hoy mismo en el gym o esta semana en tu puerta.
-    </p>
-    <a class="btn btn--wa" data-wa="cierre" href="#" data-anim="up"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2 22l5.25-1.38a9.87 9.87 0 0 0 4.79 1.22h.01c5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.82 9.82 0 0 0 12.04 2Zm4.52 12.97c-.25-.12-1.47-.72-1.69-.81-.23-.08-.39-.12-.56.13-.16.24-.64.8-.79.97-.14.16-.29.19-.54.06-.25-.12-1.05-.39-1.99-1.23-.74-.66-1.24-1.47-1.38-1.72-.15-.25-.02-.38.11-.5.11-.11.25-.29.37-.43.13-.15.17-.25.25-.41.08-.17.04-.31-.02-.43-.06-.12-.56-1.35-.77-1.85-.2-.48-.41-.42-.56-.43h-.48c-.17 0-.43.06-.66.31-.23.25-.86.85-.86 2.07 0 1.21.88 2.39 1.01 2.55.12.17 1.74 2.65 4.21 3.72.59.25 1.05.4 1.4.52.59.19 1.13.16 1.55.1.47-.07 1.47-.6 1.67-1.18.21-.58.21-1.07.15-1.18-.06-.1-.23-.16-.48-.29Z"/></svg> Pídelo por WhatsApp</a>
   </div>
 </section>
 
@@ -403,19 +389,16 @@
     <div class="footer__grid">
       <div>
         <img src="assets/img/logo-cream.png" alt="The Pouch Project" width="1024" height="784">
-        <p style="margin-top:16px; max-width:38ch; opacity:.85">
-          La tienda del estilo de vida que se suplementa en pouch.
-          Foco, energía e hidratación — limpio, discreto y portátil.
-        </p>
+        <p style="margin-top:16px; max-width:38ch; opacity:.85" id="footerTagline"></p>
       </div>
       <div>
         <h4>Navega</h4>
         <ul>
-          <li><a href="#efectos">Efectos</a></li>
           <li><a href="#producto">Producto</a></li>
-          <li><a href="#ciencia">La ciencia</a></li>
+          <li><a href="#efectos">Efectos</a></li>
+          <li><a href="#formula">Fórmula</a></li>
           <li><a href="#ritual">Cómo se usa</a></li>
-          <li><a href="#donde">Dónde comprar</a></li>
+          <li><a href="#pedido">Pedir</a></li>
           <li><a href="#faq">Preguntas</a></li>
         </ul>
       </div>
@@ -425,7 +408,6 @@
           <li><a data-wa="footer" href="#">WhatsApp</a></li>
           <li><a id="igLink" href="#" target="_blank" rel="noopener">Instagram</a></li>
           <li><a id="mailLink" href="#">Correo</a></li>
-          <li id="cityLine" style="opacity:.7"></li>
         </ul>
       </div>
     </div>
@@ -439,8 +421,8 @@
 <a class="wa-float" data-wa="flotante" href="#" aria-label="Escríbenos por WhatsApp"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2 22l5.25-1.38a9.87 9.87 0 0 0 4.79 1.22h.01c5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.82 9.82 0 0 0 12.04 2Zm4.52 12.97c-.25-.12-1.47-.72-1.69-.81-.23-.08-.39-.12-.56.13-.16.24-.64.8-.79.97-.14.16-.29.19-.54.06-.25-.12-1.05-.39-1.99-1.23-.74-.66-1.24-1.47-1.38-1.72-.15-.25-.02-.38.11-.5.11-.11.25-.29.37-.43.13-.15.17-.25.25-.41.08-.17.04-.31-.02-.43-.06-.12-.56-1.35-.77-1.85-.2-.48-.41-.42-.56-.43h-.48c-.17 0-.43.06-.66.31-.23.25-.86.85-.86 2.07 0 1.21.88 2.39 1.01 2.55.12.17 1.74 2.65 4.21 3.72.59.25 1.05.4 1.4.52.59.19 1.13.16 1.55.1.47-.07 1.47-.6 1.67-1.18.21-.58.21-1.07.15-1.18-.06-.1-.23-.16-.48-.29Z"/></svg></a>
 
 <div class="buybar" id="buybar">
-  <p class="buybar__price"><small id="barLabel">1 lata</small><b id="barTotal">$12</b></p>
-  <a class="btn btn--wa" id="barCta" href="#">Pedir</a>
+  <p class="buybar__price"><small id="barLabel">Pack</small><b id="barTotal">$12</b></p>
+  <a class="btn btn--wa" href="#pedido">Pedir</a>
 </div>
 
 <script src="assets/js/vendor/gsap.min.js"></script>
