@@ -427,32 +427,6 @@
   var nav = $('#nav');
   var claroAhora = { centro: null, lados: null }, pendiente = false;
 
-  /* El vídeo del banner va sin velo, así que su brillo cambia cuadro a
-     cuadro. Se muestrea la franja de arriba, que es la que pisa la barra. */
-  var heroClaro = false;
-  (function midePelicula() {
-    var v = $('#heroVideo'), hero = $('#hero');
-    if (!v || !document.createElement('canvas').getContext) return;
-    var lienzo = document.createElement('canvas');
-    lienzo.width = 32; lienzo.height = 8;
-    var ctx = lienzo.getContext('2d', { willReadFrequently: true });
-
-    function mide() {
-      if (!v.videoWidth || hero.getBoundingClientRect().bottom < 0) return;
-      try {
-        ctx.drawImage(v, 0, 0, v.videoWidth, v.videoHeight * 0.16, 0, 0, 32, 8);
-        var d = ctx.getImageData(0, 0, 32, 8).data, suma = 0;
-        for (var i = 0; i < d.length; i += 4) {
-          suma += 0.2126 * d[i] + 0.7152 * d[i + 1] + 0.0722 * d[i + 2];
-        }
-        var media = suma / (d.length / 4);
-        var claro = media > 132;
-        if (claro !== heroClaro) { heroClaro = claro; pintarNav(); }
-      } catch (e) { /* si el cuadro no se puede leer, se deja como está */ }
-    }
-    setInterval(mide, 380);
-    v.addEventListener('loadeddata', mide);
-  })();
 
   function luminancia(css) {
     var m = /rgba?\(([^)]+)\)/.exec(css);
@@ -474,10 +448,13 @@
     for (var n = 0; n < pila.length; n++) {
       var el = pila[n];
       if (nav.contains(el)) continue;
-      /* Sobre el banner manda el propio fotograma: se mide el brillo de la
-         franja alta del vídeo, no el elemento que toque estar debajo. */
-      if (el.closest('#hero')) return heroClaro;
+      /* Sobre el banner la barra no cambia: se queda en crema de un solo
+         color, con sombra reforzada para aguantar los cuadros claros. */
+      if (el.closest('#hero')) return false;
       var cs = getComputedStyle(el);
+      /* Solo mandan las superficies anchas. Una pegatina o un botón que pase
+         por debajo no debe hacer saltar la tinta de toda la barra. */
+      if (el.getBoundingClientRect().width < window.innerWidth * 0.25) continue;
       if (cs.backgroundImage !== 'none') return false;   /* imagen: siempre velada */
       var l = luminancia(cs.backgroundColor);
       if (l !== null) return l > 0.55;
@@ -491,6 +468,9 @@
   function pintarNav() {
     pendiente = false;
     if (!document.elementsFromPoint) return;
+    var hero = $('#hero');
+    nav.classList.toggle('is-over-hero',
+      !!hero && hero.getBoundingClientRect().bottom > nav.offsetHeight);
     var w = window.innerWidth;
     var centro = claroEn(w * 0.5);
     var lados = claroEn(w * 0.12) && claroEn(w * 0.88);

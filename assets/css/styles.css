@@ -163,6 +163,16 @@ main section[id]{scroll-margin-top:calc(var(--nav-h) + 16px)}
   --nav-ink:var(--negro);
   --nav-sombra:none;
 }
+/* Sobre el banner se queda siempre en crema, pase lo que pase en el vídeo:
+   el aplomo lo pone una sombra más cargada, no el cambio de tinta. */
+.nav.is-over-hero{
+  --nav-ink:var(--crema);
+  --nav-sombra:0 1px 2px rgba(12,5,3,.96), 0 2px 9px rgba(12,5,3,.9), 0 5px 26px rgba(12,5,3,.85);
+}
+.nav.is-over-hero .nav__brand .nav__logo--light{opacity:1}
+.nav.is-over-hero .nav__brand .nav__logo--dark{opacity:0}
+.nav.is-over-hero .nav__brand{filter:drop-shadow(0 2px 3px rgba(12,5,3,.95)) drop-shadow(0 5px 18px rgba(12,5,3,.8))}
+.nav.is-over-hero .nav__cta{--btn-bg:var(--arena); --btn-fg:var(--negro)}
 .nav__inner{display:flex; align-items:center; gap:18px; min-height:var(--nav-h)}
 .nav__side{display:none; gap:30px; flex:1}
 .nav__side--r{justify-content:flex-end}
