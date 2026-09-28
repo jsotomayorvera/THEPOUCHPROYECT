@@ -509,11 +509,6 @@
     }, function (ctx) {
       if (ctx.conditions.reduce) return;
 
-      /* Entrada del hero: las líneas del eslogan y luego las pegatinas */
-      gsap.timeline({ defaults: { ease: 'power3.out' } })
-        .from('[data-anim="claim"]', { autoAlpha: 0, yPercent: 40, duration: .95, stagger: .12 })
-        .from('.claim .tag', { scale: .7, rotate: -16, duration: .7, ease: 'back.out(2.2)', stagger: .1 }, '-=.5');
-
       /* Las pegatinas se mueven a distinta velocidad: da profundidad al muro */
       $$('.sticker').forEach(function (el) {
         gsap.to(el, {
@@ -559,10 +554,6 @@
       gsap.to('.hero__media', {
         yPercent: 12, scale: 1.06, ease: 'none',
         scrollTrigger: { trigger: '.hero', start: 'top top', end: 'bottom top', scrub: .6 },
-      });
-      gsap.to('.claim', {
-        yPercent: -16, autoAlpha: .3, ease: 'none',
-        scrollTrigger: { trigger: '.hero', start: 'top top', end: 'bottom top', scrub: .5 },
       });
 
       /* Seguimiento del ratón en las tarjetas */

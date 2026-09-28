@@ -67,10 +67,10 @@
   <div class="hero__veil" aria-hidden="true"></div>
 
   <div class="wrap hero__inner">
-    <p class="hero__kicker" data-anim="claim">Focus maxing</p>
+    <p class="hero__kicker">Focus maxing</p>
     <h1 class="claim">
-      <span class="claim__line" data-anim="claim">Rinde</span>
-      <span class="claim__stickers" data-anim="claim">
+      <span class="claim__line">Rinde</span>
+      <span class="claim__stickers">
         <em class="tag tag--cobalto">sin límites</em>
       </span>
     </h1>
@@ -218,15 +218,40 @@
 
 <!-- ══════════════════════════════════════════════════════ FOOTER -->
 <footer class="footer" data-nav="claro">
-  <div class="wrap footer__top">
-    <nav class="footer__nav" aria-label="Pie">
-      <h3>Navega</h3>
-      <a href="#productos">Producto</a>
-      <a href="#muro">Qué es</a>
-      <a href="#efectos">Efectos</a>
-      <a href="#pedido">Pedir</a>
-    </nav>
+  <div class="footer__banda" aria-hidden="true">
+    <svg viewBox="0 0 1440 340" preserveAspectRatio="xMidYMin meet" role="presentation" focusable="false">
+      <path class="banda__rayos" d="M-70 250 L-70 250 L-36 74 L20 206 L113 12 L169 206 L210 54 L301 228 L336 112 L409 228 L448 26 L529 248 L548 96 L606 18 L644 96 L804 96 L844 14 L900 96 L900 220 L872 4 L985 228 L1010 74 L1106 236 L1144 4 L1232 206 L1294 12 L1384 236 L1400 40 L1510 250 Z"/>
 
+      <!-- las manos que se agarran al borde, como en la referencia -->
+      <rect class="mano mano--i" x="452" y="236" width="104" height="72" rx="16" transform="rotate(-10 504 272)"/>
+      <rect class="mano mano--d" x="884" y="236" width="104" height="72" rx="16" transform="rotate(10 936 272)"/>
+
+      <g class="banda__cara">
+        <path class="ojo ojo--i" d="M624 150c16-24 52-24 68 0"/>
+        <path class="ojo ojo--d" d="M748 150c16-24 52-24 68 0"/>
+
+        <!-- la lengua sale por debajo del borde, con el pouch encima -->
+        <g class="lengua">
+          <path class="lengua__carne" d="M664 232h112c7 0 12 5 12 12v34c0 30-25 50-68 50s-68-20-68-50v-34c0-7 5-12 12-12Z"/>
+          <g class="pouch">
+            <rect x="682" y="262" width="76" height="34" rx="15"/>
+            <rect class="pouch__linea" x="696" y="274" width="48" height="7" rx="3.5"/>
+          </g>
+        </g>
+
+        <!-- la boca, recortada en el macizo negro -->
+        <path class="boca" d="M638 190h164c8 0 13 5 13 13v28c0 11-7 18-19 18H644c-12 0-19-7-19-18v-28c0-8 5-13 13-13Z"/>
+        <g class="dientes">
+          <rect x="638" y="190" width="36" height="24" rx="5"/>
+          <rect x="682" y="190" width="36" height="32" rx="5"/>
+          <rect x="726" y="190" width="36" height="32" rx="5"/>
+          <rect x="770" y="190" width="32" height="24" rx="5"/>
+        </g>
+      </g>
+    </svg>
+  </div>
+
+  <div class="wrap footer__top">
     <div class="footer__cta">
       <h3>¿Listo para pedir?</h3>
       <p>Te respondemos en el día.</p>
