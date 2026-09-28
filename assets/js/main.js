@@ -310,11 +310,7 @@
       if (fx && !d.video) fx.setTema(d.tema);
 
       var sec = document.getElementById('efectos');
-      if (d.tono && sec) {
-        sec.dataset.tone = d.tono;
-        sec.style.setProperty('--bg', d.tono);
-        if (toneOwner === sec) setTone(d.tono);
-      }
+      if (d.tono && sec) sec.style.setProperty('--bg', d.tono);
     }
 
     btns.forEach(function (b, i) {
@@ -337,27 +333,57 @@
     window.addEventListener('resize', recolocar);
   })();
 
-  /* ═══════════════════════════════════════════════ 4. TONO DE LA PÁGINA */
-  var toneNow = '', toneOwner = null;
-  function setTone(hex) {
-    if (!hex || hex === toneNow) return;
-    toneNow = hex;
-    document.body.style.backgroundColor = hex;
-    var meta = document.querySelector('meta[name="theme-color"]');
-    if (meta) meta.setAttribute('content', hex);
-  }
+  /* ═══════════════════════════════════════ 4. CAJÓN LATERAL DE PEDIDO */
+  (function checkout() {
+    var caja = $('#checkout');
+    if (!caja) return;
+    var panel = caja.querySelector('.drawer__panel');
+    var devolver = null;
 
-  (function tones() {
-    var secciones = $$('[data-tone]');
-    if (!('IntersectionObserver' in window) || !secciones.length) return;
-    var io = new IntersectionObserver(function (entries) {
-      var mejor = null;
-      entries.forEach(function (e) {
-        if (e.isIntersecting && (!mejor || e.intersectionRatio > mejor.intersectionRatio)) mejor = e;
-      });
-      if (mejor) { toneOwner = mejor.target; setTone(mejor.target.dataset.tone); }
-    }, { threshold: [0.12, 0.35, 0.6], rootMargin: '-25% 0px -25% 0px' });
-    secciones.forEach(function (s) { io.observe(s); });
+    function focusables() {
+      return $$('a[href], button:not([disabled]), input, select, textarea, [tabindex]:not([tabindex="-1"])', panel)
+        .filter(function (el) { return el.offsetParent !== null; });
+    }
+
+    function abrir(origen) {
+      if (caja.classList.contains('is-open')) return;
+      devolver = origen || document.activeElement;
+      caja.hidden = false;
+      document.body.classList.add('has-drawer');
+      requestAnimationFrame(function () { caja.classList.add('is-open'); });
+      var f = focusables();
+      if (f[0]) f[0].focus({ preventScroll: true });
+    }
+
+    function cerrar() {
+      if (!caja.classList.contains('is-open')) return;
+      caja.classList.remove('is-open');
+      document.body.classList.remove('has-drawer');
+      var fin = function () { if (!caja.classList.contains('is-open')) caja.hidden = true; };
+      panel.addEventListener('transitionend', fin, { once: true });
+      setTimeout(fin, 420);
+      if (devolver && devolver.focus) devolver.focus({ preventScroll: true });
+    }
+
+    /* Todo lo que llevaba al módulo de pedido abre el cajón */
+    document.addEventListener('click', function (e) {
+      var t = e.target.closest('[data-checkout], a[href="#pedido"]');
+      if (t) { e.preventDefault(); abrir(t); return; }
+      if (e.target.closest('[data-checkout-close]')) { e.preventDefault(); cerrar(); }
+    });
+
+    document.addEventListener('keydown', function (e) {
+      if (!caja.classList.contains('is-open')) return;
+      if (e.key === 'Escape') { e.preventDefault(); cerrar(); return; }
+      if (e.key !== 'Tab') return;
+      var f = focusables();
+      if (!f.length) return;
+      var a = f[0], z = f[f.length - 1];
+      if (e.shiftKey && document.activeElement === a) { e.preventDefault(); z.focus(); }
+      else if (!e.shiftKey && document.activeElement === z) { e.preventDefault(); a.focus(); }
+    });
+
+    window.abrirPedido = abrir;
   })();
 
   /* ═══════════════════════════════════════════════ 5. NAV */
@@ -486,13 +512,6 @@
       gsap.to('.hero__scroll', {
         autoAlpha: 0, ease: 'none',
         scrollTrigger: { trigger: '.hero', start: 'top top', end: '35% top', scrub: true },
-      });
-
-      /* El rótulo del pie se desplaza al pasar: da sensación de remate */
-      gsap.to('.footer__word span', {
-        xPercent: -4, ease: 'none',
-        scrollTrigger: { trigger: '.footer', start: 'top bottom', end: 'bottom bottom', scrub: .8 },
-        startAt: { xPercent: 4 },
       });
 
       /* Seguimiento del ratón en las tarjetas */

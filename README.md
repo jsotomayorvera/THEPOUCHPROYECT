@@ -76,9 +76,14 @@ docs/CIENCIA.md            Respaldo de cada dato científico, con fuentes
 DEPLOY.md                  Cómo publicarlo en Vercel
 ```
 
-Los módulos, en orden: hero con el eslogan sobre vídeo · vitrina de producto ·
-dos bloques mitad y mitad · efectos por pestañas · cierre de venta por WhatsApp ·
-pie con el rótulo grande.
+Los módulos, en orden: hero con el eslogan sobre vídeo · cintillo · muro de pegatinas
+con la llama y el logo · vitrina de producto · efectos por pestañas · bloque mitad y
+mitad · preguntas · cierre de venta (abre el cajón lateral) · pie con el rótulo grande,
+que además es el botón de volver al inicio.
+
+El fondo es **cobalto plano** en toda la página, como en la referencia: no cambia de
+tono por módulo. El contraste lo ponen las cajas de arena (tarjetas, formulario,
+preguntas, pie) y los acentos de coral y menta.
 
 ## El banner de vídeo
 
@@ -88,6 +93,12 @@ sitio nunca se ve incompleto. Para añadir los tuyos: **`assets/video/README.md`
 las especificaciones exactas (duración, peso, encuadre y tratamiento de color).
 
 ## El checkout
+
+Vive en un **cajón lateral**, no en el scroll. La página solo muestra un bloque compacto
+con las tres condiciones de envío y un botón; al pulsarlo (o cualquier enlace "Pedir")
+entra desde la derecha un panel con la elección de ciudad, el resumen y el formulario.
+En móvil sube desde abajo como hoja. Se cierra con la ✕, con la tecla `Esc` o tocando
+fuera; mientras está abierto el fondo no hace scroll y el foco queda atrapado dentro.
 
 `assets/js/checkout.js` es el único archivo que toca la "pasarela". Expone dos funciones:
 
