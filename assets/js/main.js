@@ -32,21 +32,56 @@
   $('#igFoot').textContent = '@' + cfg.instagram;
   $('#zonaLine').textContent = 'Ecuador · 24–72 h';
 
-  /* Vitrina de producto */
-  $('#cards').innerHTML = cfg.vitrina.map(function (v) {
+  /* Vitrina de producto: carrusel horizontal */
+  $('#railTrack').innerHTML = cfg.vitrina.map(function (v) {
     var live = v.estado === 'live';
-    return '<article class="card ' + (live ? 'card--live' : 'card--soon') + '" data-anim="stagger">' +
-      '<div class="card__media">' +
+    return '<article class="pcard ' + (live ? 'pcard--live' : 'pcard--soon') + '" data-anim="stagger">' +
+      '<div class="pcard__media">' +
         '<img src="' + v.foto + '" alt="' + (live ? v.titulo : '') + '" loading="lazy" width="1100" height="1100">' +
-        (live ? '' : '<p class="card__flag">Próximamente</p>') +
-        '<div class="card__bar">' +
-          '<div class="card__name"><span>' + v.sabor + '</span><b>' + v.titulo + '</b></div>' +
-          (live
-            ? '<a class="btn" href="#pedido">Pedir</a>'
-            : '<a class="btn btn--ghost" data-wa="aviso" href="#">Avísame</a>') +
-        '</div>' +
+        (live ? '' : '<p class="pcard__flag">¡Pronto!</p>') +
+      '</div>' +
+      '<div class="pcard__bar">' +
+        '<div class="pcard__name"><span>' + v.sabor + '</span><b>' + v.titulo + '</b></div>' +
+        (live
+          ? '<a class="btn btn--naranja" href="#pedido">Pedir</a>'
+          : '<a class="btn btn--outline" data-wa="aviso" href="#">Avísame</a>') +
       '</div></article>';
   }).join('');
+
+  /* Cinta superior */
+  (function ticker() {
+    var frase = '¡Rinde sin límites!   ·   Envíos a todo el Ecuador   ·   Sin cafeína, sin azúcar, sin tabaco   ·   Pedidos por WhatsApp   ·   ';
+    var texto = new Array(4).join(frase) + frase;
+    var a = $('#tickerA'), b = $('#tickerB');
+    if (a) a.textContent = texto;
+    if (b) b.textContent = texto;
+  })();
+
+  /* Muro de pegatinas */
+  if (window.TPPStickers) {
+    var estilo = getComputedStyle(document.documentElement);
+    window.TPPStickers.pinta($('#stickers'), [
+      estilo.getPropertyValue('--naranja').trim() || '#E4622E',
+      estilo.getPropertyValue('--amarillo').trim() || '#F2B94A',
+      estilo.getPropertyValue('--crema').trim() || '#F6EFE2',
+      estilo.getPropertyValue('--negro-3').trim() || '#2C241E',
+    ]);
+  }
+
+  /* Controles del carrusel */
+  (function rail() {
+    var rail = $('#rail'), prev = $('#railPrev'), next = $('#railNext');
+    if (!rail || !prev || !next) return;
+    function paso() {
+      var card = rail.querySelector('.pcard');
+      return card ? card.getBoundingClientRect().width + 18 : rail.clientWidth * .8;
+    }
+    prev.addEventListener('click', function () { rail.scrollBy({ left: -paso(), behavior: 'smooth' }); });
+    next.addEventListener('click', function () { rail.scrollBy({ left:  paso(), behavior: 'smooth' }); });
+    // Arranca centrado en la referencia disponible
+    var live = rail.querySelector('.pcard--live');
+    if (live) rail.scrollLeft = live.offsetLeft - (rail.clientWidth - live.offsetWidth) / 2;
+  })();
 
   /* Selectores del pedido */
   $('#f-pack').innerHTML = cfg.packs.map(function (p) {
@@ -281,8 +316,14 @@
   })();
 
   /* ═══════════════════════════════════════════════ 5. NAV */
-  var nav = $('#nav'), hero = $('#hero');
-  function onScroll() { nav.classList.toggle('is-solid', window.scrollY > hero.offsetHeight - 90); }
+  var nav = $('#nav');
+  var ultimoY = 0;
+  function onScroll() {
+    var y = window.scrollY;
+    // Baja: la pastilla se retira. Sube: vuelve. Arriba del todo, siempre visible.
+    nav.classList.toggle('is-up', y > 220 && y > ultimoY);
+    ultimoY = y;
+  }
   window.addEventListener('scroll', onScroll, { passive: true });
   onScroll();
 
@@ -337,6 +378,7 @@
       el.appendChild(salida);
     }
     $$('[data-split]').forEach(partir);
+    if (!$$('[data-split]').length) { /* esta versión no usa titulares partidos */ }
 
     gsap.matchMedia().add({
       motion: '(prefers-reduced-motion: no-preference)',
@@ -344,15 +386,24 @@
     }, function (ctx) {
       if (ctx.conditions.reduce) return;
 
-      /* Entrada del hero: solo el eslogan, palabra a palabra */
+      /* Entrada del hero: las líneas del eslogan y luego las pegatinas */
       gsap.timeline({ defaults: { ease: 'power3.out' } })
-        .from('.hero__claim .word', { autoAlpha: 0, yPercent: 110, duration: 1, stagger: .09 })
-        .from('.hero__scroll', { autoAlpha: 0, duration: .7 }, '-=.3');
+        .from('[data-anim="claim"]', { autoAlpha: 0, yPercent: 40, duration: .95, stagger: .12 })
+        .from('.claim .tag', { scale: .7, rotate: -16, duration: .7, ease: 'back.out(2.2)', stagger: .1 }, '-=.5')
+        .from('.hero__scroll', { autoAlpha: 0, duration: .7 }, '-=.4');
+
+      /* Las pegatinas del muro entran girando */
+      ScrollTrigger.batch('.sticker', {
+        start: 'top 92%', once: true,
+        onEnter: function (b) {
+          gsap.from(b, { autoAlpha: 0, scale: .4, rotate: -40, duration: .8, stagger: .05, ease: 'back.out(1.8)', overwrite: true });
+        },
+      });
 
       /* Titulares: el tween se crea dentro de onEnter para que el texto
          esté visible aunque el disparador no llegue a saltar. */
       $$('[data-split]').forEach(function (el) {
-        if (el.classList.contains('hero__claim')) return;
+        if (el.classList.contains('claim')) return;
         ScrollTrigger.create({
           trigger: el, start: 'top 90%', once: true,
           onEnter: function () {
@@ -379,7 +430,7 @@
         yPercent: 12, scale: 1.06, ease: 'none',
         scrollTrigger: { trigger: '.hero', start: 'top top', end: 'bottom top', scrub: .6 },
       });
-      gsap.to('.hero__claim', {
+      gsap.to('.claim', {
         yPercent: -16, autoAlpha: .3, ease: 'none',
         scrollTrigger: { trigger: '.hero', start: 'top top', end: 'bottom top', scrub: .5 },
       });
@@ -397,7 +448,7 @@
 
       /* Seguimiento del ratón en las tarjetas */
       if (window.matchMedia('(hover:hover)').matches) {
-        $$('.pop, .card').forEach(function (card) {
+        $$('.pcard, .about__fig').forEach(function (card) {
           var qx = gsap.quickTo(card, 'rotationY', { duration: .6, ease: 'power3.out' });
           var qy = gsap.quickTo(card, 'rotationX', { duration: .6, ease: 'power3.out' });
           card.addEventListener('mousemove', function (e) {

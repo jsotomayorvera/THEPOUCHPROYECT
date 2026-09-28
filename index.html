@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>The Pouch Project — Rinde sin límites</title>
 <meta name="description" content="Pouches de rendimiento en Ecuador. NZE Peppermint Focus: foco limpio sin cafeína, sin azúcar y sin tabaco. Pedidos por WhatsApp con envío a todo el país.">
-<meta name="theme-color" content="#4A3428">
+<meta name="theme-color" content="#16120F">
 <link rel="canonical" href="https://thepouchproject.ec/">
 
 <meta property="og:type" content="website">
@@ -20,7 +20,7 @@
 <link rel="icon" href="assets/img/icon-32.png" sizes="32x32">
 <link rel="apple-touch-icon" href="assets/img/icon-180.png">
 
-<link rel="preload" href="assets/fonts/fraunces-normal-600-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="assets/fonts/archivo-black-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="assets/fonts/instrument-sans-normal-400-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="assets/css/fonts.css">
 <link rel="stylesheet" href="assets/css/styles.css">
@@ -33,32 +33,28 @@
 
 <a class="visually-hidden" href="#pedido">Saltar al pedido</a>
 
-<!-- ═══════════════════════════════════════════════════════ NAV -->
+<!-- ══════════════════════════════════════════ NAV FLOTANTE -->
 <header class="nav" id="nav">
-  <div class="wrap nav__inner">
-    <nav class="nav__side nav__side--l" aria-label="Principal">
-      <a href="#productos">Productos</a>
-      <a href="#sobre">Qué es</a>
-    </nav>
+  <div class="nav__pill">
     <a class="nav__brand" href="#top" aria-label="The Pouch Project — inicio">
-      <img class="on-hero"  src="assets/img/logo-cream.png" alt="The Pouch Project" width="1024" height="784">
-      <img class="on-solid" src="assets/img/logo-full.png"  alt="" aria-hidden="true" width="1024" height="784">
+      <img src="assets/img/logo-full.png" alt="The Pouch Project" width="1024" height="784">
     </a>
-    <nav class="nav__side nav__side--r" aria-label="Secundaria">
+    <nav class="nav__links" aria-label="Principal">
+      <a href="#productos">Producto</a>
+      <a href="#muro">Qué es</a>
       <a href="#efectos">Efectos</a>
-      <a href="#pedido">Pedir</a>
+      <a href="#nosotros">Nosotros</a>
     </nav>
-    <a class="btn nav__cta" href="#pedido">Pedir</a>
+    <a class="btn btn--dark nav__cta" data-wa="general" href="#">¡Escríbenos!</a>
   </div>
 </header>
 
 <main id="top">
 
 <!-- ══════════════════════════════════════════════════════ HERO -->
-<section class="hero" id="hero" data-tone="#4A3428" aria-label="Rinde sin límites">
+<section class="hero" id="hero" data-tone="#16120F" aria-label="Rinde sin límites">
   <div class="hero__media" aria-hidden="true">
-    <img class="hero__poster" src="assets/img/poster-hero.jpg" alt=""
-         width="1920" height="1080" fetchpriority="high">
+    <img class="hero__poster" src="assets/img/poster-hero.jpg" alt="" width="1920" height="1080" fetchpriority="high">
     <video id="heroVideo" poster="assets/img/poster-hero.jpg"
            autoplay muted loop playsinline preload="auto" disablepictureinpicture>
       <source src="assets/video/hero.webm" type="video/webm">
@@ -68,85 +64,72 @@
   <div class="hero__veil" aria-hidden="true"></div>
 
   <div class="wrap hero__inner">
-    <h1 class="hero__claim" data-split>Rinde <em>sin límites</em></h1>
+    <h1 class="claim">
+      <span class="claim__line" data-anim="claim">Pouches de rendimiento</span>
+      <span class="claim__line" data-anim="claim">para el que</span>
+      <span class="claim__stickers" data-anim="claim">
+        <em class="tag tag--naranja">rinde</em>
+        <span class="claim__y">sin</span>
+        <em class="tag tag--amarillo">límites</em>
+      </span>
+    </h1>
+    <div class="hero__actions" data-anim="claim">
+      <a class="btn btn--cream" href="#pedido">¡Pídelo ahora!</a>
+      <a class="btn btn--outline" href="#productos">Ver el producto</a>
+    </div>
   </div>
 
-  <a class="hero__scroll" href="#productos" aria-label="Bajar"><i></i></a>
+  <a class="hero__scroll" href="#ticker" aria-label="Bajar"><i></i></a>
+</section>
+
+<!-- ════════════════════════════════════════════════════ TICKER -->
+<div class="ticker marquee" id="ticker" aria-hidden="true">
+  <div class="marquee__track">
+    <span id="tickerA"></span>
+    <span id="tickerB"></span>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════ MURO DE PEGATINAS -->
+<section class="muro" id="muro" data-tone="#16120F" aria-labelledby="muroTitle">
+  <div class="muro__stickers" id="stickers" aria-hidden="true"></div>
+  <div class="wrap muro__inner">
+    <p class="quote" id="muroTitle" data-anim="up">
+      <span class="quote__l">«Foco que <em>se nota</em>,</span>
+      <span class="quote__l">en el bolsillo <em>de siempre»</em></span>
+    </p>
+  </div>
 </section>
 
 <!-- ══════════════════════════════════════════════════ PRODUCTOS -->
-<section class="section surface-ink marble" id="productos" data-tone="#003F25">
+<section class="section" id="productos" data-tone="#16120F">
   <div class="wrap">
-    <div class="section-head center">
-      <p class="eyebrow eyebrow--center" data-anim="up">Lo que vendemos</p>
-      <h2 class="display h2" data-split>Un pouch, <em>una dosis</em></h2>
+    <div class="section-head">
+      <p class="eyebrow" data-anim="up">Lo que vendemos</p>
+      <h2 class="h2" data-anim="up">Un pouch, <em class="tag tag--naranja tag--sm">una dosis</em></h2>
       <p class="lede" data-anim="up">Por ahora traemos una sola referencia y la traemos bien.
         Las otras dos están en camino.</p>
     </div>
-
-    <div class="cards" id="cards"></div>
   </div>
-</section>
 
-<!-- ════════════════════════════════════════════════════ SOBRE -->
-<section class="section surface-cream marble" id="sobre" data-tone="#F6EFE2">
-  <div class="wrap splits">
-
-    <article class="split" data-anim="up">
-      <figure class="split__fig pop">
-        <img src="assets/img/producto-nze-peppermint.webp" alt="Lata de NZE Peppermint sobre hojas de menta"
-             width="1100" height="1100" loading="lazy">
-      </figure>
-      <div class="split__body">
-        <h3 class="display h3" data-split>Los pouches <em>evolucionaron</em></h3>
-        <p>El formato dejó de ser cosa de tabaco. Un pouch de rendimiento se coloca entre labio y
-          encía y libera sus activos por la mucosa de la boca, una vía muy vascularizada que entra
-          a circulación sin pasar primero por el hígado. Sin humo, sin líquido y sin cargar nada.</p>
-        <ul class="marks">
-          <li><span class="marks__i" aria-hidden="true">◈</span> Nootrópicos con evidencia</li>
-          <li><span class="marks__i" aria-hidden="true">✕</span> Cero nicotina</li>
-          <li><span class="marks__i" aria-hidden="true">✦</span> Cero azúcar</li>
-          <li><span class="marks__i" aria-hidden="true">◇</span> Sin edulcorantes artificiales</li>
-        </ul>
-      </div>
-    </article>
-
-    <article class="split split--flip" data-anim="up">
-      <figure class="split__fig split__fig--soft pop" aria-hidden="true">
-        <div class="orb"><span class="orb__ring"></span><span class="orb__ring"></span><span class="orb__ring"></span></div>
-      </figure>
-      <div class="split__body">
-        <h3 class="display h3" data-split>Foco <em>sin la resaca</em></h3>
-        <p>Alpha GPC alimenta la acetilcolina, la L-Tirosina repone lo que el cerebro gasta bajo
-          presión y la L-Teanina sostiene una atención tranquila. Sin cafeína no hay temblor ni
-          bajón, y sin azúcar no hay pico de insulina que cobre la factura una hora después.</p>
-        <a class="btn" href="#pedido">Pedir ahora</a>
-      </div>
-    </article>
-
+  <div class="rail" id="rail">
+    <div class="rail__track" id="railTrack"></div>
   </div>
-</section>
-
-<!-- ═════════════════════════════════════════════════════ TRIBU -->
-<section class="band" id="tribu" data-tone="#4A3428" aria-label="Quién lo usa">
-  <ul class="band__grid">
-    <li><img src="assets/img/atletas/arena.webp"  alt="Salida de sprint sobre arena" width="609" height="450" loading="lazy"><span>Explosión</span></li>
-    <li><img src="assets/img/atletas/barra.webp"  alt="Dominada en barra al aire libre" width="609" height="624" loading="lazy"><span>Fuerza</span></li>
-    <li><img src="assets/img/atletas/dunk.webp"   alt="Clavada de baloncesto" width="1256" height="1419" loading="lazy"><span>Altura</span></li>
-    <li><img src="assets/img/atletas/sprint.webp" alt="Corredor a contraluz en plena zancada" width="615" height="450" loading="lazy"><span>Ritmo</span></li>
-  </ul>
-  <p class="band__note">Gym, cancha, ruta y oficina. La misma dosis, el mismo bolsillo.</p>
+  <div class="wrap rail__ctrl">
+    <button class="dot" type="button" id="railPrev" aria-label="Anterior">←</button>
+    <button class="dot" type="button" id="railNext" aria-label="Siguiente">→</button>
+    <span class="rail__hint">Desliza para ver todos</span>
+  </div>
 </section>
 
 <!-- ═══════════════════════════════════════════════════ EFECTOS -->
-<section class="section efectos surface-sand" id="efectos" aria-labelledby="efectosTitle" data-tone="#F0E4CB">
+<section class="section efectos" id="efectos" data-tone="#16120F" aria-labelledby="efectosTitle">
   <canvas class="efectos__canvas" id="fxField" aria-hidden="true"></canvas>
   <div class="efectos__media" id="fxMedia" aria-hidden="true" hidden></div>
-  <div class="efectos__veil" aria-hidden="true"></div>
 
   <div class="wrap efectos__inner">
-    <p class="eyebrow eyebrow--center" data-anim="fx">Cuándo actúa</p>
-    <h2 class="display h2 efectos__title" id="efectosTitle" data-split>Efectos <em>inmediatos</em></h2>
+    <p class="eyebrow" data-anim="fx">Cuándo actúa</p>
+    <h2 class="h2" id="efectosTitle" data-anim="fx">Efectos <em class="tag tag--amarillo tag--sm">inmediatos</em></h2>
 
     <div class="efectos__panels" id="fxPanels" data-anim="fx"></div>
 
@@ -156,14 +139,41 @@
   </div>
 </section>
 
+<!-- ═════════════════════════════════════════════════ NOSOTROS -->
+<section class="section" id="nosotros" data-tone="#16120F">
+  <div class="wrap about">
+    <figure class="about__fig" data-anim="up">
+      <img src="assets/img/producto-nze-peppermint.webp" alt="Lata de NZE Peppermint sobre hojas de menta"
+           width="1100" height="1100" loading="lazy">
+      <span class="about__doodle" aria-hidden="true">
+        <svg viewBox="0 0 100 100"><path d="M50 6c10 18 2 26 10 34 5 5 12 3 14-4 8 12 12 22 12 32 0 20-16 32-36 32S14 88 14 68c0-16 10-28 20-38 8-8 14-14 16-24Z"/></svg>
+      </span>
+    </figure>
+    <div class="about__body">
+      <h2 class="h2" data-anim="up">¡Hola! <em class="tag tag--naranja tag--sm">encantado</em> de conocerte :)</h2>
+      <p data-anim="up">Somos The Pouch Project, la primera tienda de pouches de rendimiento del Ecuador.
+        Arrancamos con una sola referencia porque preferimos traer una bien que cinco a medias.</p>
+      <p data-anim="up">El formato dejó de ser cosa de tabaco. Un pouch se coloca entre labio y encía y
+        libera sus activos por la mucosa de la boca, una vía muy vascularizada que entra a circulación
+        sin pasar primero por el hígado. Sin humo, sin líquido y sin cargar nada.</p>
+      <ul class="marks" data-anim="up">
+        <li><i>◈</i> Nootrópicos con evidencia</li>
+        <li><i>✕</i> Cero nicotina</li>
+        <li><i>✦</i> Cero azúcar</li>
+        <li><i>◇</i> Sin edulcorantes</li>
+      </ul>
+      <a class="btn btn--cream" href="#pedido" data-anim="up">¡Pídelo ahora!</a>
+    </div>
+  </div>
+</section>
+
 <!-- ═══════════════════════════════════════════════════ PEDIDO -->
-<section class="section surface-coffee marble" id="pedido" data-tone="#4A3428">
+<section class="section pedido" id="pedido" data-tone="#16120F">
   <div class="wrap">
-    <div class="section-head center">
-      <p class="eyebrow eyebrow--center" data-anim="up">Cerramos por WhatsApp</p>
-      <h2 class="display h2" data-split>Haz <em>tu pedido</em></h2>
-      <p class="lede" data-anim="up">Confirmamos stock, forma de pago y hora de entrega
-        antes de que pagues nada.</p>
+    <div class="section-head">
+      <p class="eyebrow" data-anim="up">Cerramos por WhatsApp</p>
+      <h2 class="h2" data-anim="up">Haz <em class="tag tag--naranja tag--sm">tu pedido</em></h2>
+      <p class="lede" data-anim="up">Confirmamos stock, forma de pago y hora de entrega antes de que pagues nada.</p>
     </div>
 
     <div class="order">
@@ -188,9 +198,6 @@
 
       <form class="form" id="orderForm" novalidate data-anim="up">
         <p class="field-title">Tu pedido</p>
-        <p class="form__intro">Al enviar se abre WhatsApp con el detalle listo.
-          No se cobra nada automáticamente.</p>
-
         <div class="form__summary" id="summary"></div>
 
         <div class="grid-2">
@@ -240,22 +247,18 @@
             <input id="f-codigo" name="codigo" type="text" autocapitalize="characters" placeholder="POUCH10">
             <p class="err" id="e-codigo"></p>
           </div>
-          <button class="btn btn--ghost" type="button" id="applyCode">Aplicar</button>
+          <button class="btn btn--outline" type="button" id="applyCode">Aplicar</button>
         </div>
 
-        <button class="btn btn--cream btn--block" type="submit" id="sendOrder">Enviar pedido por WhatsApp →</button>
+        <button class="btn btn--naranja btn--block" type="submit" id="sendOrder">¡Enviar por WhatsApp!</button>
       </form>
     </div>
 
     <ul class="contact" data-anim="up">
-      <li><span class="contact__i" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M12.04 2a9.9 9.9 0 0 0-8.5 15l-1.4 5 5.2-1.4A9.9 9.9 0 1 0 12.04 2Z"/></svg></span>
-        <b>WhatsApp</b><a id="waLine" data-wa="general" href="#">—</a></li>
-      <li><span class="contact__i" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="3" y="5" width="18" height="14" rx="2.5"/><path d="m3.6 6.6 8.4 6 8.4-6"/></svg></span>
-        <b>Correo</b><a id="mailLink" href="#">—</a></li>
-      <li><span class="contact__i" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M12 21s7-6.4 7-11a7 7 0 1 0-14 0c0 4.6 7 11 7 11Z"/><circle cx="12" cy="10" r="2.6"/></svg></span>
-        <b>Entrega</b><span id="zonaLine">—</span></li>
-      <li><span class="contact__i" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="3.5" y="3.5" width="17" height="17" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.2" cy="6.8" r="1.1" fill="currentColor"/></svg></span>
-        <b>Instagram</b><a id="igLink" href="#" target="_blank" rel="noopener">—</a></li>
+      <li><b>WhatsApp</b><a id="waLine" data-wa="general" href="#">—</a></li>
+      <li><b>Correo</b><a id="mailLink" href="#">—</a></li>
+      <li><b>Entrega</b><span id="zonaLine">—</span></li>
+      <li><b>Instagram</b><a id="igLink" href="#" target="_blank" rel="noopener">—</a></li>
     </ul>
   </div>
 </section>
@@ -281,6 +284,7 @@
 <script src="assets/js/vendor/gsap.min.js"></script>
 <script src="assets/js/vendor/ScrollTrigger.min.js"></script>
 <script src="assets/js/config.js"></script>
+<script src="assets/js/stickers.js"></script>
 <script src="assets/js/fx.js"></script>
 <script src="assets/js/checkout.js"></script>
 <script src="assets/js/main.js"></script>

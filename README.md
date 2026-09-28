@@ -22,6 +22,20 @@ python3 -m http.server 8080
 Para publicarla sirve cualquier hosting estático: GitHub Pages, Netlify, Vercel o
 Cloudflare Pages. Se sube la carpeta tal cual.
 
+## La paleta
+
+Son **cuatro colores** y viven al principio de `assets/css/styles.css`, en un
+bloque marcado. Cambiar esos cuatro valores cambia la página entera:
+
+```css
+--negro:#16120F;    /* fondo dominante, texturizado */
+--crema:#F6EFE2;    /* texto y superficies claras */
+--naranja:#E4622E;  /* acento principal: pegatinas, botón de compra, pie */
+--amarillo:#F2B94A; /* acento secundario: pegatinas y detalles */
+```
+
+El verde de marca (`--verde`) se conserva aparte, solo para el logo.
+
 ## Lo primero que tienes que cambiar
 
 Abre **`assets/js/config.js`**. Todo lo editable está ahí y en un solo lugar:
@@ -49,6 +63,7 @@ assets/css/fonts.css       Fraunces · Instrument Sans (autoalojadas)
 assets/js/config.js        ⚙️ Configuración: contacto, producto, vitrina, packs, envíos
 assets/js/checkout.js      Cálculo del pedido y enlace de WhatsApp
 assets/js/fx.js            Animaciones del módulo de efectos (una por pestaña)
+assets/js/stickers.js      Las pegatinas del muro, dibujadas en SVG
 assets/js/main.js          Comportamiento y animación de la página
 assets/js/vendor/          GSAP + ScrollTrigger alojados en el proyecto
 assets/img/                Logo, iconos, foto del producto y latas de "próximamente"
