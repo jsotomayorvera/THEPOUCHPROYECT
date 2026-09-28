@@ -25,17 +25,17 @@
   var waLegible = String(cfg.whatsapp).replace(/^593/, '0');
   $('#year').textContent = new Date().getFullYear();
   $('#waLine').textContent = waLegible;
-  $('#mailLink').href = 'mailto:' + cfg.email;
-  $('#mailLink').textContent = cfg.email;
   $('#igLink').href = 'https://instagram.com/' + cfg.instagram;
   $('#igLink').textContent = '@' + cfg.instagram;
   $('#igFoot').textContent = '@' + cfg.instagram;
+  var igSocial = $('#igSocial');
+  if (igSocial) igSocial.href = 'https://instagram.com/' + cfg.instagram;
   $('#zonaLine').textContent = 'Ecuador · 24–72 h';
 
   /* Vitrina de producto: carrusel horizontal */
-  $('#railTrack').innerHTML = cfg.vitrina.map(function (v) {
+  $('#flowStage').innerHTML = cfg.vitrina.map(function (v, i) {
     var live = v.estado === 'live';
-    return '<article class="pcard ' + (live ? 'pcard--live' : 'pcard--soon') + '" data-anim="stagger">' +
+    return '<article class="pcard ' + (live ? 'pcard--live' : 'pcard--soon') + '" data-i="' + i + '">' +
       '<div class="pcard__media">' +
         '<img src="' + v.foto + '" alt="' + (live ? v.titulo : '') + '" loading="lazy" width="1100" height="1100">' +
         (live ? '' : '<p class="pcard__flag">¡Pronto!</p>') +
@@ -43,7 +43,7 @@
       '<div class="pcard__bar">' +
         '<div class="pcard__name"><span>' + v.sabor + '</span><b>' + v.titulo + '</b></div>' +
         (live
-          ? '<a class="btn btn--naranja" href="#pedido">Pedir</a>'
+          ? '<a class="btn btn--cobalto" href="#pedido">Pedir</a>'
           : '<a class="btn btn--outline" data-wa="aviso" href="#">Avísame</a>') +
       '</div></article>';
   }).join('');
@@ -61,26 +61,71 @@
   if (window.TPPStickers) {
     var estilo = getComputedStyle(document.documentElement);
     window.TPPStickers.pinta($('#stickers'), [
-      estilo.getPropertyValue('--naranja').trim() || '#E4622E',
-      estilo.getPropertyValue('--amarillo').trim() || '#F2B94A',
+      estilo.getPropertyValue('--cobalto').trim() || '#0038FF',
+      estilo.getPropertyValue('--arena').trim() || '#FFD888',
       estilo.getPropertyValue('--crema').trim() || '#F6EFE2',
       estilo.getPropertyValue('--negro-3').trim() || '#2C241E',
     ]);
   }
 
-  /* Controles del carrusel */
-  (function rail() {
-    var rail = $('#rail'), prev = $('#railPrev'), next = $('#railNext');
-    if (!rail || !prev || !next) return;
-    function paso() {
-      var card = rail.querySelector('.pcard');
-      return card ? card.getBoundingClientRect().width + 18 : rail.clientWidth * .8;
+  /* Coverflow: la tarjeta activa al frente, las demás giradas a los lados */
+  (function flow() {
+    var stage = $('#flowStage'), dots = $('#flowDots');
+    var prev = $('#flowPrev'), next = $('#flowNext');
+    if (!stage) return;
+    var cards = $$('.pcard', stage);
+    if (!cards.length) return;
+
+    // Arranca en la referencia disponible
+    var activo = Math.max(0, cfg.vitrina.map(function (v) { return v.estado; }).indexOf('live'));
+
+    if (dots) {
+      dots.innerHTML = cards.map(function (_, i) {
+        return '<button type="button" aria-label="Ver producto ' + (i + 1) + '"></button>';
+      }).join('');
+      $$('button', dots).forEach(function (b, i) {
+        b.addEventListener('click', function () { ir(i); });
+      });
     }
-    prev.addEventListener('click', function () { rail.scrollBy({ left: -paso(), behavior: 'smooth' }); });
-    next.addEventListener('click', function () { rail.scrollBy({ left:  paso(), behavior: 'smooth' }); });
-    // Arranca centrado en la referencia disponible
-    var live = rail.querySelector('.pcard--live');
-    if (live) rail.scrollLeft = live.offsetLeft - (rail.clientWidth - live.offsetWidth) / 2;
+
+    function ir(i) {
+      activo = (i + cards.length) % cards.length;
+      cards.forEach(function (c, n) {
+        var d = n - activo;
+        c.setAttribute('data-pos', Math.abs(d) > 2 ? 'off' : String(d));
+        c.setAttribute('aria-hidden', d === 0 ? 'false' : 'true');
+        $$('a, button', c).forEach(function (el) { el.tabIndex = d === 0 ? 0 : -1; });
+      });
+      if (dots) {
+        $$('button', dots).forEach(function (b, n) {
+          b.setAttribute('aria-current', n === activo ? 'true' : 'false');
+        });
+      }
+    }
+
+    cards.forEach(function (c, i) {
+      c.addEventListener('click', function () { if (i !== activo) ir(i); });
+    });
+    if (prev) prev.addEventListener('click', function () { ir(activo - 1); });
+    if (next) next.addEventListener('click', function () { ir(activo + 1); });
+
+    // Arrastre y deslizamiento táctil
+    var x0 = null;
+    stage.addEventListener('pointerdown', function (e) { x0 = e.clientX; });
+    stage.addEventListener('pointerup', function (e) {
+      if (x0 === null) return;
+      var d = e.clientX - x0; x0 = null;
+      if (Math.abs(d) > 45) ir(activo + (d < 0 ? 1 : -1));
+    });
+
+    // Flechas del teclado cuando el carrusel tiene el foco
+    stage.tabIndex = 0;
+    stage.addEventListener('keydown', function (e) {
+      if (e.key === 'ArrowRight') { e.preventDefault(); ir(activo + 1); }
+      if (e.key === 'ArrowLeft')  { e.preventDefault(); ir(activo - 1); }
+    });
+
+    ir(activo);
   })();
 
   /* Selectores del pedido */
@@ -316,13 +361,9 @@
   })();
 
   /* ═══════════════════════════════════════════════ 5. NAV */
-  var nav = $('#nav');
-  var ultimoY = 0;
+  var nav = $('#nav'), hero = $('#hero');
   function onScroll() {
-    var y = window.scrollY;
-    // Baja: la pastilla se retira. Sube: vuelve. Arriba del todo, siempre visible.
-    nav.classList.toggle('is-up', y > 220 && y > ultimoY);
-    ultimoY = y;
+    nav.classList.toggle('is-solid', window.scrollY > hero.offsetHeight - 90);
   }
   window.addEventListener('scroll', onScroll, { passive: true });
   onScroll();
@@ -392,6 +433,14 @@
         .from('.claim .tag', { scale: .7, rotate: -16, duration: .7, ease: 'back.out(2.2)', stagger: .1 }, '-=.5')
         .from('.hero__scroll', { autoAlpha: 0, duration: .7 }, '-=.4');
 
+      /* Las pegatinas se mueven a distinta velocidad: da profundidad al muro */
+      $$('.sticker').forEach(function (el) {
+        gsap.to(el, {
+          y: Number(el.dataset.p) || 0, ease: 'none',
+          scrollTrigger: { trigger: '#muro', start: 'top bottom', end: 'bottom top', scrub: .7 },
+        });
+      });
+
       /* Las pegatinas del muro entran girando */
       ScrollTrigger.batch('.sticker', {
         start: 'top 92%', once: true,
@@ -448,7 +497,7 @@
 
       /* Seguimiento del ratón en las tarjetas */
       if (window.matchMedia('(hover:hover)').matches) {
-        $$('.pcard, .about__fig').forEach(function (card) {
+        $$('.about__fig').forEach(function (card) {
           var qx = gsap.quickTo(card, 'rotationY', { duration: .6, ease: 'power3.out' });
           var qy = gsap.quickTo(card, 'rotationX', { duration: .6, ease: 'power3.out' });
           card.addEventListener('mousemove', function (e) {

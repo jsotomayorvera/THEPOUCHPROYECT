@@ -35,17 +35,19 @@
 
 <!-- ══════════════════════════════════════════ NAV FLOTANTE -->
 <header class="nav" id="nav">
-  <div class="nav__pill">
-    <a class="nav__brand" href="#top" aria-label="The Pouch Project — inicio">
-      <img src="assets/img/logo-full.png" alt="The Pouch Project" width="1024" height="784">
-    </a>
-    <nav class="nav__links" aria-label="Principal">
+  <div class="wrap nav__inner">
+    <nav class="nav__side nav__side--l" aria-label="Principal">
       <a href="#productos">Producto</a>
       <a href="#muro">Qué es</a>
-      <a href="#efectos">Efectos</a>
-      <a href="#nosotros">Nosotros</a>
     </nav>
-    <a class="btn btn--dark nav__cta" data-wa="general" href="#">¡Escríbenos!</a>
+    <a class="nav__brand" href="#top" aria-label="The Pouch Project — inicio">
+      <img src="assets/img/logo-cream.png" alt="The Pouch Project" width="1024" height="784">
+    </a>
+    <nav class="nav__side nav__side--r" aria-label="Secundaria">
+      <a href="#efectos">Efectos</a>
+      <a href="#pedido">Pedir</a>
+    </nav>
+    <a class="btn nav__cta" href="#pedido">Pedir</a>
   </div>
 </header>
 
@@ -68,9 +70,9 @@
       <span class="claim__line" data-anim="claim">Pouches de rendimiento</span>
       <span class="claim__line" data-anim="claim">para el que</span>
       <span class="claim__stickers" data-anim="claim">
-        <em class="tag tag--naranja">rinde</em>
+        <em class="tag tag--cobalto">rinde</em>
         <span class="claim__y">sin</span>
-        <em class="tag tag--amarillo">límites</em>
+        <em class="tag tag--arena">límites</em>
       </span>
     </h1>
     <div class="hero__actions" data-anim="claim">
@@ -90,6 +92,13 @@
   </div>
 </div>
 
+<!-- ═══════════════════════════════════════════════ TIRA DE DATOS -->
+<ul class="facts" data-tone="#0E0E12">
+  <li data-anim="up"><i>⚡</i><b>Envío 24–72 h</b><span>A todo el Ecuador, o retiro en persona.</span></li>
+  <li data-anim="up"><i>◈</i><b>Pagas al confirmar</b><span>Nada automático: coordinamos por WhatsApp.</span></li>
+  <li data-anim="up"><i>✦</i><b>Sin cafeína</b><span>Alpha GPC, L-Tirosina y L-Teanina. Cero azúcar.</span></li>
+</ul>
+
 <!-- ══════════════════════════════════════════════ MURO DE PEGATINAS -->
 <section class="muro" id="muro" data-tone="#16120F" aria-labelledby="muroTitle">
   <div class="muro__stickers" id="stickers" aria-hidden="true"></div>
@@ -106,19 +115,19 @@
   <div class="wrap">
     <div class="section-head">
       <p class="eyebrow" data-anim="up">Lo que vendemos</p>
-      <h2 class="h2" data-anim="up">Un pouch, <em class="tag tag--naranja tag--sm">una dosis</em></h2>
+      <h2 class="h2" data-anim="up">Un pouch, <em class="tag tag--cobalto tag--sm">una dosis</em></h2>
       <p class="lede" data-anim="up">Por ahora traemos una sola referencia y la traemos bien.
         Las otras dos están en camino.</p>
     </div>
   </div>
 
-  <div class="rail" id="rail">
-    <div class="rail__track" id="railTrack"></div>
+  <div class="flow" id="flow">
+    <div class="flow__stage" id="flowStage"></div>
   </div>
-  <div class="wrap rail__ctrl">
-    <button class="dot" type="button" id="railPrev" aria-label="Anterior">←</button>
-    <button class="dot" type="button" id="railNext" aria-label="Siguiente">→</button>
-    <span class="rail__hint">Desliza para ver todos</span>
+  <div class="wrap flow__ctrl">
+    <button class="dot" type="button" id="flowPrev" aria-label="Anterior">←</button>
+    <span class="flow__dots" id="flowDots"></span>
+    <button class="dot" type="button" id="flowNext" aria-label="Siguiente">→</button>
   </div>
 </section>
 
@@ -129,7 +138,7 @@
 
   <div class="wrap efectos__inner">
     <p class="eyebrow" data-anim="fx">Cuándo actúa</p>
-    <h2 class="h2" id="efectosTitle" data-anim="fx">Efectos <em class="tag tag--amarillo tag--sm">inmediatos</em></h2>
+    <h2 class="h2" id="efectosTitle" data-anim="fx">Efectos <em class="tag tag--arena tag--sm">inmediatos</em></h2>
 
     <div class="efectos__panels" id="fxPanels" data-anim="fx"></div>
 
@@ -150,9 +159,9 @@
       </span>
     </figure>
     <div class="about__body">
-      <h2 class="h2" data-anim="up">¡Hola! <em class="tag tag--naranja tag--sm">encantado</em> de conocerte :)</h2>
-      <p data-anim="up">Somos The Pouch Project, la primera tienda de pouches de rendimiento del Ecuador.
-        Arrancamos con una sola referencia porque preferimos traer una bien que cinco a medias.</p>
+      <h2 class="h2" data-anim="up">Un pouch, <em class="tag tag--cobalto tag--sm">cero excusas</em></h2>
+      <p data-anim="up">Somos la primera tienda de pouches de rendimiento del Ecuador. Arrancamos con
+        una sola referencia porque preferimos traer una bien que cinco a medias.</p>
       <p data-anim="up">El formato dejó de ser cosa de tabaco. Un pouch se coloca entre labio y encía y
         libera sus activos por la mucosa de la boca, una vía muy vascularizada que entra a circulación
         sin pasar primero por el hígado. Sin humo, sin líquido y sin cargar nada.</p>
@@ -167,12 +176,33 @@
   </div>
 </section>
 
+<!-- ═══════════════════════════════════════════════════ PREGUNTAS -->
+<section class="section" id="faq" data-tone="#0E0E12">
+  <div class="wrap">
+    <div class="section-head" style="margin-inline:auto; text-align:center; justify-items:center">
+      <p class="eyebrow" data-anim="up">Antes de pedir</p>
+      <h2 class="h2" data-anim="up">Las <em class="tag tag--arena tag--sm">dudas</em> de siempre</h2>
+    </div>
+    <div class="faq" data-anim="up">
+      <details><summary>¿Tiene nicotina o tabaco?</summary>
+        <p>No. Cero nicotina, cero tabaco, cero humo. Es un formato de consumo, no un producto de tabaco.</p></details>
+      <details><summary>¿Tiene cafeína?</summary>
+        <p>No. La NZE Peppermint es de la línea Focus: trabaja con Alpha GPC, L-Tirosina y L-Teanina.</p></details>
+      <details><summary>¿Cómo se usa?</summary>
+        <p>Se coloca entre el labio superior y la encía, se deja 20 a 30 minutos y se retira. No se mastica ni se traga.</p></details>
+      <details><summary>¿Cómo pago?</summary>
+        <p>Coordinamos por WhatsApp: transferencia, efectivo al entregar o contra entrega según la ciudad.
+          No pedimos datos de tarjeta por la web.</p></details>
+    </div>
+  </div>
+</section>
+
 <!-- ═══════════════════════════════════════════════════ PEDIDO -->
 <section class="section pedido" id="pedido" data-tone="#16120F">
   <div class="wrap">
     <div class="section-head">
       <p class="eyebrow" data-anim="up">Cerramos por WhatsApp</p>
-      <h2 class="h2" data-anim="up">Haz <em class="tag tag--naranja tag--sm">tu pedido</em></h2>
+      <h2 class="h2" data-anim="up">Haz <em class="tag tag--cobalto tag--sm">tu pedido</em></h2>
       <p class="lede" data-anim="up">Confirmamos stock, forma de pago y hora de entrega antes de que pagues nada.</p>
     </div>
 
@@ -250,15 +280,14 @@
           <button class="btn btn--outline" type="button" id="applyCode">Aplicar</button>
         </div>
 
-        <button class="btn btn--naranja btn--block" type="submit" id="sendOrder">¡Enviar por WhatsApp!</button>
+        <button class="btn btn--cobalto btn--block" type="submit" id="sendOrder">¡Enviar por WhatsApp!</button>
       </form>
     </div>
 
     <ul class="contact" data-anim="up">
       <li><b>WhatsApp</b><a id="waLine" data-wa="general" href="#">—</a></li>
-      <li><b>Correo</b><a id="mailLink" href="#">—</a></li>
-      <li><b>Entrega</b><span id="zonaLine">—</span></li>
       <li><b>Instagram</b><a id="igLink" href="#" target="_blank" rel="noopener">—</a></li>
+      <li><b>Entrega</b><span id="zonaLine">—</span></li>
     </ul>
   </div>
 </section>
@@ -267,11 +296,38 @@
 
 <!-- ══════════════════════════════════════════════════════ FOOTER -->
 <footer class="footer">
+  <div class="wrap footer__top">
+    <nav class="footer__nav" aria-label="Pie">
+      <h3>Navega</h3>
+      <a href="#productos">Producto</a>
+      <a href="#muro">Qué es</a>
+      <a href="#efectos">Efectos</a>
+      <a href="#pedido">Pedir</a>
+    </nav>
+
+    <div class="footer__cta">
+      <h3>¿Listo para pedir?</h3>
+      <p>Te respondemos en el día.</p>
+      <a class="btn btn--dark" data-wa="cierre" href="#">¡Pídelo por WhatsApp!</a>
+    </div>
+
+    <div class="footer__social">
+      <a id="igSocial" href="#" target="_blank" rel="noopener" aria-label="Instagram">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="3.5" y="3.5" width="17" height="17" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.2" cy="6.8" r="1.1" fill="currentColor"/></svg>
+      </a>
+      <a data-wa="footer" href="#" aria-label="WhatsApp">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M12 2a9.9 9.9 0 0 0-8.5 15l-1.4 5 5.2-1.4A9.9 9.9 0 1 0 12 2Z"/></svg>
+      </a>
+      <p class="footer__cop">© The Pouch Project <span id="year"></span></p>
+    </div>
+  </div>
+
   <div class="footer__word" aria-hidden="true"><span>The Pouch Project</span></div>
+
   <div class="wrap footer__legal">
     <span>Guayaquil · Ecuador</span>
-    <span>The Pouch Project <span id="year"></span> © Todos los derechos reservados</span>
-    <span id="igFoot">@thepouchproject</span>
+    <span>Todos los derechos reservados</span>
+    <span id="igFoot">@pouchproject</span>
   </div>
   <p class="wrap footer__care">
     Suplemento alimenticio para adultos. No apto para menores de 18 años, embarazadas ni personas

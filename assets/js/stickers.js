@@ -1,50 +1,53 @@
 /* ==========================================================================
    THE POUCH PROJECT — pegatinas
-   Formas dibujadas en SVG, con el borde blanco de troquel. Se colocan
-   alrededor del muro y flotan despacio. Sin imágenes ni peticiones.
+   Formas de velocidad y atletismo dibujadas en SVG, con el borde blanco de
+   troquel. Flotan y se mueven con el scroll. Sin imágenes ni peticiones.
    ========================================================================== */
 (function (global) {
   'use strict';
 
-  /* Cada forma se dibuja en una caja de 100×100 */
+  /* Cada forma se dibuja dentro de una caja de 100×100 */
   var FORMAS = {
-    llama: 'M50 6c10 18 2 26 10 34 5 5 12 3 14-4 8 12 12 22 12 32 0 20-16 32-36 32S14 88 14 68c0-16 10-28 20-38 8-8 14-14 16-24Z',
-    rayo:  'M56 4 22 54h22l-8 42 36-52H50l6-40Z',
-    flor:  'M50 8c6 0 9 10 9 18 6-5 15-10 19-6s0 13-5 19c8 0 18 3 18 9s-10 9-18 9c5 6 9 15 5 19s-13-1-19-6c0 8-3 18-9 18s-9-10-9-18c-6 5-15 9-19 5s0-13 5-19c-8 0-18-3-18-9s10-9 18-9c-5-6-9-15-5-19s13 1 19 6c0-8 3-18 9-18Z',
-    cara:  'M50 8a42 42 0 1 1 0 84 42 42 0 0 1 0-84Zm-16 28a6 7 0 1 0 0 14 6 7 0 0 0 0-14Zm32 0a6 7 0 1 0 0 14 6 7 0 0 0 0-14ZM30 62h40c0 12-9 20-20 20s-20-8-20-20Z',
-    lata:  'M50 16a34 34 0 1 1 0 68 34 34 0 0 1 0-68Zm0 11a23 23 0 1 0 0 46 23 23 0 0 0 0-46Z',
-    hoja:  'M50 8c22 10 34 26 34 42 0 22-16 42-34 42S16 72 16 50C16 34 28 18 50 8Zm0 16c-12 8-20 18-20 28 0 14 9 26 20 30Z',
-    chispa:'M50 4c4 22 20 38 42 42-22 4-38 20-42 42-4-22-20-38-42-42 22-4 38-20 42-42Z',
-    paz:   'M50 8a42 42 0 1 1 0 84 42 42 0 0 1 0-84Zm-6 12v26L28 32a31 31 0 0 0 16 40V20Zm12 0v52a31 31 0 0 0 16-40L56 46V20Z',
+    rayo:     'M58 4 20 56h24l-6 40 38-54H50l8-38Z',
+    chevron:  'M12 14 44 50 12 86l16 0 32-36L28 14H12Zm34 0 32 36-32 36h16l32-36-32-36H46Z',
+    crono:    'M50 14a36 36 0 1 1 0 72 36 36 0 0 1 0-72Zm0 12a24 24 0 1 0 0 48 24 24 0 0 0 0-48Zm-4 6h8v18l12 8-4 7-16-11V32ZM38 2h24v9H38V2Z',
+    diana:    'M50 8a42 42 0 1 1 0 84 42 42 0 0 1 0-84Zm0 13a29 29 0 1 0 0 58 29 29 0 0 0 0-58Zm0 13a16 16 0 1 0 0 32 16 16 0 0 0 0-32Z',
+    pesa:     'M14 34h12v32H14V34Zm60 0h12v32H74V34ZM28 42h6v16h-6V42Zm38 0h6v16h-6V42ZM36 45h28v10H36V45ZM4 44h8v12H4V44Zm84 0h8v12h-8V44Z',
+    flecha:   'M22 78 68 32H40V18h52v52H78V42L32 88l-10-10Z',
+    bandera:  'M18 6h8v88h-8V6Zm12 4h56v18H66v18H48V28H30V10Zm18 18h18v18H48V28Zm18 18h20v18H66V46Zm-36 0h18v18H30V46Z',
+    estela:   'M6 26h62c7 0 7 12 0 12H6c-7 0-7-12 0-12Zm22 22h60c7 0 7 12 0 12H28c-7 0-7-12 0-12Zm-18 22h52c7 0 7 12 0 12H10c-7 0-7-12 0-12Z',
+    lata:     'M50 16a34 34 0 1 1 0 68 34 34 0 0 1 0-68Zm0 11a23 23 0 1 0 0 46 23 23 0 0 0 0-46Z',
   };
 
-  /* Reparto fijo: los bordes se llenan y el centro queda libre para el texto */
+  /* Reparto fijo: los bordes se llenan y el centro queda libre para el texto.
+     `p` es el factor de paralaje: cuánto se mueve la pegatina con el scroll. */
   var PLAN = [
-    { f: 'llama',  x:  4, y:  8, s: 1.25, r: -14 },
-    { f: 'cara',   x: 16, y: 62, s: 1.05, r:  10 },
-    { f: 'flor',   x: 28, y: 14, s:  .8,  r:  18 },
-    { f: 'rayo',   x:  8, y: 36, s:  .9,  r:  -6 },
-    { f: 'lata',   x: 34, y: 80, s: 1.0,  r: -12 },
-    { f: 'chispa', x: 48, y:  5, s:  .7,  r:   8 },
-    { f: 'hoja',   x: 62, y: 76, s:  .95, r:  16 },
-    { f: 'paz',    x: 74, y: 16, s:  .9,  r: -10 },
-    { f: 'llama',  x: 88, y: 46, s: 1.15, r:  12 },
-    { f: 'flor',   x: 84, y: 62, s:  .62, r:  -8 },
-    { f: 'cara',   x: 90, y: 82, s:  .85, r:  -6 },
-    { f: 'rayo',   x: 50, y: 93, s:  .7,  r:  14 },
+    { f: 'rayo',    x:  5, y: 12, s: 1.25, r: -12, p:  38 },
+    { f: 'chevron', x: 17, y: 64, s: 1.05, r:   8, p: -26 },
+    { f: 'diana',   x: 29, y: 15, s:  .82, r:  16, p:  22 },
+    { f: 'estela',  x:  8, y: 40, s:  .95, r:  -6, p: -34 },
+    { f: 'lata',    x: 33, y: 82, s: 1.0,  r: -12, p:  30 },
+    { f: 'flecha',  x: 48, y:  5, s:  .72, r:   9, p: -20 },
+    { f: 'pesa',    x: 63, y: 78, s:  .98, r:  14, p:  36 },
+    { f: 'crono',   x: 74, y: 14, s:  .9,  r: -10, p: -28 },
+    { f: 'rayo',    x: 90, y: 44, s: 1.12, r:  13, p:  24 },
+    { f: 'bandera', x: 84, y: 64, s:  .66, r:  -8, p: -18 },
+    { f: 'chevron', x: 92, y: 84, s:  .82, r:  -5, p:  32 },
+    { f: 'estela',  x: 50, y: 93, s:  .72, r:  12, p: -24 },
   ];
 
   function pinta(host, tintas) {
-    if (!host) return;
+    if (!host) return [];
     host.innerHTML = PLAN.map(function (p, i) {
       var tinta = tintas[i % tintas.length];
-      return '<span class="sticker" style="' +
+      return '<span class="sticker" data-p="' + p.p + '" style="' +
         'left:' + p.x + '%; top:' + p.y + '%;' +
         '--s:' + p.s + '; --r:' + p.r + 'deg; --d:' + (i * 0.37).toFixed(2) + 's">' +
         '<svg viewBox="0 0 100 100" aria-hidden="true">' +
           '<path d="' + FORMAS[p.f] + '" fill="' + tinta + '"/>' +
         '</svg></span>';
     }).join('');
+    return Array.prototype.slice.call(host.children);
   }
 
   global.TPPStickers = { pinta: pinta, FORMAS: FORMAS };

@@ -12,8 +12,8 @@ window.TPP = {
 
   /* ---- CONTACTO -------------------------------------------------------- */
   // Formato internacional SIN "+" ni espacios: 593 + número sin el 0 inicial.
-  whatsapp: '593940238603',   // 0940238603
-  instagram: 'thepouchproject',
+  whatsapp: '593962618755',   // 0962618755
+  instagram: 'pouchproject',
   email: 'hola@thepouchproject.ec',
 
   /* ---- PRODUCTO -------------------------------------------------------- */
