@@ -408,9 +408,12 @@ main section[id]{scroll-margin-top:calc(var(--nav-h) + 16px)}
 }
 .tab[aria-selected="true"]{color:var(--negro)}
 
+/* Los cuatro casos se apilan en la misma celda y los ocultos siguen
+   ocupando sitio: así la rejilla mide siempre lo que el más alto y el
+   módulo no pega un salto al cambiar de pestaña. */
 .usos__panels{display:grid; width:min(100%,60ch); margin-top:2px}
-.uso{grid-area:1/1; display:grid; gap:12px; justify-items:center}
-.uso[hidden]{display:none}
+.uso{grid-area:1/1; display:grid; gap:12px; justify-items:center; align-content:start}
+.uso[hidden]{visibility:hidden; pointer-events:none}
 .uso__titulo{
   font-family:var(--display); font-weight:400;
   font-size:clamp(19px,2vw,27px); line-height:1.1;

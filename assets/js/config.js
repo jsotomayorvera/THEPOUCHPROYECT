@@ -88,38 +88,41 @@ window.TPP = {
   // y esa pestaña lo usará en lugar de la animación.
   /* Cuándo usarlos. Cada caso tiene su propia imagen: para cambiarla,
      deja el archivo en assets/img/ y apunta aquí la ruta. Nada más. */
+  /* Cuándo usarlos. Los cuatro textos se escriben a la misma medida para
+     que el módulo no cambie de alto al saltar de pestaña. Para cambiar una
+     imagen, deja el archivo en assets/img/ y apunta aquí la ruta. */
   usos: [
     {
       id: 'entrenamiento', label: 'Entrenamiento',
       foto: 'assets/img/uso-entrenamiento.webp',
-      titulo: 'Diez minutos antes de la primera serie',
-      copy: 'Te lo pones al calentar y ya estás dentro cuando tocas la barra. Sin líquido ' +
-            'que cargar, sin azúcar que te baje a media sesión y sin las manos ocupadas. ' +
-            'Aguanta puesto toda la rutina y lo retiras al terminar.',
+      titulo: 'Puesto antes de la primera serie',
+      copy: 'Te lo pones al calentar y ya estás dentro cuando tocas la barra. Nada que cargar, ' +
+            'nada de azúcar que te baje a media sesión y las manos libres. Aguanta toda la ' +
+            'rutina puesto y lo retiras al terminar.',
     },
     {
       id: 'trabajo', label: 'Trabajo',
       foto: 'assets/img/uso-trabajo.webp',
-      titulo: 'Para el bloque largo, no para el sprint',
-      copy: 'La L-Teanina sostiene una atención tranquila y la L-Tirosina es el precursor que ' +
-            'el cerebro gasta bajo presión. Al no llevar azúcar no hay pico de insulina y, ' +
-            'por tanto, tampoco la caída de una hora después.',
+      titulo: 'Para el bloque largo, no el sprint',
+      copy: 'La L-Teanina sostiene la atención sin ponerte acelerado y la L-Tirosina repone lo ' +
+            'que el cerebro gasta bajo presión. Al no llevar azúcar no hay pico, y sin pico no ' +
+            'llega la caída de la hora siguiente.',
     },
     {
       id: 'estudio', label: 'Estudio',
       foto: 'assets/img/uso-estudio.webp',
-      titulo: 'Sesiones seguidas sin ir por otro café',
-      copy: 'Cada pouch trae siempre la misma cantidad, así que dejas de adivinar la dosis. ' +
-            'Sin cafeína no te roba el sueño de la noche, que es justo lo que arruina el ' +
-            'estudio del día siguiente.',
+      titulo: 'Sesiones seguidas, sin otro café',
+      copy: 'Cada pouch trae siempre la misma cantidad, así que dejas de calcular la dosis a ojo. ' +
+            'Y como no lleva cafeína tampoco te cobra la noche: el examen de mañana no se paga ' +
+            'con las horas de sueño de hoy.',
     },
     {
       id: 'donde-sea', label: 'Donde sea',
       foto: 'assets/img/uso-donde-sea.webp',
-      titulo: 'En el bolsillo, en el bolso o en el carro',
-      copy: 'No se derrama, no hay que enfriarlo y no necesita agua. Carretera, turno largo, ' +
-            'viaje o mudanza: cabe donde quepa una lata pequeña y no deja olor, humo ni ' +
-            'nada que limpiar.',
+      titulo: 'Va donde vayas, sin cargar nada',
+      copy: 'No se derrama, no pide agua y no necesita frío. Carretera, turno largo, viaje o ' +
+            'mudanza: ocupa lo que una lata pequeña y no deja atrás humo, olor ni un vaso que ' +
+            'lavar cuando ya terminaste.',
     },
   ],
 };
