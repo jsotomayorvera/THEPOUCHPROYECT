@@ -86,30 +86,40 @@ window.TPP = {
   // Cada pestaña tiene su propia animación de fondo, generada en código.
   // Si consigues un clip real para alguna, añade `video: 'assets/video/xxx.mp4'`
   // y esa pestaña lo usará en lugar de la animación.
-  efectos: [
+  /* Cuándo usarlos. Cada caso tiene su propia imagen: para cambiarla,
+     deja el archivo en assets/img/ y apunta aquí la ruta. Nada más. */
+  usos: [
     {
-      id: 'minutos', label: 'Minutos', when: '0 – 10 minutos', tema: 'frost', tono: '#DCEFE2',
-      copy: 'El frescor de la menta llega al primer segundo. Mientras el pouch sigue puesto, ' +
-            'los activos se liberan por la mucosa de la boca, una vía muy vascularizada que entra ' +
-            'a circulación sin pasar primero por el hígado. Enciendes sin haber tomado un mililitro de líquido.',
+      id: 'entrenamiento', label: 'Entrenamiento',
+      foto: 'assets/img/uso-entrenamiento.webp',
+      titulo: 'Diez minutos antes de la primera serie',
+      copy: 'Te lo pones al calentar y ya estás dentro cuando tocas la barra. Sin líquido ' +
+            'que cargar, sin azúcar que te baje a media sesión y sin las manos ocupadas. ' +
+            'Aguanta puesto toda la rutina y lo retiras al terminar.',
     },
     {
-      id: 'horas', label: 'Horas', when: '1 – 3 horas', tema: 'pace', tono: '#DEEAF1',
-      copy: 'La ventana de trabajo. La L-Teanina sostiene una atención tranquila y la L-Tirosina es ' +
-            'el precursor que el cerebro gasta bajo presión. Sin azúcar no hay pico de insulina y, ' +
-            'por tanto, no hay caída reactiva una hora después.',
+      id: 'trabajo', label: 'Trabajo',
+      foto: 'assets/img/uso-trabajo.webp',
+      titulo: 'Para el bloque largo, no para el sprint',
+      copy: 'La L-Teanina sostiene una atención tranquila y la L-Tirosina es el precursor que ' +
+            'el cerebro gasta bajo presión. Al no llevar azúcar no hay pico de insulina y, ' +
+            'por tanto, tampoco la caída de una hora después.',
     },
     {
-      id: 'dias', label: 'Días', when: 'Día tras día', tema: 'pulse', tono: '#F0E4CB',
-      copy: 'Un pouch trae siempre la misma cantidad, así que dejas de adivinar la dosis. Nada que ' +
-            'cargar, nada que enfriar, nada que manche el esmalte. Y si quieres cortar, lo retiras: ' +
-            'con una lata ya te la tomaste.',
+      id: 'estudio', label: 'Estudio',
+      foto: 'assets/img/uso-estudio.webp',
+      titulo: 'Sesiones seguidas sin ir por otro café',
+      copy: 'Cada pouch trae siempre la misma cantidad, así que dejas de adivinar la dosis. ' +
+            'Sin cafeína no te roba el sueño de la noche, que es justo lo que arruina el ' +
+            'estudio del día siguiente.',
     },
     {
-      id: 'largo', label: 'A largo plazo', when: 'A largo plazo', tema: 'climb', tono: '#E3EDDF',
-      copy: 'Cambias la lata azucarada por un formato limpio y controlas tu día real. Cuando lleguen ' +
-            'la línea con cafeína y los electrolitos se cierra el círculo: foco para la cabeza, ' +
-            'energía para arrancar, sales para recuperar.',
+      id: 'donde-sea', label: 'Donde sea',
+      foto: 'assets/img/uso-donde-sea.webp',
+      titulo: 'En el bolsillo, en el bolso o en el carro',
+      copy: 'No se derrama, no hay que enfriarlo y no necesita agua. Carretera, turno largo, ' +
+            'viaje o mudanza: cabe donde quepa una lata pequeña y no deja olor, humo ni ' +
+            'nada que limpiar.',
     },
   ],
 };

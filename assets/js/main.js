@@ -259,18 +259,16 @@
   resumen();
 
   /* ═══════════════════════════════════════════════ 3. EFECTOS */
-  var fx = window.TPPFx ? window.TPPFx($('#fxField')) : null;
-
-  (function tabs() {
-    var list = $('#fxTabs'), panels = $('#fxPanels'), thumb = $('#fxThumb');
+  (function usos() {
+    var list = $('#fxTabs'), panels = $('#fxPanels'), thumb = $('#fxThumb'), foto = $('#usoFoto');
     if (!list || !panels) return;
-    var datos = cfg.efectos || [];
+    var datos = cfg.usos || [];
 
     panels.innerHTML = datos.map(function (d, i) {
-      return '<div class="fxpanel" id="panel-' + d.id + '" role="tabpanel" ' +
+      return '<div class="uso" id="panel-' + d.id + '" role="tabpanel" ' +
         'aria-labelledby="tab-' + d.id + '" tabindex="0"' + (i ? ' hidden' : '') + '>' +
-        '<p class="fxpanel__when">' + d.when + '</p>' +
-        '<p class="fxpanel__copy">' + d.copy + '</p></div>';
+        '<p class="uso__titulo">' + d.titulo + '</p>' +
+        '<p class="uso__copy">' + d.copy + '</p></div>';
     }).join('');
 
     list.insertAdjacentHTML('beforeend', datos.map(function (d, i) {
@@ -279,7 +277,7 @@
         (i ? ' tabindex="-1"' : '') + '>' + d.label + '</button>';
     }).join(''));
 
-    var btns = $$('.tab', list), media = $('#fxMedia');
+    var btns = $$('.tab', list);
 
     function moveThumb(btn, animate) {
       var x = btn.offsetLeft - list.clientLeft, w = btn.offsetWidth;
@@ -293,7 +291,7 @@
         b.setAttribute('aria-selected', n === i ? 'true' : 'false');
         b.tabIndex = n === i ? 0 : -1;
       });
-      $$('.fxpanel', panels).forEach(function (p, n) {
+      $$('.uso', panels).forEach(function (p, n) {
         if (n === i) {
           p.hidden = false;
           if (hasGsap && animate && !reduced) {
@@ -303,14 +301,16 @@
       });
       moveThumb(btns[i], animate);
 
-      if (media) {
-        if (d.video) { media.innerHTML = '<video src="' + d.video + '" muted playsinline loop autoplay></video>'; media.hidden = false; }
-        else { media.innerHTML = ''; media.hidden = true; }
+      /* La imagen del caso: se cambia con un fundido corto */
+      if (foto && d.foto && foto.getAttribute('src') !== d.foto) {
+        var cambia = function () { foto.src = d.foto; foto.alt = d.titulo; };
+        if (hasGsap && animate && !reduced) {
+          gsap.to(foto, { autoAlpha: 0, duration: .18, onComplete: function () {
+            cambia();
+            gsap.to(foto, { autoAlpha: 1, duration: .32 });
+          } });
+        } else cambia();
       }
-      if (fx && !d.video) fx.setTema(d.tema);
-
-      var sec = document.getElementById('efectos');
-      if (d.tono && sec) sec.style.setProperty('--bg', d.tono);
     }
 
     btns.forEach(function (b, i) {

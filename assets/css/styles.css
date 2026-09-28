@@ -61,7 +61,7 @@
    Cada palabra sobre el fondo lleva sombra: una dura pegada y una larga
    difusa. Es lo que hace que el texto parezca una capa encima y no algo
    impreso en la pared. Dentro de las cajas claras se anula. */
-.claim,.h2,.quote,.eyebrow,.lede,.fxpanel__copy,.fxpanel__when,
+.claim,.h2,.quote,.eyebrow,.lede,.uso__copy,.uso__titulo,
 .about__body p,.marks li,.contact b,.contact a,.contact span,
 .order-lite__hint,.flow__ctrl,.hero__kicker,.section-head p{
   text-shadow:var(--lift-txt);
@@ -271,10 +271,10 @@ main section[id]{scroll-margin-top:calc(var(--nav-h) + 16px)}
 /* ────────────────────────────────────── 8. MURO DE PEGATINAS ───────── */
 .muro{
   position:relative; isolation:isolate; overflow:hidden;
-  padding-block:clamp(66px,8.4vw,116px);
+  padding-block:clamp(112px,15vw,214px);
   background-color:var(--tierra-2);
   background-image:url('../img/grafiti.webp');
-  background-size:clamp(420px,46vw,700px);
+  background-size:clamp(520px,58vw,900px);
 }
 .muro__stickers{position:absolute; inset:0; z-index:0; pointer-events:none}
 
@@ -289,8 +289,8 @@ main section[id]{scroll-margin-top:calc(var(--nav-h) + 16px)}
 .muro__inner{position:relative; z-index:2; display:grid; place-items:center; text-align:center}
 /* Halo oscuro detrás de la frase: ninguna pegatina le quita legibilidad */
 .quote::before{
-  content:''; position:absolute; z-index:-1; inset:-14% -12%;
-  background:radial-gradient(closest-side, rgba(20,8,4,.92) 46%, rgba(20,8,4,.66) 72%, transparent);
+  content:''; position:absolute; z-index:-1; inset:-22% -16%;
+  background:radial-gradient(closest-side, rgba(20,8,4,.96) 52%, rgba(20,8,4,.78) 76%, transparent);
 }
 .quote{
   position:relative; display:grid; gap:.1em;
@@ -369,19 +369,9 @@ main section[id]{scroll-margin-top:calc(var(--nav-h) + 16px)}
   position:relative; isolation:isolate; overflow:hidden;
   background:var(--cobalto); border-block:4px solid var(--negro);
 }
-.efectos__canvas{position:absolute; inset:0; width:100%; height:100%; z-index:0; opacity:.5}
-.efectos__media{position:absolute; inset:0; z-index:0}
-.efectos__media video{width:100%; height:100%; object-fit:cover; opacity:.4}
-.efectos__inner{position:relative; z-index:2; display:grid; justify-items:center; text-align:center; gap:clamp(14px,2.2vw,24px)}
-.efectos__inner .h2{max-width:16ch}
-.efectos__panels{display:grid; width:min(100%,58ch); margin-top:6px}
-.fxpanel{grid-area:1/1; display:grid; gap:12px; justify-items:center}
-.fxpanel[hidden]{display:none}
-.fxpanel__when{
-  font-family:var(--marker); font-size:15px; color:var(--menta);
-  transform:rotate(-1.5deg);
-}
-.fxpanel__copy{font-size:clamp(16px,.55vw + 15px,19px); color:var(--crema); text-wrap:pretty}
+.efectos__inner{position:relative; z-index:2; display:grid; justify-items:center; gap:clamp(16px,2.4vw,26px)}
+.efectos__head{display:grid; gap:12px; justify-items:center; text-align:center}
+.efectos__head .h2{max-width:16ch}
 
 .tabs{
   box-shadow:var(--lift-sm);
@@ -409,6 +399,34 @@ main section[id]{scroll-margin-top:calc(var(--nav-h) + 16px)}
   transition:color .3s var(--ease); white-space:nowrap;
 }
 .tab[aria-selected="true"]{color:var(--negro)}
+
+/* Cuándo usarlos: imagen a un lado, texto al otro */
+.usos{
+  display:grid; gap:clamp(20px,3vw,40px); width:100%;
+  margin-top:clamp(8px,1.6vw,16px); align-items:center;
+}
+@media (min-width:860px){.usos{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}}
+.usos__fig{
+  margin:0; border:4px solid var(--negro); border-radius:var(--r-lg);
+  overflow:hidden; box-shadow:var(--lift); background:var(--tierra-2);
+  transform:rotate(-1.2deg);
+}
+.usos__fig img{display:block; width:100%; height:auto; aspect-ratio:4/3; object-fit:cover}
+.usos__panels{display:grid}
+.uso{grid-area:1/1; display:grid; gap:12px; justify-items:start; text-align:left}
+.uso[hidden]{display:none}
+.uso__titulo{
+  font-family:var(--display); font-weight:400;
+  font-size:clamp(20px,2.2vw,30px); line-height:1.08;
+  letter-spacing:-.025em; text-transform:uppercase; text-wrap:balance;
+  text-shadow:var(--lift-display);
+}
+.uso__copy{font-size:clamp(16px,.55vw + 15px,19px); color:var(--crema); text-wrap:pretty; text-shadow:var(--lift-txt)}
+@media (max-width:859px){
+  .uso,.efectos__inner{justify-items:center}
+  .uso{text-align:center}
+}
+
 
 /* ────────────────────────────────────────────── 11. NOSOTROS ───────── */
 .about{display:grid; gap:clamp(28px,4vw,60px); align-items:center}

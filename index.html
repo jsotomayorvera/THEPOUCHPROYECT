@@ -125,17 +125,21 @@
 
 <!-- ═══════════════════════════════════════════════════ EFECTOS -->
 <section class="section efectos" id="efectos" aria-labelledby="efectosTitle">
-  <canvas class="efectos__canvas" id="fxField" aria-hidden="true"></canvas>
-  <div class="efectos__media" id="fxMedia" aria-hidden="true" hidden></div>
-
   <div class="wrap efectos__inner">
-    <p class="eyebrow" data-anim="fx">Cuándo actúa</p>
-    <h2 class="h2" id="efectosTitle" data-anim="fx">Efectos <em class="tag tag--arena tag--sm">inmediatos</em></h2>
+    <div class="efectos__head">
+      <p class="eyebrow" data-anim="fx">Cuándo usarlos</p>
+      <h2 class="h2" id="efectosTitle" data-anim="fx">Para <em class="tag tag--arena tag--sm">tu día</em></h2>
+    </div>
 
-    <div class="efectos__panels" id="fxPanels" data-anim="fx"></div>
-
-    <div class="tabs" role="tablist" aria-label="Cuándo actúa" id="fxTabs" data-anim="fx">
+    <div class="tabs" role="tablist" aria-label="Cuándo usarlos" id="fxTabs" data-anim="fx">
       <span class="tabs__thumb" id="fxThumb" aria-hidden="true"></span>
+    </div>
+
+    <div class="usos" data-anim="fx">
+      <figure class="usos__fig">
+        <img id="usoFoto" src="assets/img/uso-entrenamiento.webp" alt="" width="1200" height="900" loading="lazy" decoding="async">
+      </figure>
+      <div class="usos__panels" id="fxPanels"></div>
     </div>
   </div>
 </section>
@@ -366,7 +370,6 @@
 <script src="assets/js/vendor/ScrollTrigger.min.js"></script>
 <script src="assets/js/config.js"></script>
 <script src="assets/js/stickers.js"></script>
-<script src="assets/js/fx.js"></script>
 <script src="assets/js/checkout.js"></script>
 <script src="assets/js/main.js"></script>
 </body>

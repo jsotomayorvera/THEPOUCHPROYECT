@@ -66,6 +66,7 @@ Abre **`assets/js/config.js`**. Todo lo editable está ahí y en un solo lugar:
 | `producto.foto` | Ruta de la foto del producto. Si el archivo no existe, la web dibuja una lata de respaldo y no se rompe nada |
 | `efectos` | Las cuatro pestañas del módulo de efectos. Cada una trae su animación (`tema`) y su tono de página (`tono`). Si le pones `video`, ese clip sustituye a la animación |
 | `envios`, `descuentos`, `packs` | Tarifas, códigos y precios del pedido |
+| `usos` | Los cuatro casos de "Cuándo usarlos": botón, titular, texto y **ruta de la imagen** |
 
 No hace falta tocar HTML para cambiar precios, nombres ni textos del producto.
 
@@ -77,11 +78,10 @@ assets/css/styles.css      Sistema de diseño y todos los estilos
 assets/css/fonts.css       Fraunces · Instrument Sans (autoalojadas)
 assets/js/config.js        ⚙️ Configuración: contacto, producto, vitrina, packs, envíos
 assets/js/checkout.js      Cálculo del pedido y enlace de WhatsApp
-assets/js/fx.js            Animaciones del módulo de efectos (una por pestaña)
 assets/js/stickers.js      Las pegatinas del muro (velocidad y atletismo), en SVG
 assets/js/main.js          Comportamiento y animación de la página
 assets/js/vendor/          GSAP + ScrollTrigger alojados en el proyecto
-assets/img/                Logo, iconos, foto del producto y latas de "próximamente"
+assets/img/                Logo, iconos, foto del producto, portadas de uso y grafiti
 assets/img/atletas/        Fotos de la banda de atletas (ver aviso abajo)
 assets/img/marmol-*.webp   Texturas de piedra generadas, una por color de módulo
 assets/fonts/              Tipografías (no dependen de Google Fonts)
@@ -92,7 +92,7 @@ DEPLOY.md                  Cómo publicarlo en Vercel
 ```
 
 Los módulos, en orden: hero con el eslogan sobre vídeo · cintillo · muro de pegatinas ·
-vitrina de producto · efectos por pestañas · bloque mitad y mitad · preguntas · cierre
+vitrina de producto · cuándo usarlos por pestañas · bloque mitad y mitad · preguntas · cierre
 de venta (abre el cajón lateral) · pie con el rótulo grande, que además es el botón de
 volver al inicio.
 
