@@ -157,7 +157,7 @@ main section[id]{scroll-margin-top:calc(var(--nav-h) + 16px)}
   padding-top:env(safe-area-inset-top, 0px);
   background:transparent;
   --nav-ink:var(--crema);
-  --nav-sombra:0 1px 10px rgba(0,0,0,.5);
+  --nav-sombra:0 1px 3px rgba(12,5,3,.9), 0 2px 16px rgba(12,5,3,.75);
 }
 .nav.is-ink-dark{
   --nav-ink:var(--negro);
@@ -209,17 +209,12 @@ main section[id]{scroll-margin-top:calc(var(--nav-h) + 16px)}
   .hero__media .hero__poster,
   .hero__media video{object-position:50% 28%}
 }
-.hero__veil{
-  position:absolute; inset:0; z-index:-1;
-  background:
-    linear-gradient(to bottom, rgba(2,10,42,.72) 0%, rgba(2,10,42,.2) 20%, transparent 42%),
-    linear-gradient(to top, var(--tierra) 0%, rgba(74,39,31,.82) 12%, rgba(74,39,31,.3) 26%, transparent 46%);
-}
 .hero__inner{position:relative; z-index:2; padding-block:calc(var(--nav-h) + 24px) clamp(96px,13vh,150px)}
 .hero__kicker{
   font-family:var(--marker); font-weight:400; font-size:clamp(15px,1.7vw,22px);
   letter-spacing:.02em; text-transform:uppercase; color:var(--arena);
   margin-bottom:clamp(8px,1.2vw,14px); transform:rotate(-1.5deg);
+  text-shadow:2px 3px 0 rgba(12,5,3,.8), 0 4px 18px rgba(12,5,3,.8);
 }
 
 .claim{
@@ -227,6 +222,8 @@ main section[id]{scroll-margin-top:calc(var(--nav-h) + 16px)}
   font-size:clamp(40px,6.4vw,82px); line-height:.98;
   letter-spacing:-.035em; text-transform:uppercase;
   max-width:14ch;
+  /* El banner va sin velo, así que el aplomo lo pone la sombra del texto */
+  text-shadow:4px 5px 0 rgba(12,5,3,.82), 0 6px 30px rgba(12,5,3,.7);
 }
 .claim__line{display:block}
 .claim__stickers{display:flex; flex-wrap:wrap; align-items:center; gap:.18em; margin-top:.1em}

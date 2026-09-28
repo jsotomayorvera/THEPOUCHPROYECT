@@ -110,6 +110,15 @@ sustituirse por fotos: deja el archivo en `assets/img/` y cambia el campo
 Formato recomendado: **1920×1080 webp**, motivo algo descentrado (el texto va
 en el medio) y tono oscuro o medio, porque el velo aclara poco.
 
+**El grado de color** está en `herramientas/grado.py`. Toma las fotos
+originales, las recorta a 16:9, las pasa a luminancia, iguala la exposición de
+todas a la misma media y las tiñe con una curva sacada del propio póster del
+vídeo del banner (sombras `#180B08`, medios `#664933`, luces `#8F705B`,
+extendidas hacia la arena). Deja un 12 % del color original y un punto de
+grano. Para añadir una foto nueva a la serie, se pasa por ahí y encaja sola.
+
+Las cuatro fotos actuales las aportó el cliente.
+
 ⚠️ **Pinterest no es una fuente de fotos libres**: casi todo lo que hay ahí
 está subido por terceros y conserva los derechos de su autor. Para uso
 comercial, las fuentes con licencia limpia son **Unsplash**, **Pexels** y
