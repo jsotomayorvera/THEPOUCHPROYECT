@@ -81,11 +81,10 @@ window.TPP = {
   heroVideos: [
     { src: 'assets/video/hero.mp4', poster: 'assets/img/poster-hero.jpg' },
   ],
+  // Velocidad del clip del hero. 1 = normal. Por debajo de 0.5 se ve a tirones.
+  heroVelocidad: 0.7,
 
-  /* ---- MÓDULO DE EFECTOS ----------------------------------------------- */
-  // Cada pestaña tiene su propia animación de fondo, generada en código.
-  // Si consigues un clip real para alguna, añade `video: 'assets/video/xxx.mp4'`
-  // y esa pestaña lo usará en lugar de la animación.
+  /* ---- CUÁNDO USARLOS -------------------------------------------------- */
   /* Cuándo usarlos. Cada caso tiene su propia imagen: para cambiarla,
      deja el archivo en assets/img/ y apunta aquí la ruta. Nada más. */
   /* Cuándo usarlos. Los cuatro textos se escriben a la misma medida para

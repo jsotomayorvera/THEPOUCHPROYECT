@@ -640,6 +640,14 @@
     var v = $('#heroVideo');
     if (!v) return;
     if (reduced) { v.pause(); return; }
+    /* Algunos navegadores devuelven la velocidad a 1 al recargar el búfer
+       o al reiniciar el bucle, así que se vuelve a fijar en cada arranque. */
+    var vel = Number(cfg.heroVelocidad) || 1;
+    function frena() { try { v.playbackRate = vel; } catch (e) {} }
+    frena();
+    ['loadedmetadata', 'playing', 'play', 'seeked'].forEach(function (ev) {
+      v.addEventListener(ev, frena);
+    });
     v.addEventListener('playing', function () { v.classList.add('is-on'); });
     v.addEventListener('error', function () { v.classList.remove('is-on'); });
     var intento = v.play();

@@ -66,6 +66,7 @@ Abre **`assets/js/config.js`**. Todo lo editable está ahí y en un solo lugar:
 | `producto.foto` | Ruta de la foto del producto. Si el archivo no existe, la web dibuja una lata de respaldo y no se rompe nada |
 | `efectos` | Las cuatro pestañas del módulo de efectos. Cada una trae su animación (`tema`) y su tono de página (`tono`). Si le pones `video`, ese clip sustituye a la animación |
 | `envios`, `descuentos`, `packs` | Tarifas, códigos y precios del pedido |
+| `heroVelocidad` | Velocidad del clip del hero. 1 es normal, 0.7 es lo que está puesto. Por debajo de 0.5 se ve a tirones |
 | `usos` | Los cuatro casos de "Cuándo usarlos": botón, titular, texto y **ruta de la imagen de fondo** |
 
 No hace falta tocar HTML para cambiar precios, nombres ni textos del producto.
