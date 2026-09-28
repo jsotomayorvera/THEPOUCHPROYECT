@@ -82,7 +82,7 @@ assets/js/checkout.js      Cálculo del pedido y enlace de WhatsApp
 assets/js/stickers.js      Las pegatinas del muro (velocidad y atletismo), en SVG
 assets/js/main.js          Comportamiento y animación de la página
 assets/js/vendor/          GSAP + ScrollTrigger alojados en el proyecto
-assets/img/                Logo, iconos, foto del producto, portadas de uso y grafiti
+assets/img/                Logo, iconos, foto del producto, fotos de uso y empapelados
 assets/img/atletas/        Fotos de la banda de atletas (ver aviso abajo)
 assets/img/marmol-*.webp   Texturas de piedra generadas, una por color de módulo
 assets/fonts/              Tipografías (no dependen de Google Fonts)
@@ -110,6 +110,13 @@ sustituirse por fotos: deja el archivo en `assets/img/` y cambia el campo
 
 Formato recomendado: **1920×1080 webp**, motivo algo descentrado (el texto va
 en el medio) y tono oscuro o medio, porque el velo aclara poco.
+
+**El empapelado del pie** está en `herramientas/muro-logos.py`. Separa el
+logo en sus dos tintas (`#003F25` y `#F6EFE2`) y las reasigna para generar
+ocho acabados: el original, en arena, cobalto, coral y menta, en negativo, y
+dos de solo contorno. Un tercio de las piezas pasa además por un tratamiento
+de estampa gastada. Lo reparte en rejilla desordenada y lo pega nueve veces
+para que el mosaico empalme por los cuatro bordes.
 
 **El grado de color** está en `herramientas/grado.py`. Toma las fotos
 originales, las recorta a 16:9, las pasa a luminancia, iguala la exposición de
