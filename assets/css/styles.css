@@ -595,52 +595,71 @@ body.has-drawer{overflow:hidden}
    contorno) y un tercio de las piezas con la tinta gastada de estampa. El
    mosaico empalma por los cuatro bordes. */
 .footer__muro{
-  height:clamp(126px,17vw,236px);
   background-image:url('../img/muro-logos.webp');
-  background-size:clamp(360px,40vw,620px);
-  background-position:50% 50%;
-  border-bottom:4px solid var(--negro);
-  margin-bottom:clamp(20px,3vw,36px);
+  background-size:clamp(300px,34vw,540px);
+  background-position:50% 0;
+  padding-top:clamp(96px,13vw,190px);
+  border-block:4px solid var(--negro);
+  margin-bottom:clamp(16px,2.4vw,28px);
 }
 
+/* Sobre el empapelado nada se lee si va suelto, así que cada pieza se
+   monta en su propia pastilla de arena con filete negro y sombra dura. */
 .footer__top{
-  display:grid; gap:24px; padding-bottom:clamp(22px,3.2vw,36px);
+  display:grid; gap:18px; justify-items:center;
+  padding-bottom:clamp(22px,3.2vw,36px);
 }
-@media (min-width:820px){.footer__top{grid-template-columns:1.4fr 1fr; align-items:center}}
+@media (min-width:820px){
+  .footer__top{grid-template-columns:auto auto; justify-content:center; align-items:center; gap:24px}
+}
 .footer h3{font-family:var(--display); font-weight:400; font-size:19px; text-transform:uppercase; letter-spacing:-.01em; margin-bottom:8px}
 .footer__nav{display:grid; gap:9px; justify-items:start}
 .footer__nav a{text-decoration:none; font-size:15.5px; opacity:.88}
 .footer__nav a:hover{opacity:1; text-decoration:underline; text-underline-offset:4px}
-.footer__cta{display:grid; gap:10px; justify-items:center; text-align:center}
+.footer__cta{
+  display:grid; gap:10px; justify-items:center; text-align:center;
+  background:var(--arena); border:3px solid var(--negro); border-radius:var(--r-lg);
+  padding:clamp(18px,2.4vw,26px) clamp(20px,3vw,34px); box-shadow:var(--lift);
+}
 .footer__cta p{font-size:15px; opacity:.86}
 .footer__cta .btn{--btn-bg:var(--cobalto); --btn-fg:var(--crema)}
-.footer__social{display:flex; flex-wrap:wrap; align-items:center; gap:12px}
-@media (min-width:820px){.footer__social{justify-content:flex-end}}
+.footer__social{
+  display:flex; flex-wrap:wrap; align-items:center; justify-content:center; gap:12px;
+  background:var(--arena); border:3px solid var(--negro); border-radius:var(--r-lg);
+  padding:clamp(14px,1.8vw,20px) clamp(16px,2.2vw,24px); box-shadow:var(--lift);
+}
 .footer__social a{
-  width:42px; height:42px; border-radius:50%; display:grid; place-items:center;
-  background:var(--cobalto); color:var(--arena);
+  width:44px; height:44px; border-radius:50%; display:grid; place-items:center;
+  background:var(--cobalto); color:var(--arena); border:2.5px solid var(--negro);
   transition:transform .3s var(--ease);
 }
 .footer__social a:hover{transform:translateY(-3px)}
 .footer__social svg{width:20px; height:20px}
-.footer__cop{width:100%; font-size:12px; letter-spacing:.14em; text-transform:uppercase; opacity:.75; color:var(--negro)}
-@media (min-width:820px){.footer__cop{text-align:right}}
-.footer__word{display:block; overflow:hidden; text-decoration:none; color:inherit; cursor:pointer; padding-bottom:6px}
+.footer__cop{width:100%; text-align:center; font-size:12px; letter-spacing:.14em; text-transform:uppercase; opacity:.75; color:var(--negro)}
+
+.footer__word{display:block; overflow:hidden; text-decoration:none; color:inherit; cursor:pointer; padding-bottom:clamp(14px,2vw,22px)}
 .footer__word span:first-child{
   display:block; white-space:nowrap; text-align:center;
   font-family:var(--display); font-weight:400;
   /* Ajustado para que "The Pouch Project" entre completo de borde a borde */
   font-size:clamp(22px,8.5vw,178px); line-height:.9; letter-spacing:-.045em;
   text-transform:uppercase; color:var(--negro);
+  /* Contorno de arena por detrás del relleno: es lo que hace que el rótulo
+     se lea entero sobre el empapelado sin taparlo con una caja. */
+  -webkit-text-stroke:.115em var(--arena);
+  paint-order:stroke fill;
   transition:color .25s linear;
 }
 .footer__word__up{
-  display:block; text-align:center; margin-top:4px;
-  font-family:var(--marker); font-size:clamp(13px,1.3vw,17px); color:var(--cobalto);
-  transition:color .25s linear;
+  display:block; width:fit-content; margin:6px auto 0;
+  padding:5px 16px 7px; border-radius:var(--r-pill);
+  background:var(--cobalto); color:var(--crema); border:2.5px solid var(--negro);
+  box-shadow:var(--lift-sm);
+  font-family:var(--marker); font-size:clamp(13px,1.3vw,17px);
+  transition:background .25s linear, color .25s linear;
 }
 .footer__word:hover span:first-child{color:var(--cobalto)}
-.footer__word:hover .footer__word__up{color:var(--negro)}
+.footer__word:hover .footer__word__up{background:var(--negro); color:var(--arena)}
 .footer__word:focus-visible{outline:3px solid var(--cobalto); outline-offset:4px; border-radius:var(--r)}
 .footer__legal{
   display:grid; gap:10px; padding-block:16px; margin-top:clamp(10px,1.6vw,18px);
