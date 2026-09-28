@@ -260,7 +260,7 @@
 
   /* ═══════════════════════════════════════════════ 3. EFECTOS */
   (function usos() {
-    var list = $('#fxTabs'), panels = $('#fxPanels'), thumb = $('#fxThumb'), foto = $('#usoFoto');
+    var list = $('#fxTabs'), panels = $('#fxPanels'), thumb = $('#fxThumb'), fondo = $('#usoFondo');
     if (!list || !panels) return;
     var datos = cfg.usos || [];
 
@@ -301,15 +301,17 @@
       });
       moveThumb(btns[i], animate);
 
-      /* La imagen del caso: se cambia con un fundido corto */
-      if (foto && d.foto && foto.getAttribute('src') !== d.foto) {
-        var cambia = function () { foto.src = d.foto; foto.alt = d.titulo; };
-        if (hasGsap && animate && !reduced) {
-          gsap.to(foto, { autoAlpha: 0, duration: .18, onComplete: function () {
-            cambia();
-            gsap.to(foto, { autoAlpha: 1, duration: .32 });
-          } });
-        } else cambia();
+      /* El fondo del caso: se cruzan dos capas para que no haya parpadeo */
+      if (fondo && d.foto) {
+        var url = 'url("' + d.foto + '")';
+        if (fondo.style.backgroundImage !== url) {
+          if (hasGsap && animate && !reduced) {
+            gsap.to(fondo, { autoAlpha: 0, duration: .22, onComplete: function () {
+              fondo.style.backgroundImage = url;
+              gsap.to(fondo, { autoAlpha: 1, duration: .5 });
+            } });
+          } else fondo.style.backgroundImage = url;
+        }
       }
     }
 

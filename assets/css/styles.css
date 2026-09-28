@@ -364,13 +364,25 @@ main section[id]{scroll-margin-top:calc(var(--nav-h) + 16px)}
 .dot:hover{background:var(--arena); color:var(--negro); border-color:var(--arena)}
 
 /* ─────────────────────────────────────────────── 10. EFECTOS ───────── */
+/* Cuándo usarlos: la foto del caso ocupa todo el módulo, como el banner */
 .efectos{
   position:relative; isolation:isolate; overflow:hidden;
   background:var(--cobalto); border-block:4px solid var(--negro);
+  padding-block:clamp(80px,10vw,150px);
 }
-.efectos__inner{position:relative; z-index:2; display:grid; justify-items:center; gap:clamp(16px,2.4vw,26px)}
-.efectos__head{display:grid; gap:12px; justify-items:center; text-align:center}
-.efectos__head .h2{max-width:16ch}
+.efectos__fondo{
+  position:absolute; inset:0; z-index:0;
+  background-image:url('../img/uso-entrenamiento.webp');
+  background-size:cover; background-position:50% 50%;
+}
+.efectos__velo{
+  position:absolute; inset:0; z-index:1;
+  background:
+    linear-gradient(to bottom, rgba(6,3,20,.7) 0%, rgba(6,3,20,.34) 34%, rgba(6,3,20,.34) 62%, rgba(6,3,20,.74) 100%),
+    radial-gradient(closest-side at 50% 52%, rgba(6,3,20,.62), transparent 78%);
+}
+.efectos__inner{position:relative; z-index:2; display:grid; justify-items:center; text-align:center; gap:clamp(14px,2.2vw,24px)}
+.efectos__inner .h2{max-width:16ch}
 
 .tabs{
   box-shadow:var(--lift-sm);
@@ -399,32 +411,16 @@ main section[id]{scroll-margin-top:calc(var(--nav-h) + 16px)}
 }
 .tab[aria-selected="true"]{color:var(--negro)}
 
-/* Cuándo usarlos: imagen a un lado, texto al otro */
-.usos{
-  display:grid; gap:clamp(20px,3vw,40px); width:100%;
-  margin-top:clamp(8px,1.6vw,16px); align-items:center;
-}
-@media (min-width:860px){.usos{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}}
-.usos__fig{
-  margin:0; border:4px solid var(--negro); border-radius:var(--r-lg);
-  overflow:hidden; box-shadow:var(--lift); background:var(--tierra-2);
-  transform:rotate(-1.2deg);
-}
-.usos__fig img{display:block; width:100%; height:auto; aspect-ratio:4/3; object-fit:cover}
-.usos__panels{display:grid}
-.uso{grid-area:1/1; display:grid; gap:12px; justify-items:start; text-align:left}
+.usos__panels{display:grid; width:min(100%,60ch); margin-top:2px}
+.uso{grid-area:1/1; display:grid; gap:12px; justify-items:center}
 .uso[hidden]{display:none}
 .uso__titulo{
   font-family:var(--display); font-weight:400;
-  font-size:clamp(20px,2.2vw,30px); line-height:1.08;
+  font-size:clamp(19px,2vw,27px); line-height:1.1;
   letter-spacing:-.025em; text-transform:uppercase; text-wrap:balance;
   text-shadow:var(--lift-display);
 }
 .uso__copy{font-size:clamp(16px,.55vw + 15px,19px); color:var(--crema); text-wrap:pretty; text-shadow:var(--lift-txt)}
-@media (max-width:859px){
-  .uso,.efectos__inner{justify-items:center}
-  .uso{text-align:center}
-}
 
 
 /* ────────────────────────────────────────────── 11. NOSOTROS ───────── */

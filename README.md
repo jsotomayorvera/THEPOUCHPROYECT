@@ -66,7 +66,7 @@ Abre **`assets/js/config.js`**. Todo lo editable está ahí y en un solo lugar:
 | `producto.foto` | Ruta de la foto del producto. Si el archivo no existe, la web dibuja una lata de respaldo y no se rompe nada |
 | `efectos` | Las cuatro pestañas del módulo de efectos. Cada una trae su animación (`tema`) y su tono de página (`tono`). Si le pones `video`, ese clip sustituye a la animación |
 | `envios`, `descuentos`, `packs` | Tarifas, códigos y precios del pedido |
-| `usos` | Los cuatro casos de "Cuándo usarlos": botón, titular, texto y **ruta de la imagen** |
+| `usos` | Los cuatro casos de "Cuándo usarlos": botón, titular, texto y **ruta de la imagen de fondo** |
 
 No hace falta tocar HTML para cambiar precios, nombres ni textos del producto.
 
@@ -99,6 +99,22 @@ volver al inicio.
 El fondo es **cobalto plano** en toda la página, como en la referencia: no cambia de
 tono por módulo. El contraste lo ponen las cajas de arena (tarjetas, formulario,
 preguntas, pie) y los acentos de coral y menta.
+
+## Las imágenes de "Cuándo usarlos"
+
+Cada pestaña pinta su imagen a sangre detrás del texto, con el mismo velo del
+banner. Hoy llevan portadas gráficas generadas en la paleta, pensadas para
+sustituirse por fotos: deja el archivo en `assets/img/` y cambia el campo
+`foto` del caso en `assets/js/config.js`. Nada más.
+
+Formato recomendado: **1920×1080 webp**, motivo algo descentrado (el texto va
+en el medio) y tono oscuro o medio, porque el velo aclara poco.
+
+⚠️ **Pinterest no es una fuente de fotos libres**: casi todo lo que hay ahí
+está subido por terceros y conserva los derechos de su autor. Para uso
+comercial, las fuentes con licencia limpia son **Unsplash**, **Pexels** y
+**Pixabay**. Desde este entorno están bloqueadas por política de red, así que
+la descarga la tienes que hacer tú.
 
 ## El banner de vídeo
 
