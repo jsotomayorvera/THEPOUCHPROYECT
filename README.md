@@ -24,15 +24,30 @@ Cloudflare Pages. Se sube la carpeta tal cual.
 
 ## La paleta
 
-Son **cuatro colores** y viven al principio de `assets/css/styles.css`, en un
-bloque marcado. Cambiar esos cuatro valores cambia la página entera:
+Viven al principio de `assets/css/styles.css`, en un bloque marcado.
+Cambiar esos valores cambia la página entera:
 
 ```css
---negro:#0E0E12;    /* fondo dominante, texturizado */
---crema:#FBF7EF;    /* texto y superficies claras */
---cobalto:#0038FF;  /* HYPER COBALT — acento principal: pegatinas, pie, botones */
---arena:#FFD888;    /* SKIN SAND — acento secundario: pegatinas y detalles */
+--tierra:#4A271F;   /* TIERRA — fondo dominante, plano */
+--cobalto:#0038FF;  /* HYPER COBALT — bloques, nav sólido, botones */
+--arena:#FFD888;    /* SKIN SAND — cajas, tarjetas y pie */
+--negro:#0A0A0E;    /* tinta sobre arena */
+--crema:#FBF7EF;    /* tinta sobre tierra y cobalto */
+--coral:#FF5A3C;    /* acento cálido */
+--menta:#7FE3C0;    /* acento frío */
 ```
+
+Cómo se reparten: el fondo es tierra plana de arriba abajo. El cobalto
+entra en bloques enteros (el módulo de efectos, el menú al hacer scroll,
+la cabecera del cajón de pedido) y en los botones. La arena es toda
+superficie que lleva texto largo: tarjetas, preguntas, formulario y pie.
+Coral y menta aparecen en dosis pequeñas.
+
+**Texto flotante.** Nada del texto que va sobre el fondo está impreso en
+él: lleva una sombra dura pegada más una larga difusa (`--lift-txt`, y
+`--lift-display` para los titulares), y las cajas llevan sombra dura sin
+desenfoque (`--lift`). Eso es lo que da la sensación de capas despegadas.
+Dentro de las cajas claras la sombra se anula.
 
 El verde de marca (`--verde`) se conserva aparte, solo para el logo.
 

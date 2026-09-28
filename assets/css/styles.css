@@ -10,7 +10,8 @@
    Cuando llegue la paleta definitiva, se reemplazan estos cuatro valores
    y la página entera cambia con ellos. */
 :root{
-  --cobalto:#0038FF;  /* HYPER COBALT — fondo dominante, plano */
+  --tierra:#4A271F;   /* TIERRA — fondo dominante, plano */
+  --cobalto:#0038FF;  /* HYPER COBALT — bloques, botones y acentos */
   --arena:#FFD888;    /* SKIN SAND — cajas, tarjetas y superficies */
   --negro:#0A0A0E;    /* tinta sobre arena */
   --crema:#FBF7EF;    /* tinta sobre cobalto */
@@ -25,10 +26,18 @@
 
 /* ─────────────────────────────────────────────── 2. DERIVADOS ───────── */
 :root{
+  --tierra-2:#31180F;               /* tierra hundida, para bloques */
+  --tierra-3:#5E362B;                /* tierra elevada, para filetes */
   --cobalto-2:#0030DB;              /* cobalto hundido, para bloques */
+  /* Sombra dura: es lo que despega cada pieza del fondo */
+  --lift:10px 12px 0 rgba(12,5,3,.55);
+  --lift-sm:6px 7px 0 rgba(12,5,3,.5);
+  --lift-txt:0 2px 0 rgba(12,5,3,.55), 0 10px 26px rgba(12,5,3,.45);
+  --lift-display:5px 6px 0 rgba(12,5,3,.72);
   --arena-2:#FFE6AE;                /* arena clara, superficies elevadas */
   --muted:color-mix(in srgb, var(--crema) 76%, transparent);
   --hairline:color-mix(in srgb, var(--crema) 26%, transparent);
+  --tierra-line:color-mix(in srgb, var(--crema) 20%, transparent);
   /* Dentro de una caja de arena manda la tinta negra */
   --panel-fg:var(--negro);
   --panel-muted:color-mix(in srgb, var(--negro) 68%, var(--arena));
@@ -48,13 +57,27 @@
   --ease:cubic-bezier(.16,1,.3,1);
 }
 
+/* ─────────────────────────────────────────── 2b. TEXTO FLOTANTE ─────
+   Cada palabra sobre el fondo lleva sombra: una dura pegada y una larga
+   difusa. Es lo que hace que el texto parezca una capa encima y no algo
+   impreso en la pared. Dentro de las cajas claras se anula. */
+.claim,.h2,.quote,.eyebrow,.lede,.fxpanel__copy,.fxpanel__when,
+.about__body p,.marks li,.contact b,.contact a,.contact span,
+.order-lite__hint,.flow__ctrl,.hero__kicker,.section-head p{
+  text-shadow:var(--lift-txt);
+}
+.claim,.h2,.quote{text-shadow:var(--lift-display)}
+.pcard *,.faq *,.form *,.city *,.ship-note *,.order-lite *,
+.footer *,.drawer *,.ticker *,.tag,.btn,.cutoff{text-shadow:none}
+.order-lite__hint{text-shadow:none}
+
 /* ─────────────────────────────────────────────────── 3. RESET ───────── */
 *,*::before,*::after{box-sizing:border-box}
 html{-webkit-text-size-adjust:100%; scroll-behavior:smooth}
 @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
 body{
   margin:0; color:var(--crema);
-  background-color:var(--cobalto);   /* plano, sin textura */
+  background-color:var(--tierra);   /* plano, sin textura */
   font-family:var(--body);
   font-size:clamp(15.5px,.5vw + 14.5px,17.5px);
   line-height:1.62; -webkit-font-smoothing:antialiased; overflow-x:hidden;
@@ -164,7 +187,7 @@ main section[id]{scroll-margin-top:calc(var(--nav-h) + 16px)}
 .hero{
   position:relative; isolation:isolate; overflow:hidden;
   min-height:100svh; display:grid; align-items:end;
-  background:var(--cobalto);
+  background:var(--tierra);
 }
 .hero__media{position:absolute; inset:0; z-index:-2}
 .hero__media .hero__poster,
@@ -180,7 +203,7 @@ main section[id]{scroll-margin-top:calc(var(--nav-h) + 16px)}
   position:absolute; inset:0; z-index:-1;
   background:
     linear-gradient(to bottom, rgba(2,10,42,.72) 0%, rgba(2,10,42,.2) 20%, transparent 42%),
-    linear-gradient(to top, var(--cobalto) 0%, rgba(0,44,200,.62) 13%, rgba(0,32,150,.2) 27%, transparent 46%);
+    linear-gradient(to top, var(--tierra) 0%, rgba(74,39,31,.82) 12%, rgba(74,39,31,.3) 26%, transparent 46%);
 }
 .hero__inner{position:relative; z-index:2; padding-block:calc(var(--nav-h) + 24px) clamp(78px,10vh,116px)}
 .hero__kicker{
@@ -220,7 +243,7 @@ main section[id]{scroll-margin-top:calc(var(--nav-h) + 16px)}
 /* ─────────────────────────────────────────────────── 7. TICKER ───────── */
 .ticker{
   position:relative; z-index:2;
-  background:var(--arena); color:var(--negro);
+  background:var(--arena); color:var(--negro); box-shadow:var(--lift-sm);
   padding-block:11px;
   font-family:var(--body); font-weight:600; font-size:clamp(12px,1vw,14px);
   letter-spacing:.02em;
@@ -228,7 +251,7 @@ main section[id]{scroll-margin-top:calc(var(--nav-h) + 16px)}
 }
 
 /* ──────────────────────────────────────────────── 12b. FAQ ───────────── */
-.faq{display:grid; max-width:78ch; margin-inline:auto; background:var(--arena); color:var(--panel-fg); border:3px solid var(--negro); border-radius:var(--r-lg); padding-inline:clamp(18px,2.4vw,28px)}
+.faq{display:grid; max-width:78ch; margin-inline:auto; background:var(--arena); color:var(--panel-fg); border:3px solid var(--negro); border-radius:var(--r-lg); padding-inline:clamp(18px,2.4vw,28px); box-shadow:var(--lift)}
 .faq details{border-bottom:2px solid var(--panel-line)}
 .faq details:last-child{border-bottom:0}
 .faq summary{
@@ -249,7 +272,7 @@ main section[id]{scroll-margin-top:calc(var(--nav-h) + 16px)}
 .muro{
   position:relative; isolation:isolate; overflow:hidden;
   padding-block:clamp(66px,8.4vw,116px);
-  background-color:#0A1030;
+  background-color:var(--tierra-2);
   background-image:url('../img/grafiti.webp');
   background-size:clamp(420px,46vw,700px);
 }
@@ -267,7 +290,7 @@ main section[id]{scroll-margin-top:calc(var(--nav-h) + 16px)}
 /* Halo oscuro detrás de la frase: ninguna pegatina le quita legibilidad */
 .quote::before{
   content:''; position:absolute; z-index:-1; inset:-14% -12%;
-  background:radial-gradient(closest-side, var(--negro) 52%, color-mix(in srgb, var(--negro) 76%, transparent) 76%, transparent);
+  background:radial-gradient(closest-side, rgba(20,8,4,.92) 46%, rgba(20,8,4,.66) 72%, transparent);
 }
 .quote{
   position:relative; display:grid; gap:.1em;
@@ -290,6 +313,7 @@ main section[id]{scroll-margin-top:calc(var(--nav-h) + 16px)}
   position:absolute; top:0; left:50%; width:clamp(240px,30vw,400px);
   border-radius:var(--r-lg); overflow:hidden;
   background:var(--arena); color:var(--panel-fg); border:3px solid var(--negro);
+  box-shadow:var(--lift);
   transform-origin:center center;
   transition:transform .7s var(--ease), opacity .7s var(--ease), filter .7s var(--ease), border-color .3s linear;
   will-change:transform, opacity;
@@ -341,7 +365,10 @@ main section[id]{scroll-margin-top:calc(var(--nav-h) + 16px)}
 .dot:hover{background:var(--arena); color:var(--negro); border-color:var(--arena)}
 
 /* ─────────────────────────────────────────────── 10. EFECTOS ───────── */
-.efectos{position:relative; isolation:isolate; overflow:hidden}
+.efectos{
+  position:relative; isolation:isolate; overflow:hidden;
+  background:var(--cobalto); border-block:4px solid var(--negro);
+}
 .efectos__canvas{position:absolute; inset:0; width:100%; height:100%; z-index:0; opacity:.5}
 .efectos__media{position:absolute; inset:0; z-index:0}
 .efectos__media video{width:100%; height:100%; object-fit:cover; opacity:.4}
@@ -357,6 +384,7 @@ main section[id]{scroll-margin-top:calc(var(--nav-h) + 16px)}
 .fxpanel__copy{font-size:clamp(16px,.55vw + 15px,19px); color:var(--crema); text-wrap:pretty}
 
 .tabs{
+  box-shadow:var(--lift-sm);
   /* Una sola fila siempre: si no cabe se desliza. Con dos filas el
      indicador deslizante se colocaba sobre la pestaña equivocada. */
   position:relative; display:flex; flex-wrap:nowrap; justify-content:flex-start; gap:2px;
@@ -475,7 +503,7 @@ main section[id]{scroll-margin-top:calc(var(--nav-h) + 16px)}
   background:var(--arena); color:var(--panel-fg);
   border:3px solid var(--negro); border-radius:var(--r-lg);
   padding:clamp(22px,3vw,34px); max-width:760px; margin-inline:auto;
-  box-shadow:12px 12px 0 var(--negro);
+  box-shadow:14px 16px 0 rgba(12,5,3,.6);
 }
 .order-lite__pts{display:grid; gap:14px; width:100%; text-align:left}
 @media (min-width:680px){.order-lite__pts{grid-template-columns:repeat(3,1fr); gap:18px}}
