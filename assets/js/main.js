@@ -458,8 +458,7 @@
       /* Entrada del hero: las líneas del eslogan y luego las pegatinas */
       gsap.timeline({ defaults: { ease: 'power3.out' } })
         .from('[data-anim="claim"]', { autoAlpha: 0, yPercent: 40, duration: .95, stagger: .12 })
-        .from('.claim .tag', { scale: .7, rotate: -16, duration: .7, ease: 'back.out(2.2)', stagger: .1 }, '-=.5')
-        .from('.hero__scroll', { autoAlpha: 0, duration: .7 }, '-=.4');
+        .from('.claim .tag', { scale: .7, rotate: -16, duration: .7, ease: 'back.out(2.2)', stagger: .1 }, '-=.5');
 
       /* Las pegatinas se mueven a distinta velocidad: da profundidad al muro */
       $$('.sticker').forEach(function (el) {
@@ -510,10 +509,6 @@
       gsap.to('.claim', {
         yPercent: -16, autoAlpha: .3, ease: 'none',
         scrollTrigger: { trigger: '.hero', start: 'top top', end: 'bottom top', scrub: .5 },
-      });
-      gsap.to('.hero__scroll', {
-        autoAlpha: 0, ease: 'none',
-        scrollTrigger: { trigger: '.hero', start: 'top top', end: '35% top', scrub: true },
       });
 
       /* Seguimiento del ratón en las tarjetas */

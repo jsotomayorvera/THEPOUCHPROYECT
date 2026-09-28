@@ -223,21 +223,6 @@ main section[id]{scroll-margin-top:calc(var(--nav-h) + 16px)}
 .claim__stickers .tag{font-size:1.05em; padding:.1em .34em .2em}
 .claim__y{font-size:.82em}
 
-.hero__scroll{
-  position:absolute; left:50%; bottom:28px; transform:translateX(-50%);
-  z-index:2; width:26px; height:44px; display:grid; place-items:center;
-}
-.hero__scroll i{
-  display:block; width:2px; height:38px; border-radius:2px;
-  background:linear-gradient(to bottom, transparent, var(--arena));
-  animation:drop 2.3s var(--ease) infinite;
-}
-@keyframes drop{
-  0%{transform:scaleY(0); transform-origin:top}
-  45%{transform:scaleY(1); transform-origin:top}
-  46%{transform-origin:bottom}
-  100%{transform:scaleY(0); transform-origin:bottom}
-}
 
 /* ─────────────────────────────────────────────────── 7. TICKER ───────── */
 .ticker{
@@ -649,7 +634,7 @@ body.has-drawer{overflow:hidden}
 .word{display:inline-block; will-change:transform,opacity}
 
 @media (prefers-reduced-motion:reduce){
-  .marquee__track,.hero__scroll i,.sticker{animation:none !important}
+  .marquee__track,.sticker{animation:none !important}
   .btn:hover,.wa-float:hover,.pcard:hover,.city:hover{transform:none}
   .tabs__thumb{transition:none}
 }
