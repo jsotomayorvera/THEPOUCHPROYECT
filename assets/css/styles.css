@@ -150,15 +150,18 @@ main section[id]{scroll-margin-top:calc(var(--nav-h) + 16px)}
 .marquee:hover .marquee__track{animation-play-state:paused}
 
 /* ─────────────────────────────────────────── 5. NAV (estilo Joss) ───────── */
+/* La barra nunca tiene fondo: toma la tinta del bloque por el que pasa.
+   Quién manda se decide con data-nav en cada sección. */
 .nav{
   position:fixed; top:0; left:0; right:0; z-index:60;
   padding-top:env(safe-area-inset-top, 0px);
-  transition:background .45s var(--ease), box-shadow .45s var(--ease);
+  background:transparent;
+  --nav-ink:var(--crema);
+  --nav-sombra:0 1px 10px rgba(0,0,0,.5);
 }
-.nav.is-solid{
-  background:color-mix(in srgb, var(--cobalto) 92%, transparent);
-  backdrop-filter:saturate(1.2) blur(14px);
-  box-shadow:0 1px 0 var(--hairline);
+.nav.is-ink-dark{
+  --nav-ink:var(--negro);
+  --nav-sombra:none;
 }
 .nav__inner{display:flex; align-items:center; gap:18px; min-height:var(--nav-h)}
 .nav__side{display:none; gap:30px; flex:1}
@@ -166,21 +169,28 @@ main section[id]{scroll-margin-top:calc(var(--nav-h) + 16px)}
 @media (min-width:940px){.nav__side{display:flex}}
 .nav__side a{
   font-weight:600; font-size:13px; letter-spacing:.16em; text-transform:uppercase;
-  text-decoration:none; color:var(--crema); position:relative; padding-block:6px;
-  text-shadow:0 1px 10px rgba(0,0,0,.5);
+  text-decoration:none; color:var(--nav-ink); position:relative; padding-block:6px;
+  text-shadow:var(--nav-sombra);
+  transition:color .3s linear;
 }
 .nav__side a::after{
   content:''; position:absolute; left:0; right:0; bottom:0; height:2px;
-  background:var(--arena); border-radius:2px;
+  background:var(--nav-ink); border-radius:2px;
   transform:scaleX(0); transform-origin:left; transition:transform .32s var(--ease);
 }
 .nav__side a:hover::after,.nav__side a[aria-current="true"]::after{transform:scaleX(1)}
 .nav__brand{flex:none; display:flex; align-items:center; text-decoration:none}
-.nav__brand img{height:36px; width:auto}
+.nav__brand{position:relative}
+.nav__brand img{height:36px; width:auto; display:block; transition:opacity .3s linear}
+.nav__brand .nav__logo--dark{position:absolute; inset:0; opacity:0}
+.nav.is-brand-dark .nav__brand .nav__logo--dark{opacity:1}
+.nav.is-brand-dark .nav__brand .nav__logo--light{opacity:0}
 .nav__cta{
   margin-left:auto; padding:11px 22px; font-size:14px;
   --btn-bg:var(--arena); --btn-fg:var(--negro);
+  border:2.5px solid var(--negro);
 }
+.nav.is-ink-dark .nav__cta{--btn-bg:var(--cobalto); --btn-fg:var(--crema)}
 @media (min-width:940px){.nav__cta{display:none}}
 
 /* ─────────────────────────────────────────────────── 6. HERO ───────── */

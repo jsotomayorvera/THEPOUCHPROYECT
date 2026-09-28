@@ -41,7 +41,8 @@
       <a href="#muro">Qué es</a>
     </nav>
     <a class="nav__brand" href="#top" aria-label="The Pouch Project — inicio">
-      <img src="assets/img/logo-cream.png" alt="The Pouch Project" width="1024" height="784">
+      <img class="nav__logo--light" src="assets/img/logo-cream.png" alt="The Pouch Project" width="1024" height="784">
+      <img class="nav__logo--dark" src="assets/img/logo-full.png" alt="" aria-hidden="true" width="1024" height="784">
     </a>
     <nav class="nav__side nav__side--r" aria-label="Secundaria">
       <a href="#efectos">Efectos</a>
@@ -78,7 +79,7 @@
 </section>
 
 <!-- ════════════════════════════════════════════════════ TICKER -->
-<div class="ticker marquee" id="ticker" aria-hidden="true">
+<div class="ticker marquee" id="ticker" data-nav="claro" aria-hidden="true">
   <div class="marquee__track">
     <span id="tickerA"></span>
     <span id="tickerB"></span>
@@ -216,7 +217,7 @@
 </main>
 
 <!-- ══════════════════════════════════════════════════════ FOOTER -->
-<footer class="footer">
+<footer class="footer" data-nav="claro">
   <div class="wrap footer__top">
     <nav class="footer__nav" aria-label="Pie">
       <h3>Navega</h3>

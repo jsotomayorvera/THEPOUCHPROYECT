@@ -157,6 +157,10 @@ Partimos de tu imagen y generamos los formatos que faltaban:
 - Sin dependencias externas en tiempo de ejecución: ni CDN, ni Google Fonts, ni analítica.
 - Respeta `prefers-reduced-motion`: se desactivan marquesinas, grano, vídeo y animaciones.
 - Navegación por teclado con foco visible, `aria-current` en el menú y textos alternativos.
+- La barra superior no tiene fondo: lee el color real de lo que pasa por debajo
+  (luminancia del primer elemento con fondo propio) y cambia la tinta a negro
+  sobre superficies claras. El logo y los enlaces deciden por separado, así que
+  sobre una tarjeta estrecha solo cambia el logo.
 - Sin desbordamiento horizontal desde 320 px.
 
 ## Pendientes conocidos

@@ -389,12 +389,66 @@
   })();
 
   /* ═══════════════════════════════════════════════ 5. NAV */
-  var nav = $('#nav'), hero = $('#hero');
+  /* La barra no tiene fondo nunca: toma la tinta de lo que pasa por debajo.
+     Se mira el color real del primer elemento con fondo propio bajo la barra
+     y se calcula su luminancia; si es clara, la tinta se vuelve negra. */
+  var nav = $('#nav');
+  var claroAhora = { centro: null, lados: null }, pendiente = false;
+
+  function luminancia(css) {
+    var m = /rgba?\(([^)]+)\)/.exec(css);
+    if (!m) return null;
+    var v = m[1].split(',').map(parseFloat);
+    if (v.length > 3 && v[3] < 0.5) return null;      /* casi transparente: no manda */
+    var f = v.slice(0, 3).map(function (n) {
+      n /= 255;
+      return n <= 0.03928 ? n / 12.92 : Math.pow((n + 0.055) / 1.055, 2.4);
+    });
+    return 0.2126 * f[0] + 0.7152 * f[1] + 0.0722 * f[2];
+  }
+
+  /* Mira un punto concreto de la barra y dice si lo que hay debajo es claro.
+     Se coge el primer elemento con fondo propio, así vale igual una sección
+     que una tarjeta, sin tener que marcarlas una a una. */
+  function claroEn(x) {
+    var pila = document.elementsFromPoint(x, nav.offsetHeight / 2);
+    for (var n = 0; n < pila.length; n++) {
+      var el = pila[n];
+      if (nav.contains(el)) continue;
+      /* El hero lleva su propio velo oscuro arriba: ni el vídeo ni las
+         pegatinas del eslogan deben hacer saltar la tinta. */
+      if (el.closest('#hero')) return false;
+      var cs = getComputedStyle(el);
+      if (cs.backgroundImage !== 'none') return false;   /* imagen: siempre velada */
+      var l = luminancia(cs.backgroundColor);
+      if (l !== null) return l > 0.55;
+    }
+    return false;
+  }
+
+  /* El logo va en el centro y los enlaces a los lados, así que cada parte
+     decide por su cuenta: sobre una tarjeta clara y estrecha solo cambia el
+     logo, y sobre un bloque claro a sangre cambia la barra entera. */
+  function pintarNav() {
+    pendiente = false;
+    if (!document.elementsFromPoint) return;
+    var w = window.innerWidth;
+    var centro = claroEn(w * 0.5);
+    var lados = claroEn(w * 0.12) && claroEn(w * 0.88);
+    if (centro === claroAhora.centro && lados === claroAhora.lados) return;
+    claroAhora = { centro: centro, lados: lados };
+    nav.classList.toggle('is-brand-dark', centro);
+    nav.classList.toggle('is-ink-dark', lados);
+  }
+
   function onScroll() {
-    nav.classList.toggle('is-solid', window.scrollY > hero.offsetHeight - 90);
+    if (pendiente) return;
+    pendiente = true;
+    requestAnimationFrame(pintarNav);
   }
   window.addEventListener('scroll', onScroll, { passive: true });
-  onScroll();
+  window.addEventListener('resize', onScroll);
+  pintarNav();
 
   if ('IntersectionObserver' in window) {
     var links = $$('.nav__side a');
