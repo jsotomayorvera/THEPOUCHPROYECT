@@ -76,10 +76,10 @@ docs/CIENCIA.md            Respaldo de cada dato científico, con fuentes
 DEPLOY.md                  Cómo publicarlo en Vercel
 ```
 
-Los módulos, en orden: hero con el eslogan sobre vídeo · cintillo · muro de pegatinas
-con la llama y el logo · vitrina de producto · efectos por pestañas · bloque mitad y
-mitad · preguntas · cierre de venta (abre el cajón lateral) · pie con el rótulo grande,
-que además es el botón de volver al inicio.
+Los módulos, en orden: hero con el eslogan sobre vídeo · cintillo · muro de pegatinas ·
+vitrina de producto · efectos por pestañas · bloque mitad y mitad · preguntas · cierre
+de venta (abre el cajón lateral) · pie con el rótulo grande, que además es el botón de
+volver al inicio.
 
 El fondo es **cobalto plano** en toda la página, como en la referencia: no cambia de
 tono por módulo. El contraste lo ponen las cajas de arena (tarjetas, formulario,
