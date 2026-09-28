@@ -261,7 +261,7 @@
   /* ═══════════════════════════════════════════════ 3. EFECTOS */
   (function usos() {
     var list = $('#fxTabs'), panels = $('#fxPanels'), thumb = $('#fxThumb');
-    var capas = $$('.efectos__fondo'), capaAct = 0, orden = 1;
+    var fondos = $('.efectos__fondos'), orden = 1;
     if (!list || !panels) return;
     var datos = cfg.usos || [];
 
@@ -302,35 +302,42 @@
       });
       moveThumb(btns[i], animate);
 
-      /* El fondo: la imagen nueva entra por encima de la anterior, que sigue
-         puesta hasta que la de arriba está opaca. Nunca hay un hueco. */
-      if (capas.length === 2 && d.foto) {
+      /* El fondo: cada cambio crea su propia capa, que entra por encima de
+         las que ya están puestas y se queda opaca hasta que otra la tapa.
+         Con capas fijas, si cambiabas de pestaña antes de terminar el cruce
+         el temporizador del cambio anterior apagaba la capa que acababa de
+         quedar activa y se veía el cobalto de la sección: ese era el bug.
+         Creándolas, nunca se apaga nada que esté a la vista. */
+      if (fondos && d.foto) {
         var url = 'url("' + d.foto + '")';
-        var arriba = capas[capaAct];
-        if (arriba.style.backgroundImage !== url) {
-          var entra = capas[1 - capaAct], hecho = false;
+        var ultima = fondos.lastElementChild;
+        if (!ultima || ultima.dataset.foto !== d.foto) {
+          var hecho = false;
           var pinta = function () {
             if (hecho) return;
             hecho = true;
-            /* La que entra se pone por encima y sube de 0 a 1; la de abajo
-               se queda opaca todo el rato. Si las dos se fundieran a la vez,
-               la suma bajaría de 1 a media transición y asomaría el azul
-               de la sección. Cuando ya está tapada, se apaga sin fundido. */
-            entra.style.zIndex = ++orden;
-            entra.style.backgroundImage = url;
-            void entra.offsetWidth;
-            entra.classList.add('is-on');
-            capaAct = 1 - capaAct;
+            var capa = document.createElement('div');
+            capa.className = 'efectos__fondo';
+            capa.dataset.foto = d.foto;
+            capa.style.backgroundImage = url;
+            capa.style.zIndex = ++orden;
+            if (!animate || reduced) capa.classList.add('sin-fundido');
+            fondos.appendChild(capa);
+            void capa.offsetWidth;
+            capa.classList.add('is-on');
             setTimeout(function () {
-              arriba.style.transition = 'none';
-              arriba.classList.remove('is-on');
-              void arriba.offsetWidth;
-              arriba.style.transition = '';
-            }, 620);
+              /* se retiran las que hayan quedado debajo de esta, nunca las
+                 de encima: si hubo otro cambio entremedias, manda el nuevo */
+              while (fondos.firstElementChild &&
+                     fondos.firstElementChild !== capa &&
+                     fondos.children.length > 1) {
+                fondos.removeChild(fondos.firstElementChild);
+              }
+              capa.classList.remove('sin-fundido');
+            }, 700);
           };
           if (!animate || reduced) { pinta(); }
           else {
-            /* se descarga antes de cruzar: si no, el primer cuadro sale vacío */
             var img = new Image();
             img.onload = img.onerror = pinta;
             img.src = d.foto;

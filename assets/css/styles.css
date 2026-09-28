@@ -374,13 +374,16 @@ main section[id]{scroll-margin-top:calc(var(--nav-h) + 16px)}
 }
 /* Dos capas que se cruzan: la nueva entra por encima de la que está
    puesta, así nunca se ve el fondo de la sección entre una y otra. */
-.efectos__fondos{position:absolute; inset:0; z-index:0}
+/* Suelo oscuro bajo las capas: aunque algo fallara al cambiar de imagen,
+   lo que asomaría es tierra, nunca el cobalto de la sección. */
+.efectos__fondos{position:absolute; inset:0; z-index:0; background:var(--tierra-2)}
 .efectos__fondo{
   position:absolute; inset:0;
   background-size:cover; background-position:50% 50%;
   opacity:0; transition:opacity .55s var(--ease);
 }
 .efectos__fondo.is-on{opacity:1}
+.efectos__fondo.sin-fundido{transition:none}
 @media (prefers-reduced-motion:reduce){.efectos__fondo{transition:none}}
 .efectos__velo{
   position:absolute; inset:0; z-index:1;
@@ -587,48 +590,37 @@ body.has-drawer{overflow:hidden}
 /* ─────────────────────────────────────────────── 13. FOOTER ───────── */
 .footer{background:var(--arena); color:var(--negro); position:relative}
 
-/* La banda de rayos que remata la página, con la boca y el pouch */
+/* La banda de rayos que remata la página, con la cara y el pouch.
+   Dos tintas y nada más, como la referencia: la masa negra y el fondo del
+   pie asomando por los recortes. */
 .footer__banda{
   position:relative; width:100%; line-height:0;
   margin-bottom:clamp(14px,2.2vw,26px);
 }
 .footer__banda svg{display:block; width:100%; height:auto}
-.banda__rayos{fill:var(--negro)}
-.banda__cara .ojo{fill:none; stroke:var(--arena); stroke-width:14; stroke-linecap:round; transform-origin:center}
-.banda__cara .boca{fill:var(--arena)}
-.banda__cara .dientes rect{fill:var(--negro)}
-.banda__cara .lengua__carne{fill:var(--coral)}
-.banda__cara .pouch rect{fill:var(--crema)}
-.banda__cara .pouch__linea{fill:color-mix(in srgb, var(--cobalto) 70%, var(--crema))}
-.banda__cara .mano{fill:var(--negro)}
-.lengua{transform-origin:720px 240px}
+.banda__masa{fill:var(--negro)}
+.banda__dientes rect,.mano{fill:var(--negro)}
+.lengua__carne{fill:var(--coral)}
+.banda__pouch rect{fill:var(--crema)}
+.banda__pouch .pouch__linea{fill:color-mix(in srgb, var(--cobalto) 72%, var(--crema))}
 
+.banda__lengua{transform-origin:720px 246px}
 @media (prefers-reduced-motion:no-preference){
-  .lengua{animation:saca-lengua 3.4s var(--ease) infinite}
-  .ojo--i{animation:parpadeo 5.2s linear infinite}
-  .ojo--d{animation:parpadeo 5.2s linear .08s infinite}
-  .banda__rayos{animation:chispea 6s steps(1,end) infinite}
-  .mano--i{animation:agarre 4.6s ease-in-out infinite}
-  .mano--d{animation:agarre 4.6s ease-in-out .5s infinite}
+  .banda__lengua{animation:saca-lengua 4.2s var(--ease) infinite}
+  .banda__pouch{animation:saca-lengua 4.2s var(--ease) infinite}
+  .mano--i{animation:agarre 5.1s ease-in-out infinite}
+  .mano--d{animation:agarre 5.1s ease-in-out .6s infinite}
 }
 @keyframes saca-lengua{
-  0%,58%,100%{transform:translateY(0) scaleY(1)}
-  66%{transform:translateY(16px) scaleY(1.1)}
-  80%{transform:translateY(9px) scaleY(1.04)}
-}
-@keyframes parpadeo{
-  0%,92%,100%{transform:scaleY(1)}
-  95%{transform:scaleY(.2)}
-}
-@keyframes chispea{
-  0%,100%{opacity:1}
-  49%{opacity:1}
-  50%{opacity:.88}
+  0%,56%,100%{transform:translateY(0)}
+  68%{transform:translateY(15px)}
+  84%{transform:translateY(7px)}
 }
 @keyframes agarre{
   0%,100%{transform:translateY(0)}
-  50%{transform:translateY(-6px)}
+  50%{transform:translateY(-7px)}
 }
+
 .footer__top{
   display:grid; gap:24px; padding-bottom:clamp(22px,3.2vw,36px);
 }
