@@ -260,7 +260,8 @@
 
   /* ═══════════════════════════════════════════════ 3. EFECTOS */
   (function usos() {
-    var list = $('#fxTabs'), panels = $('#fxPanels'), thumb = $('#fxThumb'), fondo = $('#usoFondo');
+    var list = $('#fxTabs'), panels = $('#fxPanels'), thumb = $('#fxThumb');
+    var capas = $$('.efectos__fondo'), capaAct = 0, orden = 1;
     if (!list || !panels) return;
     var datos = cfg.usos || [];
 
@@ -301,16 +302,40 @@
       });
       moveThumb(btns[i], animate);
 
-      /* El fondo del caso: se cruzan dos capas para que no haya parpadeo */
-      if (fondo && d.foto) {
+      /* El fondo: la imagen nueva entra por encima de la anterior, que sigue
+         puesta hasta que la de arriba está opaca. Nunca hay un hueco. */
+      if (capas.length === 2 && d.foto) {
         var url = 'url("' + d.foto + '")';
-        if (fondo.style.backgroundImage !== url) {
-          if (hasGsap && animate && !reduced) {
-            gsap.to(fondo, { autoAlpha: 0, duration: .22, onComplete: function () {
-              fondo.style.backgroundImage = url;
-              gsap.to(fondo, { autoAlpha: 1, duration: .5 });
-            } });
-          } else fondo.style.backgroundImage = url;
+        var arriba = capas[capaAct];
+        if (arriba.style.backgroundImage !== url) {
+          var entra = capas[1 - capaAct], hecho = false;
+          var pinta = function () {
+            if (hecho) return;
+            hecho = true;
+            /* La que entra se pone por encima y sube de 0 a 1; la de abajo
+               se queda opaca todo el rato. Si las dos se fundieran a la vez,
+               la suma bajaría de 1 a media transición y asomaría el azul
+               de la sección. Cuando ya está tapada, se apaga sin fundido. */
+            entra.style.zIndex = ++orden;
+            entra.style.backgroundImage = url;
+            void entra.offsetWidth;
+            entra.classList.add('is-on');
+            capaAct = 1 - capaAct;
+            setTimeout(function () {
+              arriba.style.transition = 'none';
+              arriba.classList.remove('is-on');
+              void arriba.offsetWidth;
+              arriba.style.transition = '';
+            }, 620);
+          };
+          if (!animate || reduced) { pinta(); }
+          else {
+            /* se descarga antes de cruzar: si no, el primer cuadro sale vacío */
+            var img = new Image();
+            img.onload = img.onerror = pinta;
+            img.src = d.foto;
+            if (img.complete) pinta();
+          }
         }
       }
     }
@@ -327,6 +352,13 @@
     });
 
     select(0, false);
+
+    /* Se precargan las otras tres al terminar de cargar la página: así el
+       primer cambio de pestaña ya cruza sin esperar a la descarga. */
+    window.addEventListener('load', function () {
+      datos.forEach(function (d) { if (d.foto) { var i = new Image(); i.src = d.foto; } });
+    });
+
     function recolocar() {
       var on = btns.filter(function (b) { return b.getAttribute('aria-selected') === 'true'; })[0] || btns[0];
       moveThumb(on, false);

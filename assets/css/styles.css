@@ -362,11 +362,16 @@ main section[id]{scroll-margin-top:calc(var(--nav-h) + 16px)}
   background:var(--cobalto); border-block:4px solid var(--negro);
   padding-block:clamp(80px,10vw,150px);
 }
+/* Dos capas que se cruzan: la nueva entra por encima de la que está
+   puesta, así nunca se ve el fondo de la sección entre una y otra. */
+.efectos__fondos{position:absolute; inset:0; z-index:0}
 .efectos__fondo{
-  position:absolute; inset:0; z-index:0;
-  background-image:url('../img/uso-entrenamiento.webp');
+  position:absolute; inset:0;
   background-size:cover; background-position:50% 50%;
+  opacity:0; transition:opacity .55s var(--ease);
 }
+.efectos__fondo.is-on{opacity:1}
+@media (prefers-reduced-motion:reduce){.efectos__fondo{transition:none}}
 .efectos__velo{
   position:absolute; inset:0; z-index:1;
   background:
