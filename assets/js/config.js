@@ -94,6 +94,7 @@ window.TPP = {
     {
       id: 'entrenamiento', label: 'Entrenamiento',
       foto: 'assets/img/uso-entrenamiento.webp',
+      fotoMovil: 'assets/img/uso-entrenamiento-movil.webp',
       titulo: 'Puesto antes de la primera serie',
       copy: 'Te lo pones al calentar y ya estás dentro cuando tocas la barra. Nada que cargar, ' +
             'nada de azúcar que te baje a media sesión y las manos libres. Aguanta toda la ' +
@@ -102,6 +103,7 @@ window.TPP = {
     {
       id: 'trabajo', label: 'Trabajo',
       foto: 'assets/img/uso-trabajo.webp',
+      fotoMovil: 'assets/img/uso-trabajo-movil.webp',
       titulo: 'Para el bloque largo, no el sprint',
       copy: 'La L-Teanina sostiene la atención sin ponerte acelerado y la L-Tirosina repone lo ' +
             'que el cerebro gasta bajo presión. Al no llevar azúcar no hay pico, y sin pico no ' +
@@ -110,6 +112,7 @@ window.TPP = {
     {
       id: 'estudio', label: 'Estudio',
       foto: 'assets/img/uso-estudio.webp',
+      fotoMovil: 'assets/img/uso-estudio-movil.webp',
       titulo: 'Sesiones seguidas, sin otro café',
       copy: 'Cada pouch trae siempre la misma cantidad, así que dejas de calcular la dosis a ojo. ' +
             'Y como no lleva cafeína tampoco te cobra la noche: el examen de mañana no se paga ' +
@@ -118,6 +121,7 @@ window.TPP = {
     {
       id: 'donde-sea', label: 'Donde sea',
       foto: 'assets/img/uso-donde-sea.webp',
+      fotoMovil: 'assets/img/uso-donde-sea-movil.webp',
       titulo: 'Va donde vayas, sin cargar nada',
       copy: 'No se derrama, no pide agua y no necesita frío. Carretera, turno largo, viaje o ' +
             'mudanza: ocupa lo que una lata pequeña y no deja atrás humo, olor ni un vaso que ' +

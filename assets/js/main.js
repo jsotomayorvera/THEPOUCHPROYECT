@@ -379,6 +379,145 @@
   setCiudad(order.ciudadId);
   $('#cantVal').textContent = order.cantidad;
 
+
+  /* ═══════════════════════════════════════════ 3. CUÁNDO USARLOS */
+  (function usos() {
+    var list = $('#fxTabs'), panels = $('#fxPanels'), thumb = $('#fxThumb');
+    var fondos = $('.efectos__fondos'), orden = 1;
+    /* En pantallas estrechas se usa el recorte vertical de cada caso: el
+       módulo es alto y angosto y con el recorte ancho el motivo se pierde. */
+    var esEstrecho = window.matchMedia('(max-width: 700px)');
+    function fotoDe(d) { return (esEstrecho.matches && d.fotoMovil) ? d.fotoMovil : d.foto; }
+    if (!list || !panels) return;
+    var datos = cfg.usos || [];
+
+    panels.innerHTML = datos.map(function (d, i) {
+      return '<div class="uso" id="panel-' + d.id + '" role="tabpanel" ' +
+        'aria-labelledby="tab-' + d.id + '" tabindex="0"' + (i ? ' hidden' : '') + '>' +
+        '<p class="uso__titulo">' + d.titulo + '</p>' +
+        '<p class="uso__copy">' + d.copy + '</p></div>';
+    }).join('');
+
+    list.insertAdjacentHTML('beforeend', datos.map(function (d, i) {
+      return '<button class="tab" type="button" role="tab" id="tab-' + d.id + '" ' +
+        'aria-controls="panel-' + d.id + '" aria-selected="' + (i === 0) + '"' +
+        (i ? ' tabindex="-1"' : '') + '>' + d.label + '</button>';
+    }).join(''));
+
+    var btns = $$('.tab', list);
+
+    function moveThumb(btn, animate) {
+      /* Se sigue también la fila: por debajo de 560 px las pestañas van en
+         dos por dos, y con solo la x el indicador caía siempre arriba. */
+      var x = btn.offsetLeft - list.clientLeft;
+      var y = btn.offsetTop - list.clientTop;
+      var w = btn.offsetWidth, h = btn.offsetHeight;
+      if (hasGsap && animate && !reduced) {
+        gsap.to(thumb, { x: x, y: y, width: w, height: h, duration: .55, ease: 'power3.out' });
+      } else {
+        thumb.style.width = w + 'px';
+        thumb.style.height = h + 'px';
+        thumb.style.transform = 'translate3d(' + x + 'px,' + y + 'px,0)';
+      }
+    }
+
+    function select(i, animate) {
+      var d = datos[i];
+      btns.forEach(function (b, n) {
+        b.setAttribute('aria-selected', n === i ? 'true' : 'false');
+        b.tabIndex = n === i ? 0 : -1;
+      });
+      $$('.uso', panels).forEach(function (p, n) {
+        if (n === i) {
+          p.hidden = false;
+          if (hasGsap && animate && !reduced) {
+            gsap.fromTo(p.children, { autoAlpha: 0, y: 14 }, { autoAlpha: 1, y: 0, duration: .5, stagger: .06, ease: 'power2.out' });
+          }
+        } else { p.hidden = true; }
+      });
+      moveThumb(btns[i], animate);
+
+      /* El fondo: cada cambio crea su propia capa, que entra por encima de
+         las que ya están puestas y se queda opaca hasta que otra la tapa.
+         Con capas fijas, si cambiabas de pestaña antes de terminar el cruce
+         el temporizador del cambio anterior apagaba la capa que acababa de
+         quedar activa y se veía el cobalto de la sección: ese era el bug.
+         Creándolas, nunca se apaga nada que esté a la vista. */
+      if (fondos && d.foto) {
+        var cual = fotoDe(d);
+        var url = 'url("' + cual + '")';
+        var ultima = fondos.lastElementChild;
+        if (!ultima || ultima.dataset.foto !== cual) {
+          var hecho = false;
+          var pinta = function () {
+            if (hecho) return;
+            hecho = true;
+            var capa = document.createElement('div');
+            capa.className = 'efectos__fondo';
+            capa.dataset.foto = cual;
+            capa.style.backgroundImage = url;
+            capa.style.zIndex = ++orden;
+            if (!animate || reduced) capa.classList.add('sin-fundido');
+            fondos.appendChild(capa);
+            void capa.offsetWidth;
+            capa.classList.add('is-on');
+            setTimeout(function () {
+              /* se retiran las que hayan quedado debajo de esta, nunca las
+                 de encima: si hubo otro cambio entremedias, manda el nuevo */
+              while (fondos.firstElementChild &&
+                     fondos.firstElementChild !== capa &&
+                     fondos.children.length > 1) {
+                fondos.removeChild(fondos.firstElementChild);
+              }
+              capa.classList.remove('sin-fundido');
+            }, 700);
+          };
+          if (!animate || reduced) { pinta(); }
+          else {
+            var img = new Image();
+            img.onload = img.onerror = pinta;
+            img.src = cual;
+            if (img.complete) pinta();
+          }
+        }
+      }
+    }
+
+    btns.forEach(function (b, i) {
+      b.addEventListener('click', function () { select(i, true); });
+      b.addEventListener('keydown', function (e) {
+        var dir = e.key === 'ArrowRight' ? 1 : e.key === 'ArrowLeft' ? -1 : 0;
+        if (!dir) return;
+        e.preventDefault();
+        var n = (i + dir + btns.length) % btns.length;
+        btns[n].focus(); select(n, true);
+      });
+    });
+
+    select(0, false);
+
+    /* Se precargan las otras tres al terminar de cargar la página: así el
+       primer cambio de pestaña ya cruza sin esperar a la descarga. */
+    window.addEventListener('load', function () {
+      datos.forEach(function (d) { var f = fotoDe(d); if (f) { var i = new Image(); i.src = f; } });
+    });
+
+    /* Al girar el teléfono se repinta con el recorte que toque, sin fundido */
+    esEstrecho.addEventListener('change', function () {
+      var i = btns.map(function (b) { return b.getAttribute('aria-selected'); }).indexOf('true');
+      if (fondos.lastElementChild) fondos.lastElementChild.dataset.foto = '';
+      select(i < 0 ? 0 : i, false);
+    });
+
+    function recolocar() {
+      var on = btns.filter(function (b) { return b.getAttribute('aria-selected') === 'true'; })[0] || btns[0];
+      moveThumb(on, false);
+    }
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(recolocar);
+    window.addEventListener('resize', recolocar);
+  })();
+
+
   /* ═══════════════════════════════════════ 4. CAJÓN LATERAL DE PEDIDO */
   (function checkout() {
     var caja = $('#checkout');
