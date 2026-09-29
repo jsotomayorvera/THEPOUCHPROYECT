@@ -157,6 +157,23 @@
   });
 
   /* ═══════════════════════════════════════════════ 2. PEDIDO */
+
+  /* Abrir WhatsApp. Se hace con el clic de un enlace de verdad y no con
+     window.open: dentro de un iframe (la vista previa del artifact, o
+     cualquier sitio que embeba la página) window.open acaba cargando en un
+     contexto que WhatsApp rechaza, y sale ERR_BLOCKED_BY_RESPONSE. Un
+     enlace con target y rel abre una pestaña de primer nivel. */
+  function abrirWhatsApp(url) {
+    var a = document.createElement('a');
+    a.href = url;
+    a.target = '_blank';
+    a.rel = 'noopener noreferrer';
+    a.style.display = 'none';
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+  }
+
   /* Dos pasos: primero qué pides y a dónde va, después quién eres. El
      resumen se imprime como un recibo que se alarga al cambiar el pedido. */
 
@@ -373,7 +390,7 @@
       if (hasGsap && !reduced) gsap.fromTo('#orderForm', { x: -7 }, { x: 0, duration: .5, ease: 'elastic.out(1,0.35)' });
       return;
     }
-    window.open(C.link(order), '_blank', 'noopener');
+    abrirWhatsApp(C.link(order));
   });
 
   setCiudad(order.ciudadId);
@@ -750,6 +767,22 @@
           gsap.from(b, { autoAlpha: 0, scale: .4, rotate: -40, duration: .8, stagger: .05, ease: 'back.out(1.8)', overwrite: true });
         },
       });
+
+      /* La lata: entra girando, respira y se mueve con el scroll */
+      (function lataDelHero() {
+        var lata = $('.hero__lata');
+        if (!lata) return;
+        gsap.set(lata, { transformOrigin: '50% 50%', yPercent: -50 });
+        gsap.timeline({ delay: .25 })
+          .from(lata, { autoAlpha: 0, scale: .72, rotation: -30, y: 46,
+                        duration: 1.1, ease: 'back.out(1.5)' })
+          .to(lata, { y: -14, rotation: -4, duration: 3.6, ease: 'sine.inOut',
+                      yoyo: true, repeat: -1 });
+        gsap.to(lata, {
+          y: '+=120', rotation: '+=16', ease: 'none',
+          scrollTrigger: { trigger: '.hero', start: 'top top', end: 'bottom top', scrub: .7 },
+        });
+      })();
 
       /* Paralaje del hero */
       gsap.to('.hero__media', {

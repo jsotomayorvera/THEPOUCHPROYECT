@@ -219,6 +219,22 @@ main section[id]{scroll-margin-top:calc(var(--nav-h) + 16px)}
   .hero__media .hero__poster,
   .hero__media video{object-position:50% 28%}
 }
+/* La lata entra flotando sobre el vídeo: es el producto, así que aparece
+   en el banner sin robarle sitio al eslogan, que va abajo a la izquierda. */
+.hero__lata{
+  position:absolute; z-index:1; right:clamp(8px,3vw,64px); top:44%;
+  width:clamp(188px,27vw,392px); height:auto;
+  transform:translateY(-50%) rotate(-8deg);
+  filter:drop-shadow(0 26px 40px rgba(12,5,3,.62)) drop-shadow(0 4px 10px rgba(12,5,3,.5));
+  pointer-events:none; user-select:none;
+}
+@media (max-width:760px){
+  .hero__lata{top:30%; right:-28px; width:clamp(170px,48vw,250px)}
+}
+@media (prefers-reduced-motion:reduce){
+  .hero__lata{transform:translateY(-50%) rotate(-8deg) !important}
+}
+
 .hero__inner{position:relative; z-index:2; padding-block:calc(var(--nav-h) + 24px) clamp(96px,13vh,150px)}
 .hero__kicker{
   font-family:var(--marker); font-weight:400; font-size:clamp(15px,1.7vw,22px);
