@@ -190,9 +190,13 @@ Partimos de tu imagen y generamos los formatos que faltaban:
 Revisado el 29/09/2026.
 
 ### Antes de vender
-- [ ] **Confirmar la formulación.** Toda la web está escrita para la lata de la foto:
-      NZE Peppermint FOCUS **sin cafeína** (Alpha GPC, L-Tirosina, L-Teanina). El plan
-      original hablaba de una referencia con cafeína. Ver el aviso en `docs/CIENCIA.md`.
+- [x] ~~Confirmar la formulación.~~ Resuelto el 29/09/2026: se vende la **NZE
+      Peppermint Energy**, 50 mg de cafeína más Alpha GPC, L-Teanina y L-Tirosina a
+      40 mg cada una. Toda la redacción se reescribió para esa lata y la línea Focus,
+      sin cafeína, pasó a "próximamente".
+- [ ] **Fotos de la lata Energy.** Las imágenes de la web todavía muestran la lata
+      FOCUS · CAFFEINE-FREE, que ya no es la que se vende. Hay que reemplazar
+      `producto-nze-peppermint.webp` y `lata-recorte.webp` por fotos del envase Energy.
 - [ ] **Tarifas de envío reales.** Las de `config.js` salieron de la maqueta, no de una
       cotización: Guayaquil $2.50, Quito y Cuenca $3.50, resto $4.50, gratis desde $30.
 - [ ] **Confirmar precios** (1 lata $12, 2 latas $20), la hora de cierre de despacho

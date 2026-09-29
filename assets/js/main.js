@@ -50,7 +50,7 @@
 
   /* Cinta superior */
   (function ticker() {
-    var frase = '¡Rinde sin límites!   ·   Envíos a todo el Ecuador   ·   Sin cafeína, sin azúcar, sin tabaco   ·   Pedidos por WhatsApp   ·   ';
+    var frase = '¡Rinde sin límites!   ·   Envíos a todo el Ecuador   ·   50 mg de cafeína, sin azúcar, sin tabaco   ·   Pedidos por WhatsApp   ·   ';
     var texto = new Array(4).join(frase) + frase;
     var a = $('#tickerA'), b = $('#tickerB');
     if (a) a.textContent = texto;

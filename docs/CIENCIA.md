@@ -1,15 +1,16 @@
-# La ciencia detrás del formato pouch
+# Respaldo de la información
 
-Notas de respaldo de la sección "La ciencia" de la landing. Todo lo que se afirma en la web
-sale de aquí, con su enlace para comprobarlo. Si un dato no se puede sostener con una fuente,
-no entra a la web.
+> **Actualizado el 29/09/2026.** La referencia que se vende es la **NZE Peppermint
+> Energy**: 50 mg de cafeína por pouch, más Alpha GPC 40 mg, L-Teanina 40 mg y
+> L-Tirosina 40 mg, según el panel de la lata. La web estuvo escrita durante el
+> desarrollo para la variante **Focus, sin cafeína**; todos esos textos ya se
+> reescribieron. La línea Focus pasa a "próximamente".
+>
+> Del panel de advertencia de la lata, que es lo que manda en el aviso legal:
+> no apto para menores, embarazadas, lactancia ni personas sensibles a la cafeína;
+> no masticar ni tragar el pouch; no exceder 400 mg de cafeína al día, ni 2 pouches
+> por hora ni 8 al día. Contiene coco.
 
-> ⚠️ **Verifica la formulación antes de publicar.** Esta página está escrita para la lata de la
-> foto: **NZE Peppermint · FOCUS · CAFFEINE-FREE**, con Alpha GPC, L-Tirosina y L-Teanina,
-> 15 unidades y sin edulcorantes artificiales. El plan de marca original describía una
-> referencia **con cafeína**. Si el producto que vas a vender es otro, la copia de la web debe
-> cambiar con él: vender "energía con cafeína" sobre una lata que dice *caffeine-free* es
-> publicidad falsa y es el tipo de error que hunde una marca nueva.
 
 ## 1. La mucosa bucal es una vía de absorción rápida
 

@@ -21,30 +21,35 @@ window.TPP = {
   // envase: complétalas cuando las tengas de la ficha del fabricante.
   producto: {
     nombre: 'NZE Peppermint',
-    linea: 'Focus · Nootropic Pouches',
+    linea: 'Energy · Nootropic Pouches',
     sabor: 'Peppermint',
     unidades: 15,
     foto: 'assets/img/producto-nze-peppermint.webp',
     resumen:
-      'Pouch nootrópico de menta fría. Sostiene la atención sin estimulante: ' +
-      'cero cafeína, cero azúcar, cero tabaco y sin edulcorantes artificiales.',
-    sellos: ['Sin cafeína', 'Sin azúcar', 'Sin tabaco', 'Sin edulcorantes artificiales'],
+      'Pouch nootrópico de menta fría con 50 mg de cafeína por unidad. ' +
+      'Energía y foco en el mismo formato: cero azúcar, cero tabaco y sin ' +
+      'edulcorantes artificiales.',
+    sellos: ['50 mg de cafeína', 'Sin azúcar', 'Sin tabaco', 'Sin edulcorantes artificiales'],
+    /* Dosis por pouch, leídas del panel de la lata */
     activos: [
-      { nombre: 'Alpha GPC',   rol: 'Señal',   texto: 'Precursor de colina que alimenta la acetilcolina, el neurotransmisor de la señal de contracción y de la memoria.' },
-      { nombre: 'L-Tirosina',  rol: 'Reserva', texto: 'Precursor de dopamina y noradrenalina. Su efecto aparece cuando el sistema está exigido: estrés, frío o carga mental alta.' },
-      { nombre: 'L-Teanina',   rol: 'Calma',   texto: 'Aminoácido del té verde asociado a una atención tranquila, sin el filo nervioso de un estimulante.' },
+      { nombre: 'Cafeína 50 mg',   rol: 'Chispa',  texto: 'La dosis de una taza de café corta, en un formato que no hay que preparar ni cargar. Entra por la mucosa, así que se nota antes que un café.' },
+      { nombre: 'Alpha GPC 40 mg', rol: 'Señal',   texto: 'Precursor de colina que alimenta la acetilcolina, el neurotransmisor de la señal de contracción y de la memoria.' },
+      { nombre: 'L-Teanina 40 mg', rol: 'Calma',   texto: 'Aminoácido del té verde. Junto a la cafeína suaviza el filo nervioso: atención sostenida en vez de acelere.' },
+      { nombre: 'L-Tirosina 40 mg',rol: 'Reserva', texto: 'Precursor de dopamina y noradrenalina. Su efecto aparece cuando el sistema está exigido: estrés, frío o carga mental alta.' },
     ],
+    /* Del panel de la lata, para el aviso legal */
+    limite: 'No excedas 2 pouches por hora ni 8 al día, ni 400 mg de cafeína diarios.',
   },
 
   /* ---- TARJETAS DE PRODUCTO -------------------------------------------- */
   // La del medio es la que se vende; las de los lados salen difuminadas
   // con el sello "Próximamente".
   vitrina: [
-    { id: 'cafeina', estado: 'soon', titulo: 'Línea con cafeína', sabor: 'Energía',
-      foto: 'assets/img/proximo-cafeina.webp' },
-    { id: 'nze',     estado: 'live', titulo: 'NZE Peppermint',    sabor: 'Focus · sin cafeína',
+    { id: 'focus',   estado: 'soon', titulo: 'Línea Focus',    sabor: 'Sin cafeína',
+      foto: 'assets/img/proximo-focus.webp' },
+    { id: 'energy',  estado: 'live', titulo: 'NZE Peppermint', sabor: 'Energy · 50 mg cafeína',
       foto: 'assets/img/producto-nze-peppermint.webp' },
-    { id: 'electro', estado: 'soon', titulo: 'Electrolitos',      sabor: 'Hidratación',
+    { id: 'electro', estado: 'soon', titulo: 'Electrolitos',   sabor: 'Hidratación',
       foto: 'assets/img/proximo-electrolitos.webp' },
   ],
 
@@ -96,17 +101,17 @@ window.TPP = {
       foto: 'assets/img/uso-entrenamiento.webp',
       fotoMovil: 'assets/img/uso-entrenamiento-movil.webp',
       titulo: 'Puesto antes de la primera serie',
-      copy: 'Te lo pones al calentar y ya estás dentro cuando tocas la barra. Nada que cargar, ' +
-            'nada de azúcar que te baje a media sesión y las manos libres. Aguanta toda la ' +
-            'rutina puesto y lo retiras al terminar.',
+      copy: 'Te lo pones al calentar y los 50 mg entran antes de la primera serie. Nada que ' +
+            'cargar, nada de azúcar que te baje a media sesión y las manos libres. Aguanta ' +
+            'toda la rutina puesto y lo retiras al terminar.',
     },
     {
       id: 'trabajo', label: 'Trabajo',
       foto: 'assets/img/uso-trabajo.webp',
       fotoMovil: 'assets/img/uso-trabajo-movil.webp',
       titulo: 'Para el bloque largo, no el sprint',
-      copy: 'La L-Teanina sostiene la atención sin ponerte acelerado y la L-Tirosina repone lo ' +
-            'que el cerebro gasta bajo presión. Al no llevar azúcar no hay pico, y sin pico no ' +
+      copy: 'La cafeína enciende y la L-Teanina le quita el filo nervioso: atención sostenida ' +
+            'en vez de acelere. Al no llevar azúcar no hay pico de insulina, y sin pico no ' +
             'llega la caída de la hora siguiente.',
     },
     {
@@ -114,9 +119,9 @@ window.TPP = {
       foto: 'assets/img/uso-estudio.webp',
       fotoMovil: 'assets/img/uso-estudio-movil.webp',
       titulo: 'Sesiones seguidas, sin otro café',
-      copy: 'Cada pouch trae siempre la misma cantidad, así que dejas de calcular la dosis a ojo. ' +
-            'Y como no lleva cafeína tampoco te cobra la noche: el examen de mañana no se paga ' +
-            'con las horas de sueño de hoy.',
+      copy: 'Cada pouch trae siempre 50 mg, así que dejas de calcular la dosis a ojo como con ' +
+            'el café. Sabes exactamente cuánto llevas encima y a qué hora conviene parar para ' +
+            'no pagarlo esa noche.',
     },
     {
       id: 'donde-sea', label: 'Donde sea',
@@ -124,8 +129,8 @@ window.TPP = {
       fotoMovil: 'assets/img/uso-donde-sea-movil.webp',
       titulo: 'Va donde vayas, sin cargar nada',
       copy: 'No se derrama, no pide agua y no necesita frío. Carretera, turno largo, viaje o ' +
-            'mudanza: ocupa lo que una lata pequeña y no deja atrás humo, olor ni un vaso que ' +
-            'lavar cuando ya terminaste.',
+            'mudanza: te da la cafeína de un café donde no hay dónde comprarlo, y no deja ' +
+            'atrás humo, olor ni un vaso que lavar.',
     },
   ],
 };
