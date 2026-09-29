@@ -686,10 +686,10 @@
        titular y la bajada entraban en momentos distintos y la cabecera se
        armaba a trozos: eso era lo que parecía un fallo. */
     function cabecera(bloque) {
+      /* Solo el antetítulo y el titular con sus pegatinas: la bajada, las
+         listas y los botones del bloque se quedan quietos. */
       var ceja  = bloque.querySelector('.eyebrow');
       var h     = bloque.querySelector('.h2');
-      var bajada= bloque.querySelector('.lede');
-      var resto = $$(':scope > p:not(.eyebrow):not(.lede), :scope > ul, :scope > a', bloque);
       var pegas = h ? $$('.tag', h) : [];
       var tl = gsap.timeline();
 
@@ -713,8 +713,6 @@
           .52 + i * .1);
       });
 
-      if (bajada) tl.from(bajada, { autoAlpha: 0, y: 14, duration: .5 }, .46);
-      if (resto.length) tl.from(resto, { autoAlpha: 0, y: 16, duration: .5, stagger: .07 }, .54);
       return tl;
     }
 
@@ -746,12 +744,19 @@
         });
       });
 
-      /* Tarjetas y listas: suben un poco, todas con el mismo gesto */
-      ScrollTrigger.batch('[data-anim="up"], [data-anim="fx"]', {
-        start: 'top 88%', once: true,
-        onEnter: function (b) {
-          gsap.from(b, { autoAlpha: 0, y: 24, duration: .7, stagger: .09, overwrite: true });
-        },
+      /* Imágenes: se descubren de abajo arriba y entran con un punto de
+         zoom. Solo las imágenes y los titulares se animan al hacer scroll;
+         tarjetas, listas y botones aparecen ya puestos. */
+      $$('[data-anim="img"]').forEach(function (el) {
+        ScrollTrigger.create({
+          trigger: el, start: 'top 86%', once: true,
+          onEnter: function () {
+            gsap.fromTo(el,
+              { clipPath: 'inset(14% 8% 14% 8% round 18px)', scale: 1.06 },
+              { clipPath: 'inset(0% 0% 0% 0% round 18px)', scale: 1,
+                duration: .85, ease: 'power3.out' });
+          },
+        });
       });
 
       /* Las pegatinas del muro entran girando y se mueven con el scroll */

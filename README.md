@@ -43,6 +43,12 @@ la cabecera del cajón de pedido) y en los botones. La arena es toda
 superficie que lleva texto largo: tarjetas, preguntas, formulario y pie.
 Coral y menta aparecen en dosis pequeñas.
 
+**Animación al hacer scroll.** Solo se mueven dos cosas: los titulares, que
+se descubren de abajo arriba con un recorte y reciben sus pegatinas de
+rotulador estampadas encima, y las imágenes, que se abren desde el centro con
+un punto de zoom. Tarjetas, listas, botones y textos de apoyo aparecen ya
+puestos, sin entrada. Todo se apaga con `prefers-reduced-motion`.
+
 **Texto flotante.** Nada del texto que va sobre el fondo está impreso en
 él: lleva una sombra dura pegada más una larga difusa (`--lift-txt`, y
 `--lift-display` para los titulares), y las cajas llevan sombra dura sin
