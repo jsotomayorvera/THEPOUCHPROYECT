@@ -1,0 +1,109 @@
+<!doctype html><html lang="es"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Opción</title>
+<link rel="stylesheet" href="../../assets/css/fonts.css">
+<link rel="stylesheet" href="../../assets/css/styles.css">
+<style>
+  body{background:var(--tierra); margin:0}
+  .marco{width:100%; max-width:520px; margin:0 auto; background:var(--arena);
+         border-left:4px solid var(--negro); min-height:100vh; display:flex; flex-direction:column}
+  .drawer__head{position:static}
+  .drawer__body{padding:20px 22px 40px; color:var(--panel-fg)}
+  .drawer__body .sumrow,.drawer__body .sumrow span{color:var(--panel-fg)}
+  .nota{font-size:12px; letter-spacing:.14em; text-transform:uppercase;
+        color:var(--panel-muted); margin:0 0 10px}
+</style>
+<style>
+/* piezas de las maquetas */
+.op-fila{display:grid; gap:6px; margin-bottom:12px}
+.op-fila__et{font-weight:600; font-size:11.5px; letter-spacing:.16em; text-transform:uppercase; color:var(--panel-muted)}
+.op-fila__bt{
+  display:flex; align-items:center; gap:10px; width:100%; cursor:pointer;
+  border:2.5px solid var(--negro); border-radius:var(--r); background:var(--arena-2);
+  padding:13px 14px; text-align:left; color:var(--negro); font:inherit;
+}
+.op-fila__bt b{font-size:15.5px}
+.op-fila__bt small{color:var(--panel-muted); font-size:12.5px; flex:1}
+.op-fila__pr{font-family:var(--display); font-size:17px}
+.op-fila__bt svg{width:16px; height:16px; flex:none; color:var(--cobalto)}
+.op-cont{display:flex; align-items:center; gap:14px; border:2.5px solid var(--negro);
+  border-radius:var(--r-pill); padding:6px 8px; width:fit-content; background:var(--arena-2)}
+.op-cont button{width:34px; height:34px; border-radius:50%; border:0; cursor:pointer;
+  background:var(--cobalto); color:var(--crema); font-size:18px; line-height:1}
+.op-cont b{font-family:var(--display); font-size:17px; min-width:24px; text-align:center}
+
+.op-pasos{display:flex; gap:10px; list-style:none; margin:0; padding:0}
+.op-pasos li{display:flex; align-items:center; gap:8px; flex:1; font-weight:600; font-size:13px;
+  border-bottom:4px solid var(--panel-line); padding-bottom:9px; color:var(--panel-muted)}
+.op-pasos li.is-on{border-bottom-color:var(--coral); color:var(--negro)}
+.op-pasos span{width:24px; height:24px; border-radius:50%; display:grid; place-items:center;
+  background:var(--panel-line); font-size:12px}
+.op-pasos li.is-on span{background:var(--coral); color:var(--crema)}
+
+.op-packs{display:grid; grid-template-columns:1fr 1fr; gap:10px}
+.op-pack{position:relative; display:grid; gap:2px; cursor:pointer; font:inherit; text-align:left;
+  border:2.5px solid var(--negro); border-radius:var(--r); background:var(--arena-2); padding:14px}
+.op-pack.is-on{background:var(--cobalto); color:var(--crema); box-shadow:5px 6px 0 var(--negro)}
+.op-pack b{font-size:16px}
+.op-pack small{font-size:12.5px; opacity:.8}
+.op-pack span{font-family:var(--display); font-size:20px; margin-top:4px}
+.op-pack i{position:absolute; top:-11px; right:8px; font-style:normal; font-family:var(--marker);
+  font-size:12px; background:var(--coral); color:var(--crema); padding:2px 9px; border-radius:var(--r-pill);
+  border:2px solid var(--negro)}
+
+.op-chips{display:flex; flex-wrap:wrap; gap:8px}
+.op-chip{display:flex; gap:7px; align-items:baseline; cursor:pointer; font:inherit; font-size:13.5px;
+  border:2.5px solid var(--negro); border-radius:var(--r-pill); background:var(--arena-2);
+  padding:9px 14px; color:var(--negro)}
+.op-chip b{font-family:var(--display); font-size:14px}
+.op-chip.is-on{background:var(--cobalto); color:var(--crema)}
+
+.op-barra{position:fixed; left:50%; transform:translateX(-50%); bottom:0; width:min(520px,100%);
+  display:flex; align-items:center; justify-content:space-between; gap:14px;
+  background:var(--negro); padding:14px 18px calc(16px + env(safe-area-inset-bottom,0px));
+  border-top:3px solid var(--negro)}
+.op-barra small{display:block; font-size:11px; letter-spacing:.16em; text-transform:uppercase; color:var(--arena)}
+.op-barra b{font-family:var(--display); font-size:24px; color:var(--crema)}
+.op-barra .btn{padding:13px 20px; font-size:14px}
+</style>
+</head><body>
+<div class="marco">
+  <div class="drawer__head">
+    <div><p class="drawer__eyebrow">Cerramos por WhatsApp</p>
+    <p class="drawer__title">Tu pedido</p></div>
+    <button class="drawer__x" type="button" aria-label="Cerrar">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="m6 6 12 12M18 6 6 18"/></svg>
+    </button>
+  </div>
+  <div class="drawer__body">
+    <p class="nota">Opción C · Barra fija con el total</p>
+    <p class="field-title">Elige tu ciudad</p>
+    <div class="op-chips">
+      <button class="op-chip is-on" type="button">Guayaquil <b>$2.50</b></button>
+      <button class="op-chip" type="button">Quito <b>$3.50</b></button>
+      <button class="op-chip" type="button">Cuenca <b>$3.50</b></button>
+      <button class="op-chip" type="button">Otras <b>$4.50</b></button>
+      <button class="op-chip" type="button">Retiro <b>Gratis</b></button>
+    </div>
+
+    <div class="grid-2" style="margin-top:18px">
+      <div class="field"><label>Pack</label>
+        <select><option>2 latas — $20</option><option>1 lata — $12</option></select></div>
+      <div class="field"><label>Cantidad</label>
+        <select><option>1</option><option>2</option></select></div>
+    </div>
+    <div class="field"><label>Nombre completo</label><input type="text" placeholder="Tu nombre y apellido"></div>
+    <div class="grid-2">
+      <div class="field"><label>Teléfono</label><input type="tel" placeholder="09XXXXXXXX"></div>
+      <div class="field"><label>Dirección</label><input type="text" placeholder="Calle y número"></div>
+    </div>
+    <div class="field"><label>Notas para la entrega</label>
+      <textarea placeholder="Horario preferido, punto de referencia"></textarea></div>
+    <div style="height:96px"></div>
+
+    <div class="op-barra">
+      <div><small>Total</small><b>$22.50</b></div>
+      <button class="btn btn--cobalto" type="button">¡Enviar por WhatsApp!</button>
+    </div>
+</div>
+</div></body></html>
