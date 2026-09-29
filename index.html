@@ -272,16 +272,52 @@
       </button>
     </div>
     <div class="drawer__body">
-  <div class="order">
-      <div>
-        <fieldset>
-          <legend class="field-title">Elige tu ciudad</legend>
-          <div class="cities" id="cities"></div>
-        </fieldset>
+      <ol class="pasos" id="pasos" aria-label="Pasos del pedido">
+        <li class="is-on" data-paso="1"><span>1</span>Tu pedido</li>
+        <li data-paso="2"><span>2</span>Tus datos</li>
+      </ol>
+
+      <!-- ── Paso 1: qué pides y a dónde va ── -->
+      <section class="paso is-on" data-paso="1" aria-label="Tu pedido">
+        <p class="field-title">Elige tu pack</p>
+        <div class="packs" id="packs" role="radiogroup" aria-label="Pack"></div>
+
+        <div class="linea">
+          <span class="linea__et">Cantidad</span>
+          <div class="cont">
+            <button type="button" data-cant="-1" aria-label="Quitar una">−</button>
+            <b id="cantVal" aria-live="polite">1</b>
+            <button type="button" data-cant="1" aria-label="Añadir una">+</button>
+          </div>
+        </div>
+
+        <div class="desple" id="desCiudad">
+          <p class="field-title" id="lblCiudad">A dónde va</p>
+          <button class="desple__bt" type="button" id="btCiudad"
+                  aria-expanded="false" aria-controls="listaCiudades" aria-labelledby="lblCiudad btCiudad">
+            <b id="ciudadNom">—</b><small id="ciudadEta">—</small>
+            <span class="desple__pr" id="ciudadPr">—</span>
+            <svg class="desple__v" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" aria-hidden="true"><path d="m5 8 7 8 7-8"/></svg>
+          </button>
+          <div class="desple__lista" id="listaCiudades" role="listbox" aria-labelledby="lblCiudad" hidden></div>
+        </div>
 
         <div class="ship-note" id="shipNote" hidden>
           <p id="shipNoteText"></p>
           <div class="bar"><i id="shipBar"></i></div>
+        </div>
+
+        <!-- ── El recibo: se imprime cada vez que cambia el pedido ── -->
+        <div class="recibo" id="recibo">
+          <div class="recibo__impresora" aria-hidden="true"><i></i></div>
+          <div class="recibo__papel" id="reciboPapel" role="group" aria-label="Recibo de tu pedido">
+            <div class="recibo__hoja" id="reciboHoja">
+              <p class="recibo__marca">THE POUCH PROJECT</p>
+              <p class="recibo__sub">Guayaquil · Ecuador</p>
+              <dl class="recibo__lineas" id="reciboLineas"></dl>
+              <p class="recibo__pie"><span id="reciboFecha"></span><span>Se confirma por WhatsApp</span></p>
+            </div>
+          </div>
         </div>
 
         <p class="cutoff">
@@ -290,65 +326,53 @@
           </svg>
           <span id="cutoffText"></span>
         </p>
-      </div>
 
-      <form class="form" id="orderForm" novalidate>
-        <p class="field-title">Tu pedido</p>
-        <div class="form__summary" id="summary"></div>
+        <button class="btn btn--cobalto btn--block" type="button" id="irPaso2">Siguiente: tus datos →</button>
+      </section>
 
-        <div class="grid-2">
+      <!-- ── Paso 2: a quién y a dónde ── -->
+      <section class="paso" data-paso="2" aria-label="Tus datos" hidden>
+        <form class="form" id="orderForm" novalidate>
           <div class="field">
-            <label for="f-pack">Pack</label>
-            <select id="f-pack" name="pack"></select>
+            <label for="f-nombre">Nombre completo</label>
+            <input id="f-nombre" name="nombre" type="text" autocomplete="name" placeholder="Tu nombre y apellido">
+            <p class="err" id="e-nombre"></p>
           </div>
-          <div class="field">
-            <label for="f-cantidad">Cantidad</label>
-            <select id="f-cantidad" name="cantidad"></select>
-          </div>
-        </div>
 
-        <div class="field">
-          <label for="f-nombre">Nombre completo</label>
-          <input id="f-nombre" name="nombre" type="text" autocomplete="name" placeholder="Tu nombre y apellido">
-          <p class="err" id="e-nombre"></p>
-        </div>
-
-        <div class="grid-2">
           <div class="field">
             <label for="f-telefono">Teléfono</label>
             <input id="f-telefono" name="telefono" type="tel" inputmode="numeric" autocomplete="tel" placeholder="09XXXXXXXX">
             <p class="err" id="e-telefono"></p>
           </div>
-          <div class="field">
-            <label for="f-ciudad">Ciudad</label>
-            <select id="f-ciudad" name="ciudad"></select>
-            <p class="err" id="e-ciudad"></p>
+
+          <div class="field" id="wrap-direccion">
+            <label for="f-direccion">Dirección de entrega</label>
+            <input id="f-direccion" name="direccion" type="text" autocomplete="street-address" placeholder="Calle principal, número, referencia">
+            <p class="err" id="e-direccion"></p>
           </div>
-        </div>
 
-        <div class="field" id="wrap-direccion">
-          <label for="f-direccion">Dirección de entrega</label>
-          <input id="f-direccion" name="direccion" type="text" autocomplete="street-address" placeholder="Calle principal, número, referencia">
-          <p class="err" id="e-direccion"></p>
-        </div>
-
-        <div class="field">
-          <label for="f-notas">Notas para la entrega</label>
-          <textarea id="f-notas" name="notas" placeholder="Horario preferido, punto de referencia"></textarea>
-        </div>
-
-        <div class="promo">
           <div class="field">
-            <label for="f-codigo">Código de descuento</label>
-            <input id="f-codigo" name="codigo" type="text" autocapitalize="characters" placeholder="POUCH10">
-            <p class="err" id="e-codigo"></p>
+            <label for="f-notas">Notas para la entrega</label>
+            <textarea id="f-notas" name="notas" placeholder="Horario preferido, punto de referencia"></textarea>
           </div>
-          <button class="btn btn--outline" type="button" id="applyCode">Aplicar</button>
-        </div>
 
-        <button class="btn btn--cobalto btn--block" type="submit" id="sendOrder">¡Enviar por WhatsApp!</button>
-      </form>
-  </div>
+          <div class="promo">
+            <div class="field">
+              <label for="f-codigo">Código de descuento</label>
+              <input id="f-codigo" name="codigo" type="text" autocapitalize="characters" placeholder="POUCH10">
+              <p class="err" id="e-codigo"></p>
+            </div>
+            <button class="btn btn--outline" type="button" id="applyCode">Aplicar</button>
+          </div>
+
+          <p class="err" id="e-ciudad"></p>
+
+          <div class="recap" id="recap"></div>
+
+          <button class="btn btn--cobalto btn--block" type="submit" id="sendOrder">¡Enviar por WhatsApp!</button>
+        </form>
+        <button class="volver" type="button" id="irPaso1">← Volver al pedido</button>
+      </section>
     </div>
   </div>
 </aside>

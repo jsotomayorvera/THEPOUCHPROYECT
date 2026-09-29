@@ -308,8 +308,11 @@ main section[id]{scroll-margin-top:calc(var(--nav-h) + 16px)}
    lados giradas y hundidas, como en la referencia. */
 .flow{position:relative; perspective:1600px; overflow:hidden; padding-block:clamp(10px,1.6vw,18px)}
 .flow__stage{
+  /* La altura la fija el guion midiendo la tarjeta más alta; este valor es
+     solo el de arranque, antes de que carguen las imágenes. */
   position:relative; height:clamp(318px,37vw,498px);
   transform-style:preserve-3d;
+  transition:height .3s var(--ease);
 }
 .pcard{
   position:absolute; top:0; left:50%; width:clamp(240px,30vw,400px);
@@ -489,7 +492,6 @@ main section[id]{scroll-margin-top:calc(var(--nav-h) + 16px)}
 
 /* ─────────────────────────────────────────────── 12. PEDIDO ───────── */
 .field-title{font-weight:600; font-size:12px; letter-spacing:.2em; text-transform:uppercase; color:var(--panel-muted); margin-bottom:12px}
-.order{display:grid; gap:clamp(20px,2.6vw,28px)}
 
 .cities{display:grid; gap:9px}
 .city{
@@ -518,6 +520,7 @@ main section[id]{scroll-margin-top:calc(var(--nav-h) + 16px)}
 .cutoff svg{width:16px; height:16px; flex:none; color:var(--coral)}
 
 .form{display:grid; gap:15px; color:var(--panel-fg)}
+.paso .field-title{margin-bottom:0}
 .form__summary{border:2px dashed var(--panel-line); border-radius:var(--r); padding:14px 16px; display:grid; gap:8px; background:var(--arena-2)}
 .sumrow{display:flex; justify-content:space-between; gap:14px; font-size:14px}
 .sumrow span:last-child{font-variant-numeric:tabular-nums}
@@ -571,6 +574,159 @@ main section[id]{scroll-margin-top:calc(var(--nav-h) + 16px)}
 .order-lite__pts span{font-size:13.5px; color:var(--panel-muted)}
 .order-lite__go{max-width:420px}
 .order-lite__hint{font-size:13px; color:var(--panel-muted); max-width:46ch}
+
+/* ── Pedido en dos pasos ────────────────────────────────────────────── */
+.pasos{display:flex; gap:10px; list-style:none; margin:0 0 20px; padding:0}
+.pasos li{
+  display:flex; align-items:center; gap:8px; flex:1; cursor:default;
+  font-weight:600; font-size:13px; color:var(--panel-muted);
+  border-bottom:4px solid var(--panel-line); padding-bottom:9px;
+}
+.pasos li.is-on{border-bottom-color:var(--coral); color:var(--negro); cursor:pointer}
+.pasos li span{
+  width:24px; height:24px; border-radius:50%; display:grid; place-items:center;
+  background:var(--panel-line); font-size:12px; flex:none;
+}
+.pasos li.is-on span{background:var(--coral); color:var(--crema)}
+.pasos li.is-hecho span{background:var(--negro); color:var(--arena)}
+.paso{display:grid; gap:16px}
+.paso[hidden]{display:none}
+
+/* Packs como tarjetas: la decisión más fácil, la primera */
+.packs{display:grid; grid-template-columns:1fr 1fr; gap:10px}
+.pack{
+  position:relative; display:grid; gap:2px; text-align:left; cursor:pointer; font:inherit;
+  border:2.5px solid var(--negro); border-radius:var(--r); background:var(--arena-2);
+  padding:14px; color:var(--negro);
+  transition:background .2s linear, color .2s linear, box-shadow .2s var(--ease), transform .2s var(--ease);
+}
+.pack b{font-size:16px}
+.pack small{font-size:12.5px; opacity:.78}
+.pack span{font-family:var(--display); font-weight:400; font-size:20px; margin-top:4px}
+.pack i{
+  position:absolute; top:-11px; right:8px; font-style:normal; font-family:var(--marker);
+  font-size:12px; background:var(--coral); color:var(--crema); padding:2px 9px;
+  border-radius:var(--r-pill); border:2px solid var(--negro);
+}
+.pack[aria-checked="true"]{background:var(--cobalto); color:var(--crema); box-shadow:5px 6px 0 var(--negro)}
+.pack:focus-visible{outline:3px solid var(--cobalto); outline-offset:3px}
+
+/* Contador */
+.linea{display:flex; align-items:center; justify-content:space-between; gap:14px}
+.linea__et{font-weight:600; font-size:11.5px; letter-spacing:.16em; text-transform:uppercase; color:var(--panel-muted)}
+.cont{
+  display:flex; align-items:center; gap:12px; background:var(--arena-2);
+  border:2.5px solid var(--negro); border-radius:var(--r-pill); padding:5px 7px;
+}
+.cont button{
+  width:36px; height:36px; border-radius:50%; border:0; cursor:pointer;
+  background:var(--cobalto); color:var(--crema); font-size:19px; line-height:1;
+  transition:background .2s linear;
+}
+.cont button:hover{background:var(--negro)}
+.cont b{font-family:var(--display); font-weight:400; font-size:18px; min-width:26px; text-align:center}
+
+/* Ciudad: un botón que despliega la lista, en vez de cinco filas siempre */
+.desple{position:relative; display:grid; gap:6px}
+.desple .field-title{margin:0}
+.desple__bt{
+  display:flex; align-items:center; gap:10px; width:100%; cursor:pointer; font:inherit;
+  border:2.5px solid var(--negro); border-radius:var(--r); background:var(--arena-2);
+  padding:13px 14px; text-align:left; color:var(--negro);
+}
+.desple__bt b{font-size:15.5px}
+.desple__bt small{flex:1; font-size:12.5px; color:var(--panel-muted)}
+.desple__pr{font-family:var(--display); font-weight:400; font-size:17px}
+.desple__pr.es-gratis{font-family:var(--marker); font-size:14px; color:var(--coral)}
+.desple__v{width:16px; height:16px; flex:none; color:var(--cobalto); transition:transform .25s var(--ease)}
+.desple.is-open .desple__v{transform:rotate(180deg)}
+.desple__bt:focus-visible,.desple__op:focus-visible{outline:3px solid var(--cobalto); outline-offset:2px}
+.desple__lista{
+  position:absolute; z-index:5; top:calc(100% + 6px); left:0; right:0;
+  display:grid; background:var(--arena-2); border:3px solid var(--negro);
+  border-radius:var(--r); overflow:hidden; box-shadow:var(--lift);
+}
+.desple__lista[hidden]{display:none}
+.desple__op{
+  display:flex; align-items:center; gap:10px; cursor:pointer; font:inherit; text-align:left;
+  border:0; border-bottom:2px solid var(--panel-line); background:transparent;
+  padding:13px 14px; color:var(--negro);
+}
+.desple__op:last-child{border-bottom:0}
+.desple__op b{font-size:15px}
+.desple__op small{flex:1; font-size:12.5px; color:var(--panel-muted)}
+.desple__op span{font-family:var(--display); font-weight:400; font-size:16px}
+.desple__op:hover{background:var(--arena)}
+.desple__op[aria-selected="true"]{background:var(--cobalto); color:var(--crema)}
+.desple__op[aria-selected="true"] small{color:color-mix(in srgb, var(--crema) 76%, transparent)}
+
+/* ── El recibo ──────────────────────────────────────────────────────── */
+/* La idea viene del componente que me pasaste: el pedido sale impreso.
+   Aquí está rehecho en CSS plano y con nuestra paleta. */
+.recibo{display:grid; justify-items:center; margin-top:4px}
+.recibo__impresora{
+  width:min(300px,100%); height:26px; border-radius:10px 10px 4px 4px;
+  background:linear-gradient(var(--negro), color-mix(in srgb, var(--negro) 80%, var(--tierra)));
+  display:grid; place-items:center; box-shadow:var(--lift-sm);
+}
+.recibo__impresora i{display:block; width:78%; height:5px; border-radius:3px; background:var(--tierra-2)}
+.recibo__papel{
+  width:min(288px,96%); overflow:hidden;
+  background:var(--crema); color:var(--negro);
+  /* El borde inferior dentado: el papel se corta en la cuchilla */
+  -webkit-mask:linear-gradient(#000 0 0) top/100% calc(100% - 9px) no-repeat,
+          conic-gradient(from -45deg at bottom, #0000 25%, #000 0) bottom/13px 9px repeat-x;
+          mask:linear-gradient(#000 0 0) top/100% calc(100% - 9px) no-repeat,
+          conic-gradient(from -45deg at bottom, #0000 25%, #000 0) bottom/13px 9px repeat-x;
+  filter:drop-shadow(0 8px 14px rgba(12,5,3,.35));
+}
+.recibo__hoja{padding:16px 18px 22px; font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}
+.recibo__marca{
+  font-family:var(--display); font-weight:400; font-size:14px; letter-spacing:.02em;
+  text-align:center; text-transform:uppercase;
+}
+.recibo__sub{
+  text-align:center; font-size:10.5px; letter-spacing:.14em; text-transform:uppercase;
+  color:color-mix(in srgb, var(--negro) 55%, var(--crema)); margin-bottom:12px;
+}
+.recibo__lineas{
+  margin:0; display:grid; gap:7px; padding-top:11px;
+  border-top:2px dashed color-mix(in srgb, var(--negro) 34%, var(--crema));
+}
+.rec-l{display:flex; align-items:baseline; gap:6px; font-size:12px}
+.rec-l dt{flex:none; max-width:60%; order:0}
+/* La guía de puntos va entre el concepto y el importe, como en un tique:
+   por eso se ordena en medio en vez de quedar detrás del importe. */
+.rec-l::after{
+  content:''; flex:1; order:1; align-self:end; margin-bottom:3px; height:0;
+  border-bottom:1.5px dotted color-mix(in srgb, var(--negro) 38%, var(--crema));
+}
+.rec-l dd{margin:0; flex:none; order:2; font-variant-numeric:tabular-nums}
+.rec-l--dto{color:var(--coral)}
+.rec-l--total{
+  font-size:15px; font-weight:700; padding-top:9px; margin-top:2px;
+  border-top:2px dashed color-mix(in srgb, var(--negro) 34%, var(--crema));
+}
+.rec-l--total dt{font-family:var(--display); font-weight:400; text-transform:uppercase}
+.recibo__pie{
+  display:grid; gap:2px; margin-top:13px; text-align:center;
+  font-size:10px; letter-spacing:.1em; text-transform:uppercase;
+  color:color-mix(in srgb, var(--negro) 52%, var(--crema));
+}
+
+/* Recordatorio del total en el paso 2 */
+.recap{
+  display:flex; align-items:center; justify-content:space-between; gap:12px;
+  background:var(--cobalto); color:var(--crema); border:2.5px solid var(--negro);
+  border-radius:var(--r); padding:12px 15px; font-size:13.5px;
+}
+.recap b{font-family:var(--display); font-weight:400; font-size:20px}
+
+.volver{
+  display:block; margin:14px auto 0; background:none; border:0; cursor:pointer;
+  font:inherit; font-family:var(--marker); font-size:15px; color:var(--cobalto);
+}
+.volver:hover{color:var(--negro)}
 
 /* ── Cajón lateral ─────────────────────────────────────────────── */
 body.has-drawer{overflow:hidden}

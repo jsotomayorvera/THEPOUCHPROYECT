@@ -125,32 +125,28 @@
       if (e.key === 'ArrowLeft')  { e.preventDefault(); ir(activo - 1); }
     });
 
+    /* El escenario mide en alto lo que la tarjeta más alta. Antes tenía una
+       altura fija en CSS y, al apilarse el nombre sobre el botón en móvil,
+       la tarjeta crecía y quedaba cortada por el recorte del carrusel. */
+    function ajustarAlto() {
+      var alto = 0;
+      cards.forEach(function (c) {
+        /* offsetHeight de la tarjeta, que ya incluye su filete de 3 px:
+           sumando solo los hijos se quedaba 6 px corta y seguía cortando. */
+        if (c.offsetHeight > alto) alto = c.offsetHeight;
+      });
+      if (alto) stage.style.height = Math.ceil(alto) + 'px';
+    }
+    ajustarAlto();
+    window.addEventListener('resize', ajustarAlto);
+    window.addEventListener('load', ajustarAlto);
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(ajustarAlto);
+    $$('img', stage).forEach(function (im) {
+      if (!im.complete) im.addEventListener('load', ajustarAlto, { once: true });
+    });
+
     ir(activo);
   })();
-
-  /* Selectores del pedido */
-  $('#f-pack').innerHTML = cfg.packs.map(function (p) {
-    return '<option value="' + p.id + '"' + (p.id === order.packId ? ' selected' : '') + '>' +
-      p.titulo + ' — ' + C.money(p.precio) + '</option>';
-  }).join('');
-  $('#f-cantidad').innerHTML = [1,2,3,4,5,6,8,10].map(function (n) {
-    return '<option value="' + n + '"' + (n === order.cantidad ? ' selected' : '') + '>' + n + '</option>';
-  }).join('');
-  $('#f-ciudad').innerHTML = cfg.envios.ciudades.map(function (c) {
-    return '<option value="' + c.id + '"' + (c.id === order.ciudadId ? ' selected' : '') + '>' +
-      c.nombre + '</option>';
-  }).join('');
-
-  $('#cities').innerHTML = cfg.envios.ciudades.map(function (c) {
-    var precio = c.precio === 0
-      ? '<span class="city__price free">Gratis</span>'
-      : '<span class="city__price">' + C.money(c.precio) + '</span>';
-    return '<label class="city">' +
-      '<input type="radio" name="ciudad" value="' + c.id + '"' + (c.id === order.ciudadId ? ' checked' : '') + '>' +
-      '<svg class="city__pin" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">' +
-        '<path d="M12 21s7-6.4 7-11a7 7 0 1 0-14 0c0 4.6 7 11 7 11Z"/><circle cx="12" cy="10" r="2.6"/></svg>' +
-      '<span class="city__txt"><b>' + c.nombre + '</b><small>' + c.eta + '</small></span>' + precio + '</label>';
-  }).join('');
 
   $('#cutoffText').textContent =
     'Los pedidos de hoy salen mañana. Cierre de despacho: ' + cfg.envios.cierreDespacho + '.';
@@ -161,21 +157,132 @@
   });
 
   /* ═══════════════════════════════════════════════ 2. PEDIDO */
-  function resumen() {
-    var t = C.totals(order);
-    var filas = [
-      '<div class="sumrow"><span>' + t.pack.titulo + ' × ' + order.cantidad +
-        '</span><span>' + C.money(t.subtotal) + '</span></div>',
-    ];
-    if (t.pct) {
-      filas.push('<div class="sumrow sumrow--save"><span>Descuento ' + order.codigo.toUpperCase() +
-        ' (-' + t.pct + '%)</span><span>-' + C.money(t.ahorro) + '</span></div>');
-    }
-    filas.push('<div class="sumrow"><span>Envío · ' + t.ciudad.nombre + '</span><span>' +
-      (t.ciudad.retiro ? 'Sin costo' : (t.envioGratis ? 'Gratis' : C.money(t.envio))) + '</span></div>');
-    filas.push('<div class="sumrow sumrow--total"><span>Total</span><span>' + C.money(t.total) + '</span></div>');
-    $('#summary').innerHTML = filas.join('');
+  /* Dos pasos: primero qué pides y a dónde va, después quién eres. El
+     resumen se imprime como un recibo que se alarga al cambiar el pedido. */
 
+  /* ── Packs ────────────────────────────────────────────────────────── */
+  $('#packs').innerHTML = cfg.packs.map(function (p) {
+    return '<button class="pack" type="button" role="radio" data-pack="' + p.id + '"' +
+      ' aria-checked="' + (p.id === order.packId) + '">' +
+      (p.destacado ? '<i>Más pedido</i>' : '') +
+      '<b>' + p.titulo + '</b>' +
+      '<small>' + (p.latas * cfg.producto.unidades) + ' pouches' +
+      (p.nota ? ' · ' + p.nota.toLowerCase() : '') + '</small>' +
+      '<span>' + C.money(p.precio) + '</span></button>';
+  }).join('');
+
+  $$('.pack').forEach(function (b) {
+    b.addEventListener('click', function () {
+      order.packId = b.dataset.pack;
+      $$('.pack').forEach(function (o) { o.setAttribute('aria-checked', String(o === b)); });
+      imprimir();
+    });
+  });
+
+  /* ── Cantidad ─────────────────────────────────────────────────────── */
+  $$('[data-cant]').forEach(function (b) {
+    b.addEventListener('click', function () {
+      order.cantidad = Math.max(1, Math.min(12, order.cantidad + Number(b.dataset.cant)));
+      $('#cantVal').textContent = order.cantidad;
+      imprimir();
+    });
+  });
+
+  /* ── Ciudad, en un desplegable ────────────────────────────────────── */
+  var lista = $('#listaCiudades'), btCiudad = $('#btCiudad');
+
+  lista.innerHTML = cfg.envios.ciudades.map(function (c) {
+    return '<button class="desple__op" type="button" role="option" data-ciudad="' + c.id + '"' +
+      ' aria-selected="' + (c.id === order.ciudadId) + '">' +
+      '<b>' + c.nombre + '</b><small>' + c.eta + '</small>' +
+      '<span>' + (c.precio ? C.money(c.precio) : 'Gratis') + '</span></button>';
+  }).join('');
+
+  function abrirCiudades(abrir) {
+    lista.hidden = !abrir;
+    btCiudad.setAttribute('aria-expanded', String(abrir));
+    $('#desCiudad').classList.toggle('is-open', abrir);
+    if (abrir) {
+      var on = lista.querySelector('[aria-selected="true"]') || lista.firstElementChild;
+      if (on) on.focus();
+    }
+  }
+
+  btCiudad.addEventListener('click', function () {
+    abrirCiudades(lista.hidden);
+  });
+
+  $$('.desple__op', lista).forEach(function (b) {
+    b.addEventListener('click', function () {
+      setCiudad(b.dataset.ciudad);
+      abrirCiudades(false);
+      btCiudad.focus();
+    });
+  });
+
+  document.addEventListener('click', function (e) {
+    if (!lista.hidden && !$('#desCiudad').contains(e.target)) abrirCiudades(false);
+  });
+  $('#desCiudad').addEventListener('keydown', function (e) {
+    if (e.key === 'Escape' && !lista.hidden) { e.preventDefault(); abrirCiudades(false); btCiudad.focus(); }
+  });
+
+  function setCiudad(id) {
+    order.ciudadId = id;
+    var c = cfg.envios.ciudades.filter(function (x) { return x.id === id; })[0];
+    if (!c) return;
+    $('#ciudadNom').textContent = c.nombre;
+    $('#ciudadEta').textContent = c.eta;
+    $('#ciudadPr').textContent = c.precio ? C.money(c.precio) : 'Gratis';
+    $('#ciudadPr').classList.toggle('es-gratis', !c.precio);
+    $$('.desple__op', lista).forEach(function (o) {
+      o.setAttribute('aria-selected', String(o.dataset.ciudad === id));
+    });
+    $('#wrap-direccion').hidden = !!c.retiro;
+    imprimir();
+  }
+
+  /* ── El recibo ────────────────────────────────────────────────────── */
+  var hoja = $('#reciboHoja'), papel = $('#reciboPapel');
+
+  function linea(et, val, clase) {
+    return '<div class="rec-l' + (clase ? ' ' + clase : '') + '">' +
+      '<dt>' + et + '</dt><dd>' + val + '</dd></div>';
+  }
+
+  function imprimir() {
+    var t = C.totals(order);
+
+    var filas = [
+      linea('Producto', cfg.producto.nombre),
+      linea(t.pack.titulo + ' x ' + order.cantidad, C.money(t.subtotal)),
+    ];
+    if (t.pct) filas.push(linea('Dto ' + order.codigo.toUpperCase() + ' -' + t.pct + '%', '-' + C.money(t.ahorro), 'rec-l--dto'));
+    filas.push(linea(t.ciudad.retiro ? 'Retiro en persona' : 'Envio ' + t.ciudad.nombre,
+      t.ciudad.retiro ? 'Sin costo' : (t.envioGratis ? 'Gratis' : C.money(t.envio))));
+    filas.push(linea('Total', C.money(t.total), 'rec-l--total'));
+
+    var antes = papel.offsetHeight;
+    $('#reciboLineas').innerHTML = filas.join('');
+    var recap = $('#recap');
+    if (recap) {
+      recap.innerHTML = '<span>' + t.pack.titulo + ' x ' + order.cantidad + ' · ' +
+        (t.ciudad.retiro ? 'retiro' : t.ciudad.nombre) + '</span><b>' + C.money(t.total) + '</b>';
+    }
+
+    /* La hoja sale de la ranura: se mide el alto nuevo y se avanza el papel */
+    papel.style.height = 'auto';
+    var despues = hoja.offsetHeight;
+    if (!reduced && antes && antes !== despues && hasGsap) {
+      gsap.fromTo(papel, { height: antes }, { height: despues, duration: .42, ease: 'power2.out',
+        onComplete: function () { papel.style.height = ''; } });
+      gsap.fromTo($$('.rec-l', hoja), { autoAlpha: 0, y: -6 },
+        { autoAlpha: 1, y: 0, duration: .28, stagger: .05, ease: 'none' });
+    } else {
+      papel.style.height = '';
+    }
+
+    /* Aviso de envío gratis */
     var nota = $('#shipNote');
     if (t.faltaGratis > 0) {
       nota.hidden = false;
@@ -190,36 +297,48 @@
     } else {
       nota.hidden = true;
     }
-
-    $('#wrap-direccion').hidden = !!t.ciudad.retiro;
   }
 
-  function setCiudad(id, desde) {
-    order.ciudadId = id;
-    if (desde !== 'radio') {
-      var r = $('input[name="ciudad"][value="' + id + '"]');
-      if (r) r.checked = true;
+  $('#reciboFecha').textContent = new Date().toLocaleDateString('es-EC',
+    { day: '2-digit', month: '2-digit', year: 'numeric' });
+
+  /* ── Los dos pasos ────────────────────────────────────────────────── */
+  function verPaso(n) {
+    $$('.paso').forEach(function (s) {
+      var suyo = s.dataset.paso === String(n);
+      s.hidden = !suyo;
+      s.classList.toggle('is-on', suyo);
+    });
+    $$('#pasos li').forEach(function (l) {
+      l.classList.toggle('is-on', Number(l.dataset.paso) <= n);
+      l.classList.toggle('is-hecho', Number(l.dataset.paso) < n);
+    });
+    var cuerpo = $('.drawer__body');
+    if (cuerpo) cuerpo.scrollTop = 0;
+    if (hasGsap && !reduced) {
+      gsap.from('.paso.is-on > *', { autoAlpha: 0, y: 14, duration: .45, stagger: .05, overwrite: true });
     }
-    if (desde !== 'select') $('#f-ciudad').value = id;
-    resumen();
   }
-
-  $$('input[name="ciudad"]').forEach(function (i) {
-    i.addEventListener('change', function () { setCiudad(i.value, 'radio'); });
+  $('#irPaso2').addEventListener('click', function () { verPaso(2); $('#f-nombre').focus(); });
+  $('#irPaso1').addEventListener('click', function () { verPaso(1); });
+  $$('#pasos li').forEach(function (l) {
+    l.addEventListener('click', function () {
+      var n = Number(l.dataset.paso);
+      if (n === 1 || l.classList.contains('is-on')) verPaso(n);
+    });
   });
-  $('#f-ciudad').addEventListener('change', function () { setCiudad(this.value, 'select'); });
-  $('#f-pack').addEventListener('change', function () { order.packId = this.value; resumen(); });
-  $('#f-cantidad').addEventListener('change', function () { order.cantidad = Number(this.value); resumen(); });
 
+  /* ── Código de descuento ──────────────────────────────────────────── */
   $('#applyCode').addEventListener('click', function () {
     var v = $('#f-codigo').value.trim();
     var pct = C.descuento(v), err = $('#e-codigo');
-    if (!v) { order.codigo = ''; err.textContent = ''; err.className = 'err'; resumen(); return; }
+    if (!v) { order.codigo = ''; err.textContent = ''; err.className = 'err'; imprimir(); return; }
     if (pct) { order.codigo = v; err.textContent = 'Código aplicado: -' + pct + '%'; err.className = 'promo-ok'; }
     else { order.codigo = ''; err.textContent = 'Ese código no existe o ya venció.'; err.className = 'err'; }
-    resumen();
+    imprimir();
   });
 
+  /* ── Campos y envío ───────────────────────────────────────────────── */
   var CAMPOS = ['nombre', 'telefono', 'direccion', 'notas'];
   CAMPOS.forEach(function (f) {
     var el = $('#f-' + f); if (!el) return;
@@ -248,6 +367,7 @@
 
     var keys = Object.keys(errs).filter(function (k) { return k !== 'pack'; });
     if (keys.length) {
+      if (errs.ciudad) { verPaso(1); return; }
       var first = $('#f-' + keys[0]);
       if (first) first.focus();
       if (hasGsap && !reduced) gsap.fromTo('#orderForm', { x: -7 }, { x: 0, duration: .5, ease: 'elastic.out(1,0.35)' });
@@ -256,132 +376,8 @@
     window.open(C.link(order), '_blank', 'noopener');
   });
 
-  resumen();
-
-  /* ═══════════════════════════════════════════════ 3. EFECTOS */
-  (function usos() {
-    var list = $('#fxTabs'), panels = $('#fxPanels'), thumb = $('#fxThumb');
-    var fondos = $('.efectos__fondos'), orden = 1;
-    if (!list || !panels) return;
-    var datos = cfg.usos || [];
-
-    panels.innerHTML = datos.map(function (d, i) {
-      return '<div class="uso" id="panel-' + d.id + '" role="tabpanel" ' +
-        'aria-labelledby="tab-' + d.id + '" tabindex="0"' + (i ? ' hidden' : '') + '>' +
-        '<p class="uso__titulo">' + d.titulo + '</p>' +
-        '<p class="uso__copy">' + d.copy + '</p></div>';
-    }).join('');
-
-    list.insertAdjacentHTML('beforeend', datos.map(function (d, i) {
-      return '<button class="tab" type="button" role="tab" id="tab-' + d.id + '" ' +
-        'aria-controls="panel-' + d.id + '" aria-selected="' + (i === 0) + '"' +
-        (i ? ' tabindex="-1"' : '') + '>' + d.label + '</button>';
-    }).join(''));
-
-    var btns = $$('.tab', list);
-
-    function moveThumb(btn, animate) {
-      /* Se sigue también la fila: por debajo de 560 px las pestañas van en
-         dos por dos, y con solo la x el indicador caía siempre arriba. */
-      var x = btn.offsetLeft - list.clientLeft;
-      var y = btn.offsetTop - list.clientTop;
-      var w = btn.offsetWidth, h = btn.offsetHeight;
-      if (hasGsap && animate && !reduced) {
-        gsap.to(thumb, { x: x, y: y, width: w, height: h, duration: .55, ease: 'power3.out' });
-      } else {
-        thumb.style.width = w + 'px';
-        thumb.style.height = h + 'px';
-        thumb.style.transform = 'translate3d(' + x + 'px,' + y + 'px,0)';
-      }
-    }
-
-    function select(i, animate) {
-      var d = datos[i];
-      btns.forEach(function (b, n) {
-        b.setAttribute('aria-selected', n === i ? 'true' : 'false');
-        b.tabIndex = n === i ? 0 : -1;
-      });
-      $$('.uso', panels).forEach(function (p, n) {
-        if (n === i) {
-          p.hidden = false;
-          if (hasGsap && animate && !reduced) {
-            gsap.fromTo(p.children, { autoAlpha: 0, y: 14 }, { autoAlpha: 1, y: 0, duration: .5, stagger: .06, ease: 'power2.out' });
-          }
-        } else { p.hidden = true; }
-      });
-      moveThumb(btns[i], animate);
-
-      /* El fondo: cada cambio crea su propia capa, que entra por encima de
-         las que ya están puestas y se queda opaca hasta que otra la tapa.
-         Con capas fijas, si cambiabas de pestaña antes de terminar el cruce
-         el temporizador del cambio anterior apagaba la capa que acababa de
-         quedar activa y se veía el cobalto de la sección: ese era el bug.
-         Creándolas, nunca se apaga nada que esté a la vista. */
-      if (fondos && d.foto) {
-        var url = 'url("' + d.foto + '")';
-        var ultima = fondos.lastElementChild;
-        if (!ultima || ultima.dataset.foto !== d.foto) {
-          var hecho = false;
-          var pinta = function () {
-            if (hecho) return;
-            hecho = true;
-            var capa = document.createElement('div');
-            capa.className = 'efectos__fondo';
-            capa.dataset.foto = d.foto;
-            capa.style.backgroundImage = url;
-            capa.style.zIndex = ++orden;
-            if (!animate || reduced) capa.classList.add('sin-fundido');
-            fondos.appendChild(capa);
-            void capa.offsetWidth;
-            capa.classList.add('is-on');
-            setTimeout(function () {
-              /* se retiran las que hayan quedado debajo de esta, nunca las
-                 de encima: si hubo otro cambio entremedias, manda el nuevo */
-              while (fondos.firstElementChild &&
-                     fondos.firstElementChild !== capa &&
-                     fondos.children.length > 1) {
-                fondos.removeChild(fondos.firstElementChild);
-              }
-              capa.classList.remove('sin-fundido');
-            }, 700);
-          };
-          if (!animate || reduced) { pinta(); }
-          else {
-            var img = new Image();
-            img.onload = img.onerror = pinta;
-            img.src = d.foto;
-            if (img.complete) pinta();
-          }
-        }
-      }
-    }
-
-    btns.forEach(function (b, i) {
-      b.addEventListener('click', function () { select(i, true); });
-      b.addEventListener('keydown', function (e) {
-        var dir = e.key === 'ArrowRight' ? 1 : e.key === 'ArrowLeft' ? -1 : 0;
-        if (!dir) return;
-        e.preventDefault();
-        var n = (i + dir + btns.length) % btns.length;
-        btns[n].focus(); select(n, true);
-      });
-    });
-
-    select(0, false);
-
-    /* Se precargan las otras tres al terminar de cargar la página: así el
-       primer cambio de pestaña ya cruza sin esperar a la descarga. */
-    window.addEventListener('load', function () {
-      datos.forEach(function (d) { if (d.foto) { var i = new Image(); i.src = d.foto; } });
-    });
-
-    function recolocar() {
-      var on = btns.filter(function (b) { return b.getAttribute('aria-selected') === 'true'; })[0] || btns[0];
-      moveThumb(on, false);
-    }
-    if (document.fonts && document.fonts.ready) document.fonts.ready.then(recolocar);
-    window.addEventListener('resize', recolocar);
-  })();
+  setCiudad(order.ciudadId);
+  $('#cantVal').textContent = order.cantidad;
 
   /* ═══════════════════════════════════════ 4. CAJÓN LATERAL DE PEDIDO */
   (function checkout() {

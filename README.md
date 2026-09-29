@@ -140,11 +140,19 @@ las especificaciones exactas (duración, peso, encuadre y tratamiento de color).
 
 ## El checkout
 
-Vive en un **cajón lateral**, no en el scroll. La página solo muestra un bloque compacto
-con las tres condiciones de envío y un botón; al pulsarlo (o cualquier enlace "Pedir")
-entra desde la derecha un panel con la elección de ciudad, el resumen y el formulario.
-En móvil sube desde abajo como hoja. Se cierra con la ✕, con la tecla `Esc` o tocando
-fuera; mientras está abierto el fondo no hace scroll y el foco queda atrapado dentro.
+Vive en un **cajón lateral** y va en **dos pasos**. En móvil sube desde abajo como hoja.
+Se cierra con la ✕, con `Esc` o tocando fuera; mientras está abierto el fondo no hace
+scroll y el foco queda atrapado dentro.
+
+1. **Tu pedido** — pack en dos tarjetas, cantidad con contador, y la ciudad en un
+   **botón desplegable** en vez de una lista de cinco filas siempre abierta.
+2. **Tus datos** — nombre, teléfono, dirección, notas y código, con el total recordado
+   arriba del botón de enviar.
+
+El resumen se imprime como un **recibo**: sale de una ranura, con la guía de puntos
+entre concepto e importe y el borde inferior dentado. Al cambiar el pedido el papel
+avanza hasta el alto nuevo y las líneas entran escalonadas. Con `prefers-reduced-motion`
+aparece de golpe. Todo en CSS y JavaScript plano, sin dependencias.
 
 `assets/js/checkout.js` es el único archivo que toca la "pasarela". Expone dos funciones:
 
