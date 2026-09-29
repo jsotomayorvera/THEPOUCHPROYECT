@@ -77,22 +77,22 @@ N = 1400                    # lado del mosaico
 FONDO = (255, 216, 136)     # skin sand
 lienzo = Image.new('RGBA', (N, N), FONDO + (255,))
 
-random.seed(2718)
-PASO = 152
+random.seed(31337)
+PASO = 108
 puestos = []
 for gy in range(0, N, PASO):
     for gx in range(0, N, PASO):
         k = random.choices(ACABADOS, weights=PESOS)[0]
-        esc = random.uniform(0.70, 1.30)
-        ancho = int(PASO * 1.30 * esc)
+        esc = random.uniform(0.66, 1.34)
+        ancho = int(PASO * 1.62 * esc)
         alto = max(1, int(ancho * SILUETA.size[1] / SILUETA.size[0]))
         pieza = variante(k, (ancho, alto))
         if random.random() < 0.30:
             pieza = gastada(pieza, gx * 977 + gy)
-        pieza = pieza.rotate(random.uniform(-19, 19), expand=True,
+        pieza = pieza.rotate(random.uniform(-23, 23), expand=True,
                              resample=Image.BICUBIC)
-        cx = gx + PASO // 2 + int(random.uniform(-38, 38))
-        cy = gy + PASO // 2 + int(random.uniform(-38, 38))
+        cx = gx + PASO // 2 + int(random.uniform(-30, 30))
+        cy = gy + PASO // 2 + int(random.uniform(-30, 30))
         puestos.append((pieza, cx, cy))
 
 # se pega nueve veces para que el mosaico empalme por los cuatro bordes

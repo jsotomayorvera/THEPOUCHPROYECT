@@ -773,22 +773,6 @@
         },
       });
 
-      /* La lata: entra girando, respira y se mueve con el scroll */
-      (function lataDelHero() {
-        var lata = $('.hero__lata');
-        if (!lata) return;
-        gsap.set(lata, { transformOrigin: '50% 50%', yPercent: -50 });
-        gsap.timeline({ delay: .25 })
-          .from(lata, { autoAlpha: 0, scale: .72, rotation: -30, y: 46,
-                        duration: 1.1, ease: 'back.out(1.5)' })
-          .to(lata, { y: -14, rotation: -4, duration: 3.6, ease: 'sine.inOut',
-                      yoyo: true, repeat: -1 });
-        gsap.to(lata, {
-          y: '+=120', rotation: '+=16', ease: 'none',
-          scrollTrigger: { trigger: '.hero', start: 'top top', end: 'bottom top', scrub: .7 },
-        });
-      })();
-
       /* Paralaje del hero */
       gsap.to('.hero__media', {
         yPercent: 12, scale: 1.06, ease: 'none',

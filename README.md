@@ -126,7 +126,8 @@ para que el mosaico empalme por los cuatro bordes.
 separa la lata de su fondo inundando desde los bordes (no por umbral, que se
 comería los blancos del propio envase), y de `herramientas/bodegon-producto.py`,
 que la monta flotando sobre un estudio cálido en nuestra paleta con su sombra
-elíptica difusa.
+elíptica difusa. `lata-recorte.webp` es la toma de tres cuartos con
+transparencia: ahora mismo no se usa en ninguna parte, queda guardada.
 
 **El grado de color** está en `herramientas/grado.py`. Trabaja sobre el color
 original y solo le da temperatura: iguala la exposición de las cuatro a la misma
