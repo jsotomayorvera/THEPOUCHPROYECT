@@ -83,8 +83,6 @@ assets/js/stickers.js      Las pegatinas del muro (velocidad y atletismo), en SV
 assets/js/main.js          Comportamiento y animación de la página
 assets/js/vendor/          GSAP + ScrollTrigger alojados en el proyecto
 assets/img/                Logo, iconos, foto del producto, fotos de uso y empapelados
-assets/img/atletas/        Fotos de la banda de atletas (ver aviso abajo)
-assets/img/marmol-*.webp   Texturas de piedra generadas, una por color de módulo
 assets/fonts/              Tipografías (no dependen de Google Fonts)
 assets/video/              Clip del hero (webm + mp4) e instrucciones
 docs/MARCA.md              Guía de marca: paleta, tipografía, voz, precios
@@ -166,7 +164,6 @@ Partimos de tu imagen y generamos los formatos que faltaban:
   `--logo-ink` y `--logo-paper`, así que se adapta solo a fondo claro u oscuro.
 - `logo-full.png` — bicolor con fondo transparente. Para fondos claros.
 - `logo-cream.png` — versión crema en una sola tinta. Para fondos oscuros o verdes.
-- `logo-green.png` — versión verde en una sola tinta. Para sellos y estampados.
 - `icon-32/180/192/512.png` — favicon e icono de aplicación.
 
 ## Accesibilidad y rendimiento
@@ -208,6 +205,3 @@ Revisado el 29/09/2026.
 - [ ] Sin publicidad pagada no hacen falta, pero con ella sí: política de privacidad y
       términos.
 
-### Limpieza (opcional)
-- [ ] Sobran unos 260 KB de archivos que ya no usa nadie: `pared.webp`, los tres
-      `marmol-*.webp`, `logo-green.png` y la carpeta `assets/img/atletas/`.

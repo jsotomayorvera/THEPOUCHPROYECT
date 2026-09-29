@@ -514,40 +514,48 @@
     gsap.registerPlugin(ScrollTrigger);
     gsap.defaults({ ease: 'power3.out', duration: .8 });
 
-    /* Parte cada [data-split] en palabras, respetando los <em> de acento. */
-    function partir(el) {
-      if (el.dataset.splitDone) return;
-      el.dataset.splitDone = '1';
-      var salida = document.createDocumentFragment(), ultima = null;
+    /* El giro de cada pegatina vive en CSS (--rot). Al animarla con GSAP hay
+       que devolvérselo, o el tween le borra la inclinación al terminar. */
+    function giro(el) {
+      var v = parseFloat(getComputedStyle(el).getPropertyValue('--rot'));
+      return isNaN(v) ? -2.2 : v;
+    }
 
-      function palabra(contenido) {
-        var sp = document.createElement('span');
-        sp.className = 'word';
-        if (typeof contenido === 'string') sp.textContent = contenido;
-        else sp.appendChild(contenido);
-        salida.appendChild(sp);
-        salida.appendChild(document.createTextNode(' '));
-        ultima = sp;
+    /* Un disparador por bloque, no uno por línea. Antes el antetítulo, el
+       titular y la bajada entraban en momentos distintos y la cabecera se
+       armaba a trozos: eso era lo que parecía un fallo. */
+    function cabecera(bloque) {
+      var ceja  = bloque.querySelector('.eyebrow');
+      var h     = bloque.querySelector('.h2');
+      var bajada= bloque.querySelector('.lede');
+      var resto = $$(':scope > p:not(.eyebrow):not(.lede), :scope > ul, :scope > a', bloque);
+      var pegas = h ? $$('.tag', h) : [];
+      var tl = gsap.timeline();
+
+      if (ceja) tl.from(ceja, { autoAlpha: 0, y: 10, duration: .45 }, 0);
+
+      if (h) {
+        /* El titular se descubre de abajo arriba, como si se imprimiera.
+           El recorte se abre por los lados para no comerse la sombra dura. */
+        pegas.forEach(function (t) { gsap.set(t, { autoAlpha: 0 }); });
+        tl.fromTo(h,
+          { clipPath: 'inset(-40% -14% 100% -14%)' },
+          { clipPath: 'inset(-40% -14% -40% -14%)', duration: .72, ease: 'power4.out' }, .1);
       }
 
-      Array.prototype.slice.call(el.childNodes).forEach(function (nodo) {
-        if (nodo.nodeType === 3) {
-          var texto = nodo.textContent;
-          var pegado = texto.match(/^([.,;:!?)]+)/);
-          if (pegado && ultima) {
-            ultima.appendChild(document.createTextNode(pegado[1]));
-            texto = texto.slice(pegado[1].length);
-          }
-          texto.split(/\s+/).forEach(function (w) { if (w) palabra(w); });
-        } else if (nodo.nodeType === 1) {
-          palabra(nodo.cloneNode(true));
-        }
+      /* Las pegatinas se estampan encima, con rebote y su giro de vuelta */
+      pegas.forEach(function (t, i) {
+        var r = giro(t);
+        tl.fromTo(t,
+          { autoAlpha: 0, scale: .55, rotation: r - 16 },
+          { autoAlpha: 1, scale: 1, rotation: r, duration: .55, ease: 'back.out(2.6)' },
+          .52 + i * .1);
       });
-      el.innerHTML = '';
-      el.appendChild(salida);
+
+      if (bajada) tl.from(bajada, { autoAlpha: 0, y: 14, duration: .5 }, .46);
+      if (resto.length) tl.from(resto, { autoAlpha: 0, y: 16, duration: .5, stagger: .07 }, .54);
+      return tl;
     }
-    $$('[data-split]').forEach(partir);
-    if (!$$('[data-split]').length) { /* esta versión no usa titulares partidos */ }
 
     gsap.matchMedia().add({
       motion: '(prefers-reduced-motion: no-preference)',
@@ -555,45 +563,48 @@
     }, function (ctx) {
       if (ctx.conditions.reduce) return;
 
-      /* Las pegatinas se mueven a distinta velocidad: da profundidad al muro */
+      /* Cabeceras */
+      $$('[data-anim="head"]').forEach(function (el) {
+        ScrollTrigger.create({
+          trigger: el, start: 'top 86%', once: true,
+          onEnter: function () { cabecera(el); },
+        });
+      });
+
+      /* La frase del muro se descubre renglón a renglón */
+      $$('[data-anim="cita"]').forEach(function (el) {
+        var lineas = $$('.quote__l', el);
+        ScrollTrigger.create({
+          trigger: el, start: 'top 88%', once: true,
+          onEnter: function () {
+            gsap.fromTo(lineas,
+              { clipPath: 'inset(-30% -8% 100% -8%)', y: 10 },
+              { clipPath: 'inset(-30% -8% -30% -8%)', y: 0,
+                duration: .7, stagger: .12, ease: 'power4.out' });
+          },
+        });
+      });
+
+      /* Tarjetas y listas: suben un poco, todas con el mismo gesto */
+      ScrollTrigger.batch('[data-anim="up"], [data-anim="fx"]', {
+        start: 'top 88%', once: true,
+        onEnter: function (b) {
+          gsap.from(b, { autoAlpha: 0, y: 24, duration: .7, stagger: .09, overwrite: true });
+        },
+      });
+
+      /* Las pegatinas del muro entran girando y se mueven con el scroll */
       $$('.sticker').forEach(function (el) {
         gsap.to(el, {
           y: Number(el.dataset.p) || 0, ease: 'none',
           scrollTrigger: { trigger: '#muro', start: 'top bottom', end: 'bottom top', scrub: .7 },
         });
       });
-
-      /* Las pegatinas del muro entran girando */
       ScrollTrigger.batch('.sticker', {
         start: 'top 92%', once: true,
         onEnter: function (b) {
           gsap.from(b, { autoAlpha: 0, scale: .4, rotate: -40, duration: .8, stagger: .05, ease: 'back.out(1.8)', overwrite: true });
         },
-      });
-
-      /* Titulares: el tween se crea dentro de onEnter para que el texto
-         esté visible aunque el disparador no llegue a saltar. */
-      $$('[data-split]').forEach(function (el) {
-        if (el.classList.contains('claim')) return;
-        ScrollTrigger.create({
-          trigger: el, start: 'top 90%', once: true,
-          onEnter: function () {
-            gsap.from(el.querySelectorAll('.word'), {
-              autoAlpha: 0, yPercent: 100, duration: .7, stagger: .045, ease: 'power3.out',
-            });
-          },
-        });
-      });
-
-      ['up', 'fx'].forEach(function (kind) {
-        ScrollTrigger.batch('[data-anim="' + kind + '"]', {
-          start: 'top 88%', once: true,
-          onEnter: function (b) { gsap.from(b, { autoAlpha: 0, y: 28, duration: .8, stagger: .09, overwrite: true }); },
-        });
-      });
-      ScrollTrigger.batch('[data-anim="stagger"]', {
-        start: 'top 86%', once: true, batchMax: 3,
-        onEnter: function (b) { gsap.from(b, { autoAlpha: 0, y: 36, duration: .9, stagger: .12, overwrite: true }); },
       });
 
       /* Paralaje del hero */
@@ -602,7 +613,7 @@
         scrollTrigger: { trigger: '.hero', start: 'top top', end: 'bottom top', scrub: .6 },
       });
 
-      /* Seguimiento del ratón en las tarjetas */
+      /* Seguimiento del ratón en la foto del producto */
       if (window.matchMedia('(hover:hover)').matches) {
         $$('.about__fig').forEach(function (card) {
           var qx = gsap.quickTo(card, 'rotationY', { duration: .6, ease: 'power3.out' });
