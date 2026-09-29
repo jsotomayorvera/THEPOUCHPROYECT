@@ -182,10 +182,32 @@ Partimos de tu imagen y generamos los formatos que faltaban:
 
 ## Pendientes conocidos
 
-- [ ] **Confirmar la formulación.** La web está escrita para la lata de la foto: NZE Peppermint
-      FOCUS **sin cafeína** (Alpha GPC, L-Tirosina, L-Teanina). El plan original hablaba de una
-      referencia con cafeína. Ver el aviso en `docs/CIENCIA.md`
-- [ ] Poner el número real de WhatsApp en `config.js`
-- [ ] Guardar la foto del producto en `assets/img/producto-nze-peppermint.jpg`
-- [ ] Grabar o licenciar los 3 clips del hero
-- [ ] Confirmar usuario de Instagram y dominio definitivos
+Revisado el 29/09/2026.
+
+### Antes de vender
+- [ ] **Confirmar la formulación.** Toda la web está escrita para la lata de la foto:
+      NZE Peppermint FOCUS **sin cafeína** (Alpha GPC, L-Tirosina, L-Teanina). El plan
+      original hablaba de una referencia con cafeína. Ver el aviso en `docs/CIENCIA.md`.
+- [ ] **Tarifas de envío reales.** Las de `config.js` salieron de la maqueta, no de una
+      cotización: Guayaquil $2.50, Quito y Cuenca $3.50, resto $4.50, gratis desde $30.
+- [ ] **Confirmar precios** (1 lata $12, 2 latas $20), la hora de cierre de despacho
+      (18:00) y si el código `POUCH10` existe de verdad.
+
+### Material de terceros
+- [ ] **El clip del hero no es nuestro** y es de baja resolución. Hay que grabarlo o
+      licenciarlo antes de publicar. Especificaciones en `assets/video/README.md`.
+- [ ] **Las latas de "próximamente"** (cafeína y electrolitos) están inventadas: son
+      imágenes generadas, no producto real.
+
+### Publicación
+- [ ] El `canonical` y los metadatos apuntan a `https://thepouchproject.ec/`. Confirmar
+      el dominio y apuntarlo en Vercel.
+- [ ] La imagen que se ve al compartir el enlace es el icono. Conviene una propia de
+      1200x630 con el producto y el eslogan.
+- [ ] No hay analítica ni píxel de Meta o TikTok. Si vas a pautar, hace falta.
+- [ ] Sin publicidad pagada no hacen falta, pero con ella sí: política de privacidad y
+      términos.
+
+### Limpieza (opcional)
+- [ ] Sobran unos 260 KB de archivos que ya no usa nadie: `pared.webp`, los tres
+      `marmol-*.webp`, `logo-green.png` y la carpeta `assets/img/atletas/`.
