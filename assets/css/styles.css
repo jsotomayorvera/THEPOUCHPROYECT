@@ -493,12 +493,6 @@ main section[id]{scroll-margin-top:calc(var(--nav-h) + 16px)}
 @media (min-width:900px){.about{grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr)}}
 .about__fig{position:relative; border-radius:var(--r-lg); overflow:visible}
 .about__fig img{width:100%; height:auto; border-radius:var(--r-lg); border:3px solid var(--negro)}
-.about__doodle{
-  position:absolute; top:-26px; left:-18px; width:clamp(58px,7vw,92px); z-index:2;
-  transform:rotate(-16deg);
-}
-.about__doodle svg{width:100%; height:auto; overflow:visible}
-.about__doodle path{fill:var(--arena); stroke:var(--negro); stroke-width:7; paint-order:stroke fill; stroke-linejoin:round}
 .about__body{display:grid; gap:16px; justify-items:start}
 .about__body p{color:var(--muted); max-width:54ch}
 .marks{display:grid; gap:9px; margin-top:2px}

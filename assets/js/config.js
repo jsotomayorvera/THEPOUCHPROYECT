@@ -24,7 +24,7 @@ window.TPP = {
     linea: 'Energy · Nootropic Pouches',
     sabor: 'Peppermint',
     unidades: 15,
-    foto: 'assets/img/producto-nze-peppermint.webp',
+    foto: 'assets/img/producto-nze-energy.webp',
     resumen:
       'Pouch nootrópico de menta fría con 50 mg de cafeína por unidad. ' +
       'Energía y foco en el mismo formato: cero azúcar, cero tabaco y sin ' +
@@ -48,7 +48,7 @@ window.TPP = {
     { id: 'focus',   estado: 'soon', titulo: 'Línea Focus',    sabor: 'Sin cafeína',
       foto: 'assets/img/proximo-focus.webp' },
     { id: 'energy',  estado: 'live', titulo: 'NZE Peppermint', sabor: 'Energy · 50 mg cafeína',
-      foto: 'assets/img/producto-nze-peppermint.webp' },
+      foto: 'assets/img/producto-nze-energy.webp' },
     { id: 'electro', estado: 'soon', titulo: 'Electrolitos',   sabor: 'Hidratación',
       foto: 'assets/img/proximo-electrolitos.webp' },
   ],

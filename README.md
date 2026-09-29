@@ -122,12 +122,18 @@ dos de solo contorno. Un tercio de las piezas pasa además por un tratamiento
 de estampa gastada. Lo reparte en rejilla desordenada y lo pega nueve veces
 para que el mosaico empalme por los cuatro bordes.
 
-**El grado de color** está en `herramientas/grado.py`. Toma las fotos
-originales, las recorta a 16:9, las pasa a luminancia, iguala la exposición de
-todas a la misma media y las tiñe con una curva sacada del propio póster del
-vídeo del banner (sombras `#180B08`, medios `#664933`, luces `#8F705B`,
-extendidas hacia la arena). Deja un 12 % del color original y un punto de
-grano. Para añadir una foto nueva a la serie, se pasa por ahí y encaja sola.
+**Las imágenes de producto** salen de `herramientas/recortar-producto.py`, que
+separa la lata de su fondo inundando desde los bordes (no por umbral, que se
+comería los blancos del propio envase), y de `herramientas/bodegon-producto.py`,
+que la monta flotando sobre un estudio cálido en nuestra paleta con su sombra
+elíptica difusa.
+
+**El grado de color** está en `herramientas/grado.py`. Trabaja sobre el color
+original y solo le da temperatura: iguala la exposición de las cuatro a la misma
+luminancia media, aplica una curva de contraste suave y un balance de blancos
+hacia el ámbar por canal (sube el rojo, deja el verde y baja el azul), baja un
+punto la saturación y añade realce y grano. Para añadir una foto a la serie, se
+pasa por ahí y encaja sola.
 
 Las cuatro fotos actuales las aportó el cliente.
 
@@ -200,9 +206,6 @@ Revisado el 29/09/2026.
       Peppermint Energy**, 50 mg de cafeína más Alpha GPC, L-Teanina y L-Tirosina a
       40 mg cada una. Toda la redacción se reescribió para esa lata y la línea Focus,
       sin cafeína, pasó a "próximamente".
-- [ ] **Fotos de la lata Energy.** Las imágenes de la web todavía muestran la lata
-      FOCUS · CAFFEINE-FREE, que ya no es la que se vende. Hay que reemplazar
-      `producto-nze-peppermint.webp` y `lata-recorte.webp` por fotos del envase Energy.
 - [ ] **Tarifas de envío reales.** Las de `config.js` salieron de la maqueta, no de una
       cotización: Guayaquil $2.50, Quito y Cuenca $3.50, resto $4.50, gratis desde $30.
 - [ ] **Confirmar precios** (1 lata $12, 2 latas $20), la hora de cierre de despacho
