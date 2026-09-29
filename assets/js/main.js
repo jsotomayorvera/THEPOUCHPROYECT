@@ -281,9 +281,18 @@
     var btns = $$('.tab', list);
 
     function moveThumb(btn, animate) {
-      var x = btn.offsetLeft - list.clientLeft, w = btn.offsetWidth;
-      if (hasGsap && animate && !reduced) gsap.to(thumb, { x: x, width: w, duration: .55, ease: 'power3.out' });
-      else { thumb.style.width = w + 'px'; thumb.style.transform = 'translate3d(' + x + 'px,0,0)'; }
+      /* Se sigue también la fila: por debajo de 560 px las pestañas van en
+         dos por dos, y con solo la x el indicador caía siempre arriba. */
+      var x = btn.offsetLeft - list.clientLeft;
+      var y = btn.offsetTop - list.clientTop;
+      var w = btn.offsetWidth, h = btn.offsetHeight;
+      if (hasGsap && animate && !reduced) {
+        gsap.to(thumb, { x: x, y: y, width: w, height: h, duration: .55, ease: 'power3.out' });
+      } else {
+        thumb.style.width = w + 'px';
+        thumb.style.height = h + 'px';
+        thumb.style.transform = 'translate3d(' + x + 'px,' + y + 'px,0)';
+      }
     }
 
     function select(i, animate) {

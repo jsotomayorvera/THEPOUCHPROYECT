@@ -189,7 +189,7 @@ main section[id]{scroll-margin-top:calc(var(--nav-h) + 16px)}
   transform:scaleX(0); transform-origin:left; transition:transform .32s var(--ease);
 }
 .nav__side a:hover::after,.nav__side a[aria-current="true"]::after{transform:scaleX(1)}
-.nav__brand{flex:none; display:flex; align-items:center; text-decoration:none}
+.nav__brand{flex:none; display:flex; align-items:center; text-decoration:none; padding-block:5px}
 .nav__brand{position:relative}
 .nav__brand img{height:36px; width:auto; display:block; transition:opacity .3s linear}
 .nav__brand .nav__logo--dark{position:absolute; inset:0; opacity:0}
@@ -238,6 +238,7 @@ main section[id]{scroll-margin-top:calc(var(--nav-h) + 16px)}
 .claim__line{display:block}
 .claim__stickers{display:flex; flex-wrap:wrap; align-items:center; gap:.18em; margin-top:.1em}
 .claim__stickers .tag{font-size:1.05em; padding:.1em .34em .2em}
+@media (max-width:400px){.claim__stickers .tag{--rot:-1.1deg; font-size:1em}}
 .claim__y{font-size:.82em}
 
 
@@ -252,7 +253,7 @@ main section[id]{scroll-margin-top:calc(var(--nav-h) + 16px)}
 }
 
 /* ──────────────────────────────────────────────── 12b. FAQ ───────────── */
-.faq{display:grid; max-width:78ch; margin-inline:auto; background:var(--arena); color:var(--panel-fg); border:3px solid var(--negro); border-radius:var(--r-lg); padding-inline:clamp(18px,2.4vw,28px); box-shadow:var(--lift)}
+.faq{display:grid; max-width:78ch; margin-inline:auto; background:var(--arena); color:var(--panel-fg); border:3px solid var(--negro); border-radius:var(--r-lg); padding-inline:clamp(20px,2.6vw,30px); box-shadow:var(--lift)}
 .faq details{border-bottom:2px solid var(--panel-line)}
 .faq details:last-child{border-bottom:0}
 .faq summary{
@@ -344,26 +345,49 @@ main section[id]{scroll-margin-top:calc(var(--nav-h) + 16px)}
   font-family:var(--marker); font-size:13px;
   transform:rotate(-3deg); border:2px solid var(--crema);
 }
-.pcard__bar{display:flex; align-items:center; justify-content:space-between; gap:12px; padding:18px 20px}
-.pcard__name{display:grid; gap:2px; min-width:0}
-.pcard__name span{font-size:11px; letter-spacing:.18em; text-transform:uppercase; color:var(--coral); font-weight:700}
-.pcard__name b{font-family:var(--display); font-weight:400; font-size:17px; letter-spacing:-.015em; text-transform:uppercase}
-.pcard .btn{padding:10px 18px; font-size:13.5px}
+.pcard__bar{display:flex; align-items:center; justify-content:space-between; gap:10px; padding:16px 16px}
+.pcard__name{display:grid; gap:2px; min-width:0; flex:1}
+/* min-width:0 también en los hijos: en rejilla heredan min-width:auto y
+   por eso no se encogían, y el nombre se metía debajo del botón. */
+.pcard__name > *{min-width:0}
+.pcard__name span{font-size:11px; letter-spacing:.1em; text-transform:uppercase; color:var(--coral); font-weight:700; text-wrap:balance}
+.pcard__name b{font-family:var(--display); font-weight:400; font-size:clamp(14px,3.9vw,17px); letter-spacing:-.02em; text-transform:uppercase; overflow-wrap:anywhere}
+.pcard .btn{padding:10px 16px; font-size:13px; flex:none}
+/* La tarjeta mide 240 px fijos hasta los 800 de pantalla: ahí el nombre y
+   el botón no caben en una fila sin quedar desparejos, así que se apilan y
+   el botón ocupa el ancho. Desde 800 vuelven a ir en línea. */
+@media (max-width:800px){
+  .pcard__bar{flex-direction:column; align-items:stretch; gap:12px; padding:16px}
+  .pcard .btn{width:100%}
+  .pcard__name span{letter-spacing:.14em}
+}
 
 .flow__ctrl{display:flex; align-items:center; justify-content:center; gap:14px; margin-top:14px}
-.flow__dots{display:flex; gap:8px}
+.flow__dots{display:flex; gap:0}
+/* El punto se pinta con un pseudo-elemento: el botón mide 44x44 para que
+   se pueda acertar con el dedo, aunque la marca siga siendo pequeña. */
 .flow__dots button{
-  width:9px; height:9px; padding:0; border-radius:50%; cursor:pointer;
-  border:0; background:color-mix(in srgb, var(--crema) 40%, transparent); transition:background .3s linear, transform .3s var(--ease);
+  width:44px; height:44px; padding:0; border:0; background:transparent;
+  cursor:pointer; display:grid; place-items:center;
 }
-.flow__dots button[aria-current="true"]{background:var(--arena); transform:scale(1.4)}
+.flow__dots button::before{
+  content:''; width:9px; height:9px; border-radius:50%;
+  background:color-mix(in srgb, var(--crema) 40%, transparent);
+  transition:background .3s linear, transform .3s var(--ease);
+}
+.flow__dots button[aria-current="true"]::before{background:var(--arena); transform:scale(1.4)}
+/* Las flechas del carrusel hablan el idioma de la página: pastilla de
+   arena con filete negro, sombra dura y el doble galón de las pegatinas. */
 .dot{
-  width:46px; height:46px; border-radius:50%; cursor:pointer;
-  border:2px solid var(--hairline); background:transparent; color:var(--crema);
-  display:grid; place-items:center; font-size:17px;
-  transition:background .2s linear, color .2s linear, border-color .2s linear;
+  width:48px; height:48px; border-radius:50%; cursor:pointer;
+  border:3px solid var(--negro); background:var(--arena); color:var(--negro);
+  display:grid; place-items:center; box-shadow:var(--lift-sm);
+  transition:background .2s linear, color .2s linear, transform .2s var(--ease), box-shadow .2s var(--ease);
 }
-.dot:hover{background:var(--arena); color:var(--negro); border-color:var(--arena)}
+.dot svg{width:19px; height:19px; fill:currentColor}
+.dot:hover{background:var(--cobalto); color:var(--arena); transform:translate(-2px,-2px); box-shadow:8px 9px 0 rgba(12,5,3,.5)}
+.dot:active{transform:translate(2px,2px); box-shadow:2px 3px 0 rgba(12,5,3,.5)}
+.dot:focus-visible{outline:3px solid var(--arena); outline-offset:3px}
 
 /* ─────────────────────────────────────────────── 10. EFECTOS ───────── */
 /* Cuándo usarlos: la foto del caso ocupa todo el módulo, como el banner */
@@ -407,11 +431,20 @@ main section[id]{scroll-margin-top:calc(var(--nav-h) + 16px)}
 .tabs::-webkit-scrollbar{display:none}
 .tabs > *{flex:none}
 @media (min-width:640px){.tabs{justify-content:center; overflow:visible}}
+/* Por debajo de 560 px las cuatro no caben en una fila y la última se
+   quedaba fuera de pantalla sin ninguna pista. Pasan a dos por dos, y el
+   indicador deslizante sigue también la fila (mide alto y posición). */
+@media (max-width:559px){
+  /* En dos filas la pastilla completa se ve rara: pasa a caja redondeada */
+  .tabs{flex-wrap:wrap; overflow:visible; row-gap:2px; border-radius:var(--r-lg)}
+  .tabs > .tab{flex:1 1 calc(50% - 2px)}
+  .tab{padding:11px 10px; text-align:center}
+}
 .tabs__thumb{
-  position:absolute; top:5px; left:0; height:calc(100% - 10px); width:0;
+  position:absolute; top:0; left:0; height:0; width:0;
   border-radius:var(--r-pill); background:var(--coral);
   transform:translate3d(0,0,0); pointer-events:none;
-  transition:transform .5s var(--ease), width .5s var(--ease);
+  transition:transform .5s var(--ease), width .5s var(--ease), height .5s var(--ease);
 }
 .tab{
   position:relative; z-index:1; border:0; background:transparent; cursor:pointer;
@@ -518,9 +551,9 @@ main section[id]{scroll-margin-top:calc(var(--nav-h) + 16px)}
   padding-top:clamp(20px,2.4vw,26px); border-top:2px solid var(--hairline);
 }
 @media (min-width:640px){.contact{grid-template-columns:repeat(4,1fr)}}
-.contact li{display:grid; gap:3px}
+.contact li{display:grid; gap:2px}
 .contact b{font-family:var(--marker); font-size:14px; color:var(--menta); font-weight:400}
-.contact a,.contact span{font-size:15px; text-decoration:none}
+.contact a,.contact span{font-size:15px; text-decoration:none; display:flex; align-items:center; min-height:34px}
 .contact a:hover{color:var(--arena)}
 
 /* ── Módulo compacto: el pedido vive en un cajón, no en el scroll ── */
@@ -528,7 +561,7 @@ main section[id]{scroll-margin-top:calc(var(--nav-h) + 16px)}
   display:grid; gap:18px; justify-items:center; text-align:center;
   background:var(--arena); color:var(--panel-fg);
   border:3px solid var(--negro); border-radius:var(--r-lg);
-  padding:clamp(22px,3vw,34px); max-width:760px; margin-inline:auto;
+  padding:clamp(20px,2.6vw,30px); max-width:760px; margin-inline:auto;
   box-shadow:14px 16px 0 rgba(12,5,3,.6);
 }
 .order-lite__pts{display:grid; gap:14px; width:100%; text-align:left}
@@ -566,7 +599,7 @@ body.has-drawer{overflow:hidden}
 }
 .drawer__head{
   display:flex; align-items:center; justify-content:space-between; gap:16px;
-  padding:clamp(18px,2.4vw,24px) clamp(18px,2.6vw,28px);
+  padding:clamp(18px,2.4vw,24px) clamp(18px,5vw,30px);
   border-bottom:3px solid var(--negro); background:var(--cobalto); color:var(--crema);
 }
 .drawer__eyebrow{font-family:var(--marker); font-size:14px; color:var(--arena)}
@@ -580,7 +613,7 @@ body.has-drawer{overflow:hidden}
 .drawer__x svg{width:20px; height:20px}
 .drawer__body{
   flex:1; overflow-y:auto; -webkit-overflow-scrolling:touch;
-  padding:clamp(18px,2.6vw,28px) clamp(18px,2.6vw,28px) calc(28px + env(safe-area-inset-bottom,0px));
+  padding:clamp(18px,5vw,30px) clamp(18px,5vw,30px) calc(28px + env(safe-area-inset-bottom,0px));
   scrollbar-width:thin;
 }
 .drawer__body .field-title{color:var(--panel-muted)}
@@ -680,7 +713,7 @@ body.has-drawer{overflow:hidden}
 
 /* ────────────────────────────────────────────── 14. FLOTANTE ───────── */
 .wa-float{
-  position:fixed; right:16px; bottom:calc(16px + env(safe-area-inset-bottom, 0px)); z-index:70;
+  position:fixed; right:var(--gutter); bottom:calc(var(--gutter) + env(safe-area-inset-bottom, 0px)); z-index:70;
   width:56px; height:56px; border-radius:50%;
   background:var(--coral); color:var(--crema);
   display:grid; place-items:center; text-decoration:none;
